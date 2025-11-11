@@ -1,27 +1,28 @@
 package net.smileycorp.magiadaemonica.common.data.prices;
 
+import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.IAttribute;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.text.TextComponentBase;
 import net.smileycorp.magiadaemonica.common.MagiaDaemonicaCapabilities;
+import net.smileycorp.magiadaemonica.common.PriceUtils;
 
-public class FlatSoulPrice implements Price {
+public class FlatHealthPrice implements Price {
 
     private final float amount;
 
-    public FlatSoulPrice(float amount) {
+    public FlatHealthPrice(float amount) {
         this.amount = amount;
     }
 
     @Override
     public void pay(EntityPlayer player, int tier) {
-        if (!player.hasCapability(MagiaDaemonicaCapabilities.SOUL, null)) return;
-        player.getCapability(MagiaDaemonicaCapabilities.SOUL, null).consumeSoul(amount, true);
+        PriceUtils.addAttribute(player, SharedMonsterAttributes.MAX_HEALTH, amount);
     }
 
     @Override
     public boolean canPay(EntityPlayer player, int tier) {
-        if (!player.hasCapability(MagiaDaemonicaCapabilities.SOUL, null)) return false;
-        return player.getCapability(MagiaDaemonicaCapabilities.SOUL, null).getSoul() >= amount;
+        return player.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).getAttributeValue() > amount;
     }
 
     @Override

@@ -28,4 +28,5 @@ public class PercentageSoulPrice implements Price {
     public TextComponentBase getDescription(int tier) {
         return null;
     }
+
 }
