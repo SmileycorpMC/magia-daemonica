@@ -6,14 +6,18 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.smileycorp.magiadaemonica.common.capabilities.ISoul;
+import net.smileycorp.magiadaemonica.common.command.CommandSoul;
+import net.smileycorp.magiadaemonica.common.network.PacketHandler;
 
 @Mod.EventBusSubscriber
 public class CommonProxy {
 	
 	public void preInit(FMLPreInitializationEvent event) {
 		MinecraftForge.EVENT_BUS.register(new MagicaDaemonicaEventHandler());
-		CapabilityManager.INSTANCE.register(ISoul.class, new ISoul.Storage(), () -> new ISoul.Soul(null));
+		PacketHandler.initPackets();
+		CapabilityManager.INSTANCE.register(ISoul.class, new ISoul.Storage(), ISoul.Soul::new);
 	}
 
 	public void init(FMLInitializationEvent event) {
@@ -23,5 +27,9 @@ public class CommonProxy {
 	public void postInit(FMLPostInitializationEvent event) {
 
 	}
-	
+
+	public void serverStart(FMLServerStartingEvent event) {
+		event.registerServerCommand(new CommandSoul());
+	}
+
 }

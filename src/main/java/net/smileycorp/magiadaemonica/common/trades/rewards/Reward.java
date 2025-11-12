@@ -4,7 +4,7 @@ import net.minecraft.entity.ai.attributes.IAttribute;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.smileycorp.magiadaemonica.common.TradeUtils;
+import net.smileycorp.magiadaemonica.common.trades.TradeUtils;
 
 public interface Reward {
 

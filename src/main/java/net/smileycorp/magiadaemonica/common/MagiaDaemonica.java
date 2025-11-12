@@ -6,6 +6,7 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 
 
 @Mod(modid = Constants.MODID, name = Constants.NAME, version = Constants.VERSION, dependencies = Constants.DEPENDENCIES)
@@ -14,9 +15,7 @@ public class MagiaDaemonica {
 	@SidedProxy(clientSide = Constants.CLIENT, serverSide = Constants.SERVER)
 	public static CommonProxy proxy;
 	
-	public MagiaDaemonica() {
-
-	}
+	public MagiaDaemonica() {}
 	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event){
@@ -31,6 +30,11 @@ public class MagiaDaemonica {
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event){
 		proxy.postInit(event);
+	}
+
+	@EventHandler
+	public void serverStart(FMLServerStartingEvent event){
+		proxy.serverStart(event);
 	}
 	
 }

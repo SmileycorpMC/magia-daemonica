@@ -1,12 +1,10 @@
 package net.smileycorp.magiadaemonica.common.capabilities;
 
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagFloat;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
-import net.smileycorp.magiadaemonica.common.MagiaDaemonicaCapabilities;
 
 import javax.annotation.Nullable;
 
@@ -16,16 +14,11 @@ public interface ISoul {
 
     void consumeSoul(float percent, boolean flat);
 
-    void setSoul(float percent, boolean client);
+    void setSoul(float percent);
 
     class Soul implements ISoul {
 
-        private final EntityPlayer player;
         private float soul_percent = 1;
-
-        public Soul(EntityPlayer player) {
-            this.player = player;
-        }
 
         @Override
         public float getSoul() {
@@ -34,11 +27,11 @@ public interface ISoul {
 
         @Override
         public void consumeSoul(float percent, boolean flat) {
-            setSoul(Math.max(0, flat ? soul_percent - percent : soul_percent * (1 - percent)), false);
+            setSoul(Math.max(0, flat ? soul_percent - percent : soul_percent * (1 - percent)));
         }
 
         @Override
-        public void setSoul(float percent, boolean client) {
+        public void setSoul(float percent) {
             soul_percent = percent;
         }
 
@@ -54,14 +47,14 @@ public interface ISoul {
 
         @Override
         public void readNBT(Capability<ISoul> capability, ISoul soul, EnumFacing enumFacing, NBTBase nbtBase) {
-            soul.setSoul(((NBTTagFloat)nbtBase).getFloat(), true);
+            soul.setSoul(((NBTTagFloat)nbtBase).getFloat());
         }
 
     }
 
     class Provider implements ICapabilitySerializable<NBTBase> {
 
-        protected ISoul instance;
+        protected ISoul instance = MagiaDaemonicaCapabilities.SOUL.getDefaultInstance();
 
         @Override
         public boolean hasCapability(Capability<?> capability, EnumFacing facing) {

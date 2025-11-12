@@ -1,9 +1,18 @@
 package net.smileycorp.magiadaemonica.client;
 
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.relauncher.Side;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
+import net.smileycorp.magiadaemonica.common.capabilities.MagiaDaemonicaCapabilities;
 
-@Mod.EventBusSubscriber(Side.CLIENT)
 public class ClientHandler {
+
+    public static void setSoul(float soul) {
+        EntityPlayerSP player = Minecraft.getMinecraft().player;
+        if (player == null) return;
+        System.out.println(player);
+        if (!player.hasCapability(MagiaDaemonicaCapabilities.SOUL, null)) return;
+        System.out.println(soul);
+        player.getCapability(MagiaDaemonicaCapabilities.SOUL, null).setSoul(soul);
+    }
 
 }

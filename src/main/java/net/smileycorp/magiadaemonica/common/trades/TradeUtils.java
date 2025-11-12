@@ -1,4 +1,4 @@
-package net.smileycorp.magiadaemonica.common;
+package net.smileycorp.magiadaemonica.common.trades;
 
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttribute;

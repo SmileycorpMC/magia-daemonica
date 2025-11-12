@@ -1,0 +1,44 @@
+package net.smileycorp.magiadaemonica.common.network;
+
+import io.netty.buffer.ByteBuf;
+import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
+import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import net.minecraftforge.fml.relauncher.Side;
+import net.smileycorp.magiadaemonica.client.ClientHandler;
+import net.smileycorp.magiadaemonica.common.capabilities.MagiaDaemonicaCapabilities;
+
+public class SyncSoulMessage implements IMessage {
+
+    private float soul;
+
+    public SyncSoulMessage() {}
+
+    public SyncSoulMessage(float soul) {
+        this.soul = soul;
+    }
+
+    @Override
+    public void fromBytes(ByteBuf buf) {
+        soul = buf.readFloat();
+    }
+
+    @Override
+    public void toBytes(ByteBuf buf) {
+        buf.writeFloat(soul);
+    }
+
+    public IMessage process(MessageContext ctx) {
+        if (ctx.side == Side.CLIENT) Minecraft.getMinecraft().addScheduledTask(() -> ClientHandler.setSoul(soul));
+        return null;
+    }
+
+    public static void send(EntityPlayerMP player) {
+        System.out.println(player);
+        if (!player.hasCapability(MagiaDaemonicaCapabilities.SOUL ,null)) return;
+        System.out.println(player.getCapability(MagiaDaemonicaCapabilities.SOUL, null).getSoul());
+        PacketHandler.NETWORK_INSTANCE.sendTo(new SyncSoulMessage(player.getCapability(MagiaDaemonicaCapabilities.SOUL, null).getSoul()), player);
+    }
+
+}

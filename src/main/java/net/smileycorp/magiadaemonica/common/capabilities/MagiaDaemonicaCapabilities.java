@@ -1,8 +1,7 @@
-package net.smileycorp.magiadaemonica.common;
+package net.smileycorp.magiadaemonica.common.capabilities;
 
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
-import net.smileycorp.magiadaemonica.common.capabilities.ISoul;
 
 public class MagiaDaemonicaCapabilities {
 
