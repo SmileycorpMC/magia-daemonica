@@ -1,8 +1,7 @@
 package net.smileycorp.magiadaemonica.client.rituals;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
 import net.smileycorp.magiadaemonica.common.rituals.summoningcircle.SummoningCircle;
@@ -14,7 +13,16 @@ public class SummoningCircleRenderer implements RitualRenderer<SummoningCircle> 
         ResourceLocation name = ritual.getName();
         if (name == null) return;
         ResourceLocation texture = new ResourceLocation(name.getResourceDomain(), "textures/summoning_circles/" + name.getResourcePath() + ".png");
-        Minecraft.getMinecraft().getTextureManager().bindTexture(texture);
+        Minecraft mc = Minecraft.getMinecraft();
+        mc.getTextureManager().bindTexture(texture);
+        RenderHelper.enableStandardItemLighting();
+        GlStateManager.setActiveTexture(OpenGlHelper.lightmapTexUnit);
+        GlStateManager.enableTexture2D();
+        int i = mc.world.getCombinedLight(ritual.getCenter(), 0);
+        int j = i % 65536;
+        int k = i / 65536;
+        OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float)j, (float)k);
+        GlStateManager.color(1, 1, 1, 1);
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder buffer = tessellator.getBuffer();
         buffer.begin(7, DefaultVertexFormats.POSITION_TEX_NORMAL);
@@ -23,6 +31,8 @@ public class SummoningCircleRenderer implements RitualRenderer<SummoningCircle> 
         buffer.pos(width, 0.01, height).tex(1, 1).normal(0, 1, 0).endVertex();
         buffer.pos(width, 0.01, 0).tex(1, 0).normal(0, 1, 0).endVertex();
         tessellator.draw();
+        GlStateManager.disableTexture2D();
+        GlStateManager.setActiveTexture(OpenGlHelper.defaultTexUnit);
     }
 
 
