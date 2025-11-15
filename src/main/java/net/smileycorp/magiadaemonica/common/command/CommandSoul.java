@@ -43,7 +43,6 @@ public class CommandSoul extends CommandBase {
                 if (!player.hasCapability(DaemonicaCapabilities.SOUL, null)) return;
                 ISoul soul = player.getCapability(DaemonicaCapabilities.SOUL, null);
                 if (command.equals("get")) {
-                    System.out.println(soul.getSoul());
                     notifyCommandListener(sender, this, "command." + Constants.MODID + ".soul.get.success", player.getDisplayName(), soul.getSoul());
                     return;
                 }

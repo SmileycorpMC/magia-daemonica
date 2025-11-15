@@ -7,9 +7,7 @@
     "normal": [{}],
 	"lit=false": [{}],
 	"lit=true": [{
-		"textures": {
-			"candle": "magiadaemonica:blocks/scented_candle_lit"
-		}
+		"model": "magiadaemonica:scented_candle_lit"
 	}]
   }
 }

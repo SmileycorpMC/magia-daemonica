@@ -1,24 +1,32 @@
 {
     "multipart": [       
 		{   
-			"when": {"north": false, "east": false, "south": false, "west": false},
+			"when": {"north": false, "east": false, "south": false, "west": false, "active": false},
             "apply": { "model": "magiadaemonica:chalk_pile" }
         },
         {   
-			"when": {"north": true},
+			"when": {"north": true, "active": false},
             "apply": { "model": "magiadaemonica:chalk_north" }
         },
 		{   
-			"when": {"east": true},
+			"when": {"east": true, "active": false},
             "apply": { "model": "magiadaemonica:chalk_east" }
         },
 		{   
-			"when": {"south": true},
+			"when": {"south": true, "active": false},
             "apply": { "model": "magiadaemonica:chalk_south" }
         },
 		{   
-			"when": {"west": true},
+			"when": {"west": true, "active": false},
             "apply": { "model": "magiadaemonica:chalk_west" }
+        },
+        {
+			"when": {"candle": "unlit"},
+			"apply": { "model": "magiadaemonica:scented_candle" }
+        },
+		{
+			"when": {"candle": "lit"},
+			"apply": { "model": "magiadaemonica:scented_candle_lit" }
         }
     ]
 }

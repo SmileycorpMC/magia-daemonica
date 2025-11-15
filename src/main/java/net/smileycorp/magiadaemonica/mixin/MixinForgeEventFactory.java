@@ -1,16 +1,17 @@
 package net.smileycorp.magiadaemonica.mixin;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.BlockSnapshot;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.event.world.BlockEvent;
-import net.smileycorp.magiadaemonica.common.blocks.BlockScentedCandle;
-import net.smileycorp.magiadaemonica.common.blocks.DaemonicaBlocks;
+import net.smileycorp.magiadaemonica.common.blocks.ILightable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -32,9 +33,11 @@ public class MixinForgeEventFactory {
         IBlockState state = event.getPlacedAgainst();
         World world = event.getWorld();
         if (event.getPlacedBlock().getBlock() != Blocks.FIRE) return;
-        if (state.getBlock() != DaemonicaBlocks.SCENTED_CANDLE) return;
-        if (state.getValue(BlockScentedCandle.LIT)) return;
-        if (!event.getWorld().isRemote) world.setBlockState(event.getPos().offset(direction.getOpposite()), state.withProperty(BlockScentedCandle.LIT, true));
+        Block block = state.getBlock();
+        if (!(block instanceof ILightable)) return;
+        BlockPos pos = event.getPos().offset(direction.getOpposite());
+        if (!((ILightable) block).isLightable(world, pos, state)) return;
+        if (!event.getWorld().isRemote) ((ILightable) block).light(world, pos, state);
         event.setCanceled(true);
     }
 

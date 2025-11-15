@@ -16,13 +16,14 @@ import net.smileycorp.atlas.api.block.BlockBase;
 import net.smileycorp.magiadaemonica.common.Constants;
 import net.smileycorp.magiadaemonica.common.MagiaDaemonica;
 
+import javax.annotation.Nullable;
 import java.util.Random;
 
-public class BlockScentedCandle extends BlockBase {
+public class BlockScentedCandle extends BlockBase implements ILightable {
 
     public static PropertyBool LIT = PropertyBool.create("lit");
 
-    private final AxisAlignedBB AABB = new AxisAlignedBB(0.4375, 0, 0.4375, 0.5625, 0.4375, 0.5625);
+    public static final AxisAlignedBB AABB = new AxisAlignedBB(0.4375, 0, 0.4375, 0.5625, 0.4375, 0.5625);
 
     public BlockScentedCandle() {
         super("scented_candle", Constants.MODID, Material.CIRCUITS, SoundType.STONE, 0, 0, 0, MagiaDaemonica.CREATIVE_TAB);
@@ -59,6 +60,12 @@ public class BlockScentedCandle extends BlockBase {
         return AABB;
     }
 
+    @Nullable
+    @Override
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos) {
+        return NULL_AABB;
+    }
+
     @Override
     public BlockRenderLayer getBlockLayer() {
         return BlockRenderLayer.CUTOUT_MIPPED;
@@ -81,4 +88,15 @@ public class BlockScentedCandle extends BlockBase {
         if (rand.nextInt(4) == 0) world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, pos.getX() + 0.5 + (rand.nextFloat() - 0.5) * 0.05,
                 pos.getY() + 0.6, pos.getZ() + 0.5 + (rand.nextFloat() - 0.5) * 0.05, 0, 0, 0);
     }
+
+    @Override
+    public boolean isLightable(World world, BlockPos pos, IBlockState state) {
+        return !state.getValue(LIT);
+    }
+
+    @Override
+    public void light(World world, BlockPos pos, IBlockState state) {
+        world.setBlockState(pos, state.withProperty(LIT, true));
+    }
+
 }
