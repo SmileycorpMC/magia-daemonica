@@ -17,7 +17,7 @@ public class SummoningCircle implements IRitual {
 
     public static final ResourceLocation ID = Constants.loc("summoning_circle");
 
-    private final BlockPos pos;
+    private final BlockPos pos, center;
     private final int width, height;
     private final ResourceLocation name;
     private boolean mirror;
@@ -27,6 +27,7 @@ public class SummoningCircle implements IRitual {
         this.pos = pos;
         this.width = width;
         this.height = height;
+        this.center = pos.add(width/2, 0, height/2);
         this.name = name;
     }
 
@@ -80,6 +81,11 @@ public class SummoningCircle implements IRitual {
     @Override
     public BlockPos getPos() {
         return pos;
+    }
+
+    @Override
+    public BlockPos getCenter() {
+        return center;
     }
 
     @Override

@@ -31,8 +31,8 @@ public class RitualRendererDispatcher {
         Set<BlockPos> toRemove = Sets.newHashSet();
         WorldClient world = Minecraft.getMinecraft().world;
         for (IRitual ritual : rituals.values()) {
-            if (!world.isBlockLoaded(ritual.getPos()) &! world.isBlockLoaded(ritual.getPos().add(ritual.getHeight(), 0, ritual.getWidth()))) {
-                toRemove.add(ritual.getPos());
+            if (!world.isBlockLoaded(ritual.getCenter())) {
+                toRemove.add(ritual.getCenter());
                 continue;
             }
             renderRitual(ritual);
@@ -42,7 +42,7 @@ public class RitualRendererDispatcher {
 
     public static void addRitual(IRitual ritual) {
         if (ritual == null) return;
-        rituals.put(ritual.getPos(), ritual);
+        rituals.put(ritual.getCenter(), ritual);
     }
 
     public static void removeRitual(BlockPos pos) {

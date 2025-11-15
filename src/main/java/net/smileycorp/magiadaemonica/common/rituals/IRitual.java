@@ -12,6 +12,8 @@ public interface IRitual {
 
     BlockPos getPos();
 
+    BlockPos getCenter();
+
     int getWidth();
 
     int getHeight();

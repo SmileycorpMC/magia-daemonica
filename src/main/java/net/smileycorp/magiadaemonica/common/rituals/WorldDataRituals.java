@@ -33,13 +33,19 @@ public class WorldDataRituals extends WorldSavedData {
         return findRitual(pos);
     }
 
+    public IRitual getRitual(double x, double y, double z, double range) {
+        double rangeSqr = range * range;
+        for (IRitual ritual : rituals.values()) if (ritual.getCenter().distanceSqToCenter(x, y, z) <= rangeSqr) return ritual;
+        return null;
+    }
+
     private IRitual findRitual(BlockPos pos) {
         for (IRitual ritual : rituals.values()) if (ritual.contains(pos)) return ritual;
         return null;
     }
 
     public void addRitual(IRitual ritual) {
-        rituals.put(ritual.getPos(), ritual);
+        rituals.put(ritual.getCenter(), ritual);
         updateRitual(ritual);
         markDirty();
     }
@@ -48,7 +54,7 @@ public class WorldDataRituals extends WorldSavedData {
         IRitual ritual = getRitual(pos);
         if (ritual == null) return;
         ritual.removeBlocks(world);
-        pos = ritual.getPos();
+        pos = ritual.getCenter();
         rituals.remove(pos);
         PacketHandler.NETWORK_INSTANCE.sendToAllTracking(new RemoveRitualMessage(pos),
                 new NetworkRegistry.TargetPoint(world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(),
@@ -57,17 +63,15 @@ public class WorldDataRituals extends WorldSavedData {
     }
     
     public void updateRitual(IRitual ritual) {
-        BlockPos pos = ritual.getPos();
+        BlockPos pos = ritual.getCenter();
         PacketHandler.NETWORK_INSTANCE.sendToAllTracking(new SyncRitualMessage(ritual),
                 new NetworkRegistry.TargetPoint(world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 128));
     }
 
     public void syncRituals(Chunk chunk) {
         for (IRitual ritual : rituals.values()) {
-            BlockPos pos = ritual.getPos();
-            if (world.getChunkFromBlockCoords(pos) == chunk
-                    || world.getChunkFromBlockCoords(pos.add(ritual.getWidth(), 0, ritual.getHeight())) == chunk)
-                updateRitual(ritual);
+            BlockPos pos = ritual.getCenter();
+            if (world.getChunkFromBlockCoords(pos) == chunk) updateRitual(ritual);
         }
     }
 
@@ -76,7 +80,7 @@ public class WorldDataRituals extends WorldSavedData {
         if (!nbt.hasKey("rituals")) return;
         for (NBTBase tag : nbt.getTagList("rituals", 10)) {
             IRitual ritual = RitualsRegistry.getRitualFromNBT((NBTTagCompound) tag);
-            if (ritual != null) rituals.put(ritual.getPos(), ritual);
+            if (ritual != null) rituals.put(ritual.getCenter(), ritual);
         }
     }
 
