@@ -5,7 +5,7 @@ import com.google.common.collect.Sets;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.Entity;
+import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.smileycorp.magiadaemonica.common.rituals.IRitual;
@@ -54,19 +54,16 @@ public class RitualRendererDispatcher {
     }
 
     public static void renderRitual(IRitual ritual) {
-        Minecraft mc = Minecraft.getMinecraft();
         if (ritual == null) return;
         RitualRenderer renderer = RENDERERS.get(ritual.getID());
         if (renderer == null) return;
-        float partialTicks = mc.getRenderPartialTicks();
         int width = ritual.getWidth();
         int height = ritual.getHeight();
         BlockPos pos = ritual.getPos();
         GlStateManager.pushMatrix();
-        Entity entity = mc.getRenderViewEntity();
-        GlStateManager.translate(pos.getX() - (entity.lastTickPosX + (entity.posX - entity.lastTickPosX) * partialTicks),
-                pos.getY() - (entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * partialTicks),
-                pos.getZ() - (entity.lastTickPosZ + (entity.posZ - entity.lastTickPosZ) * partialTicks));
+        GlStateManager.translate(pos.getX() - TileEntityRendererDispatcher.staticPlayerX,
+                pos.getY() - TileEntityRendererDispatcher.staticPlayerY,
+                pos.getZ() - TileEntityRendererDispatcher.staticPlayerZ);
         switch (ritual.getFacing()) {
             case EAST:
                 GlStateManager.rotate(90, 0, 1, 0);
