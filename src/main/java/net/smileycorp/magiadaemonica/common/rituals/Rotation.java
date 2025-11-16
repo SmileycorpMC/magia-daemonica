@@ -13,7 +13,7 @@ public enum Rotation {
             for (int z = 0; z < height; z++)
                 rotated[z][x] = pattern[x][z];
         return rotated;
-    }, pos -> new float[] {-pos[1], pos[0]}),
+    }, pos -> new float[] {pos[1],-pos[0]}),
     SOUTH(EnumFacing.SOUTH, pattern -> {
         int width = pattern.length;
         int height = pattern[0].length;
@@ -31,7 +31,7 @@ public enum Rotation {
             for (int z = 0; z < height; z++)
                 rotated[height - z - 1][width - x - 1] = pattern[x][z];
         return rotated;
-    }, pos -> new float[] {pos[1], -pos[0]});
+    }, pos -> new float[] {-pos[1], pos[0]});
 
     private final EnumFacing facing;
     private final PatternTransformer patternFunc;

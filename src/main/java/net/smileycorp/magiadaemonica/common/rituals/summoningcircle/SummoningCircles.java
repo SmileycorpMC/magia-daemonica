@@ -8,6 +8,7 @@ import net.minecraft.world.WorldServer;
 import net.smileycorp.magiadaemonica.common.Constants;
 import net.smileycorp.magiadaemonica.common.rituals.WorldDataRituals;
 
+import java.util.Arrays;
 import java.util.Map;
 
 public class SummoningCircles {
@@ -23,7 +24,7 @@ public class SummoningCircles {
                     {1, 0, 1, 1, 1, 0, 1},
                     {0, 2, 1, 0, 1, 2, 0},
                     {0, 0, 1, 1, 1, 0, 0}},
-            new float[][]{{0.5f, -2.56f}, {-2.37f, -0.37f}, {3.37f, -0.37f}, {-1.25f, 2.875f}, {2.25f, 2.875f}});
+            new float[][]{{0, -3.06f}, {-2.87f, -0.87f}, {2.87f, -0.87f}, {-1.75f, 2.375f}, {1.75f, 2.375f}});
 
     private static SummoningCirclePattern register(ResourceLocation name, boolean rotate, boolean mirror, int[][] pattern, float[][] candles) {
         SummoningCirclePattern circle = new SummoningCirclePattern(name, rotate, mirror, pattern);
@@ -48,7 +49,8 @@ public class SummoningCircles {
     }
 
     public static float[][] getCandles(ResourceLocation name) {
-        return (float[][]) CANDLES.get(name);
+        float[][] candles = (float[][]) CANDLES.get(name);
+        return Arrays.copyOf(candles, candles.length);
     }
 
 }

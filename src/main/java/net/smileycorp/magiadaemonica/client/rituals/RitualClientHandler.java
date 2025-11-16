@@ -8,6 +8,8 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.smileycorp.magiadaemonica.client.rituals.renderers.RitualRenderer;
+import net.smileycorp.magiadaemonica.client.rituals.renderers.SummoningCircleRenderer;
 import net.smileycorp.magiadaemonica.common.rituals.IRitual;
 import net.smileycorp.magiadaemonica.common.rituals.summoningcircle.SummoningCircle;
 
@@ -28,16 +30,11 @@ public class RitualClientHandler {
     }
 
     public static void renderRituals() {
-        Set<BlockPos> toRemove = Sets.newHashSet();
         WorldClient world = Minecraft.getMinecraft().world;
         for (IRitual ritual : rituals.values()) {
-            if (!world.isBlockLoaded(ritual.getCenter())) {
-                toRemove.add(ritual.getCenter());
-                continue;
-            }
+            if (!world.isBlockLoaded(ritual.getCenter())) continue;
             renderRitual(ritual);
         }
-        for (BlockPos pos : toRemove) rituals.remove(pos);
     }
 
     public static void addRitual(IRitual ritual) {

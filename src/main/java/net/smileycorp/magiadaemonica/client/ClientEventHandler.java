@@ -14,7 +14,7 @@ public class ClientEventHandler {
     }
 
     @SubscribeEvent
-    public void clientTick(TickEvent.ClientTickEvent event) {
+    public void clientTick(TickEvent.WorldTickEvent event) {
         if (event.phase != TickEvent.Phase.END) return;
         RitualClientHandler.clientTick();
     }

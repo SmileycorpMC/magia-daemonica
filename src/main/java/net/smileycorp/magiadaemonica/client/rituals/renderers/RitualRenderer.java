@@ -1,4 +1,4 @@
-package net.smileycorp.magiadaemonica.client.rituals;
+package net.smileycorp.magiadaemonica.client.rituals.renderers;
 
 import net.smileycorp.magiadaemonica.common.rituals.IRitual;
 

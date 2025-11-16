@@ -103,7 +103,7 @@ public class SummoningCirclePattern {
                         if (i == 2 && state.getValue(BlockChalkLine.CANDLE) == BlockChalkLine.Candle.NONE) return null;
                     }
                 }
-                return new SummoningCircle(pos, pattern.length, pattern[0].length, name);
+                return new SummoningCircle(name, pos, pattern.length, pattern[0].length);
             }
         }
         return null;

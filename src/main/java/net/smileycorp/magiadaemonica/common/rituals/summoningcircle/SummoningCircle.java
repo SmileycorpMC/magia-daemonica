@@ -7,6 +7,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.smileycorp.magiadaemonica.common.Constants;
 import net.smileycorp.magiadaemonica.common.blocks.BlockChalkLine;
@@ -20,20 +21,23 @@ public class SummoningCircle implements IRitual {
 
     public static final ResourceLocation ID = Constants.loc("summoning_circle");
 
-    private final BlockPos pos, center;
+    private final BlockPos pos;
     private final int width, height;
+    private final Vec3d center;
     private final ResourceLocation name;
     private final float[][] candles;
     private boolean mirror;
     private Rotation rotation = Rotation.NORTH;
 
-    public SummoningCircle(BlockPos pos, int width, int height, ResourceLocation name) {
+    public SummoningCircle(ResourceLocation name, BlockPos pos, int width, int height) {
         this.pos = pos;
         this.width = width;
         this.height = height;
-        this.center = pos.add(width/2, 0, height/2);
+        this.center = new Vec3d(pos.getX() + width  * 0.5f, pos.getY(), pos.getZ() + height  * 0.5f);
         this.name = name;
         this.candles = SummoningCircles.getCandles(name);
+        System.out.println(pos);
+        System.out.println(center);
     }
 
     public void setBlocks(World world) {
@@ -63,21 +67,19 @@ public class SummoningCircle implements IRitual {
 
     public void mirror() {
         this.mirror = true;
-        for (int i = 0; i < candles.length; i++) for (int j = 0; j < 2; j++) candles[i][j] = -candles[i][j];
     }
 
     public void setRotation(Rotation rotation) {
         this.rotation = rotation;
-        for (int i = 0; i < candles.length; i++) candles[i] = rotation.apply(candles[i]);
-    }
-
-    public ResourceLocation getName() {
-        return name;
     }
 
     @Override
     public ResourceLocation getID() {
         return ID;
+    }
+
+    public ResourceLocation getName() {
+        return name;
     }
 
     @Override
@@ -87,7 +89,7 @@ public class SummoningCircle implements IRitual {
 
     @Override
     public BlockPos getCenter() {
-        return center;
+        return new BlockPos(center);
     }
 
     @Override
@@ -118,9 +120,11 @@ public class SummoningCircle implements IRitual {
     public void clientTick(World world) {
         Random rand = world.rand;
         for (float[] candle : candles) {
-            world.spawnParticle(EnumParticleTypes.FLAME, center.getX() + candle[0], center.getY() + 0.6, center.getZ() + candle[1], 0, 0, 0);
-            if (rand.nextInt(4) == 0) world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, pos.getX() + candle[0] + (rand.nextFloat() - 0.5) * 0.05,
-                    pos.getY() + 0.6,  + candle[1] + (rand.nextFloat() - 0.5) * 0.05, 0, 0, 0);
+            candle = rotation.apply(candle);
+            if (mirror) for (int i = 0; i < 2; i++) candle[i] = -candle[i];
+            world.spawnParticle(EnumParticleTypes.FLAME, center.x + candle[0], center.y + 0.6, center.z + candle[1], 0, 0, 0);
+            if (rand.nextInt(4) == 0) world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, center.x + candle[0] + (rand.nextFloat() - 0.5) * 0.05,
+                    center.y + 0.6,  center.z + candle[1] + (rand.nextFloat() - 0.5) * 0.05, 0, 0, 0);
         }
     }
 
@@ -137,10 +141,10 @@ public class SummoningCircle implements IRitual {
     }
 
     public static SummoningCircle fromNBT(NBTTagCompound nbt) {
-        SummoningCircle circle = new SummoningCircle(NBTUtil.getPosFromTag(nbt.getCompoundTag("pos")),
-                nbt.getInteger("width"), nbt.getInteger("height"), new ResourceLocation(nbt.getString("name")));
+        SummoningCircle circle = new SummoningCircle(new ResourceLocation(nbt.getString("name")),
+                NBTUtil.getPosFromTag(nbt.getCompoundTag("pos")), nbt.getInteger("width"), nbt.getInteger("height"));
         circle.setRotation(Rotation.values()[nbt.getByte("rotation")]);
-        circle.mirror = nbt.getBoolean("mirror");
+        if (nbt.getBoolean("mirror")) circle.mirror();
         return circle;
     }
 
