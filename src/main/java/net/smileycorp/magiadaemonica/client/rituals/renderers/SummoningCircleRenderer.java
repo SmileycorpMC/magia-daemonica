@@ -4,7 +4,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.renderer.*;
-import net.minecraft.client.renderer.entity.RenderFallingBlock;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
@@ -13,7 +12,6 @@ import net.minecraft.util.math.MathHelper;
 import net.smileycorp.magiadaemonica.common.blocks.BlockChalkLine;
 import net.smileycorp.magiadaemonica.common.blocks.BlockScentedCandle;
 import net.smileycorp.magiadaemonica.common.blocks.DaemonicaBlocks;
-import net.smileycorp.magiadaemonica.common.rituals.IRitual;
 import net.smileycorp.magiadaemonica.common.rituals.summoningcircle.SummoningCircle;
 
 public class SummoningCircleRenderer implements RitualRenderer<SummoningCircle> {
