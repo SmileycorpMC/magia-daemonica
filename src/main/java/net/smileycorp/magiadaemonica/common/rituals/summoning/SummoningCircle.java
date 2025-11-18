@@ -1,13 +1,22 @@
 package net.smileycorp.magiadaemonica.common.rituals.summoning;
 
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.effect.EntityLightningBolt;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.MobEffects;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTUtil;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.smileycorp.atlas.api.util.DirectionUtils;
 import net.smileycorp.magiadaemonica.common.Constants;
 import net.smileycorp.magiadaemonica.common.blocks.BlockChalkLine;
 import net.smileycorp.magiadaemonica.common.blocks.DaemonicaBlocks;
@@ -28,8 +37,9 @@ public class SummoningCircle implements Ritual {
     private boolean mirror;
     private Rotation rotation = Rotation.NORTH;
     private boolean isDirty;
-    private int power = 0;
+    private int power, lastPower = 0;
     private boolean active = false;
+    private int ticksActive;
 
     public SummoningCircle(ResourceLocation name, BlockPos pos, int width, int height) {
         this.pos = pos;
@@ -40,29 +50,21 @@ public class SummoningCircle implements Ritual {
         this.candles = SummoningCircles.getCandles(name);
     }
 
-    public void setBlocks(World world) {
+    public void setBlocks(World world, BlockChalkLine.RitualState ritualState) {
         BlockPos.MutableBlockPos mutable;
         for (int x = 0; x < width; x++) {
             for (int z = 0; z < height; z++) {
                 mutable = new BlockPos.MutableBlockPos(pos.getX() + x, pos.getY(), pos.getZ() + z);
                 IBlockState state = world.getBlockState(mutable);
                 if (state.getBlock() != DaemonicaBlocks.CHALK_LINE) continue;
-                world.setBlockState(mutable, state.withProperty(BlockChalkLine.ACTIVE, true));
+                world.setBlockState(mutable, state.withProperty(BlockChalkLine.RITUAL_STATE, ritualState));
             }
         }
     }
 
     @Override
     public void removeBlocks(World world) {
-        BlockPos.MutableBlockPos mutable;
-        for (int x = 0; x < width; x++) {
-            for (int z = 0; z < height; z++) {
-                mutable = new BlockPos.MutableBlockPos(pos.getX() + x, pos.getY(), pos.getZ() + z);
-                IBlockState state = world.getBlockState(mutable);
-                if (state.getBlock() != DaemonicaBlocks.CHALK_LINE) continue;
-                world.setBlockState(mutable, state.withProperty(BlockChalkLine.ACTIVE, false));
-            }
-        }
+       setBlocks(world, BlockChalkLine.RitualState.NONE);
     }
 
     @Override
@@ -129,6 +131,7 @@ public class SummoningCircle implements Ritual {
     @Override
     public void tick(World world) {
         if (world.isRemote) {
+            lastPower = power;
             Random rand = world.rand;
             for (float[] candle : candles) {
                 candle = rotation.apply(candle);
@@ -141,19 +144,68 @@ public class SummoningCircle implements Ritual {
                     world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, center.x + candle[0] + (rand.nextFloat() - 0.5) * 0.05,
                             center.y + 0.6, center.z + candle[1] + (rand.nextFloat() - 0.5) * 0.05, 0, 0, 0);
             }
+            if (ticksActive > 100) {
+                int r = width/2;
+                for (int i = 0; i < rand.nextInt(3); i++) {
+                    Vec3d dir = DirectionUtils.getRandomDirectionVecXZ(world.rand);
+                    world.spawnParticle(EnumParticleTypes.FLAME, center.x + dir.x * r, center.y + 0.05, center.z + dir.z * r, 0, 0, 0);
+                }
+                for (int i = 0; i < rand.nextInt(3) + 2; i++) {
+                    Vec3d dir = DirectionUtils.getRandomDirectionVecXZ(world.rand);
+                    float magnitude = rand.nextFloat() * r;
+                    world.spawnParticle(EnumParticleTypes.FLAME, center.x + dir.x * magnitude, center.y + 0.05, center.z + dir.z * magnitude, 0, 0, 0);
+                }
+            }
             return;
         }
+        if (!active) return;
+        //if (ticksActive == 3) world.setBlockState(new BlockPos(center), Blocks.FIRE.getDefaultState());
+        if (ticksActive == 40) {
+            world.setBlockState(new BlockPos(center), Blocks.AIR.getDefaultState());
+            BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos(pos);
+            for (float[] candle : candles) {
+                candle = rotation.apply(candle);
+                if (mirror) for (int i = 0; i < 2; i++) candle[i] = -candle[i];
+                mutable.setPos(center.x + candle[0], center.y, center.z + candle[1]);
+                world.setBlockState(mutable, world.getBlockState(mutable).withProperty(BlockChalkLine.CANDLE, BlockChalkLine.Candle.UNLIT));
+            }
+            world.playSound(null, center.x, center.y, center.z, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.HOSTILE, 0.75f, 1);
+            for (EntityPlayerMP player : world.getPlayers(EntityPlayerMP.class, player -> player.getDistanceSq(center.x, center.y, center.z) <= 256))
+                player.addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 100, 1, true, true));
+        }
+        if (ticksActive == 100) {
+            BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos(pos);
+            for (float[] candle : candles) {
+                candle = rotation.apply(candle);
+                if (mirror) for (int i = 0; i < 2; i++) candle[i] = -candle[i];
+                mutable.setPos(center.x + candle[0], center.y, center.z + candle[1]);
+                world.setBlockState(mutable, world.getBlockState(mutable).withProperty(BlockChalkLine.CANDLE, BlockChalkLine.Candle.LIT));
+            }
+        }
+        if (ticksActive > 100 && ticksActive % 40 == 0)
+            world.playSound(null, center.x, center.y, center.z, SoundEvents.ENTITY_GUARDIAN_ATTACK, SoundCategory.HOSTILE, 0.75f, 1);
+        ticksActive++;
+        isDirty = true;
     }
 
     @Override
     public void addPower(int power) {
         this.power += power;
+        if (this.power > 2000) this.power = 2000;
         isDirty = true;
     }
 
     @Override
     public int getPower() {
         return power;
+    }
+
+    public int getLastTickPower() {
+        return lastPower;
+    }
+
+    public int getTicksActive() {
+        return ticksActive;
     }
 
     @Override
@@ -166,10 +218,18 @@ public class SummoningCircle implements Ritual {
         nbt.setByte("rotation", (byte) rotation.ordinal());
         nbt.setBoolean("mirror", mirror);
         nbt.setBoolean("active", active);
-        System.out.println(power);
         nbt.setInteger("power", power);
-        System.out.println(nbt);
+        nbt.setInteger("ticksActive", ticksActive);
         return nbt;
+    }
+
+    @Override
+    public void readFromNBT(NBTTagCompound nbt) {
+        rotation = Rotation.values()[nbt.getByte("rotation")];
+        mirror = nbt.getBoolean("mirror");
+        active = nbt.getBoolean("active");
+        power = nbt.getInteger("power");
+        ticksActive = nbt.getInteger("ticksActive");
     }
 
     @Override
@@ -177,14 +237,34 @@ public class SummoningCircle implements Ritual {
         return active;
     }
 
+    @Override
+    public boolean canPower() {
+        return !active && power < 2000;
+    }
+
+    @Override
+    public void processInvocation(EntityPlayer player, String invocation) {
+        if (active || power < 500) return;
+        World world = player.world;
+        if (world.isDaytime()) return;
+        if (!"te infernale invoco pacisci volo".equals(invocation)) return;
+        for (float[] candle : candles) {
+            candle = rotation.apply(candle);
+            if (mirror) for (int i = 0; i < 2; i++) candle[i] = -candle[i];
+            IBlockState state = world.getBlockState(new BlockPos(center.addVector(candle[0], 0, candle[1])));
+            if (state.getBlock() != DaemonicaBlocks.CHALK_LINE) return;
+            if (state.getValue(BlockChalkLine.CANDLE) != BlockChalkLine.Candle.LIT) return;
+        }
+        EntityLightningBolt bolt = new EntityLightningBolt(world, center.x, center.y, center.z, false);
+        world.spawnEntity(bolt);
+        setBlocks(world, BlockChalkLine.RitualState.ACTIVE);
+        active = true;
+    }
+
     public static SummoningCircle fromNBT(NBTTagCompound nbt) {
-        System.out.println(nbt);
         SummoningCircle circle = new SummoningCircle(new ResourceLocation(nbt.getString("name")),
                 NBTUtil.getPosFromTag(nbt.getCompoundTag("pos")), nbt.getInteger("width"), nbt.getInteger("height"));
-        circle.setRotation(Rotation.values()[nbt.getByte("rotation")]);
-        circle.mirror = nbt.getBoolean("mirror");
-        circle.active = nbt.getBoolean("active");
-        circle.power = nbt.getInteger("power");
+        circle.readFromNBT(nbt);
         return circle;
     }
 

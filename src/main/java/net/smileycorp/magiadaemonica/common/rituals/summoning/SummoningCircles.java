@@ -6,6 +6,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.smileycorp.magiadaemonica.common.Constants;
+import net.smileycorp.magiadaemonica.common.blocks.BlockChalkLine;
 import net.smileycorp.magiadaemonica.common.rituals.RitualsServer;
 
 import java.util.Arrays;
@@ -17,13 +18,13 @@ public class SummoningCircles {
     private static Map<ResourceLocation, Object> CANDLES = Maps.newHashMap();
 
     public static SummoningCirclePattern FIVE_POINT_PENTACLE = register(Constants.loc("five_point_pentacle"), true, false, new int[][]{
-                    {0, 0, 1, 2, 1, 0, 0},
-                    {0, 1, 0, 1, 0, 1, 0},
+                    {-1, -1, 1, 2, 1, -1, -1},
+                    {-1, 1, 0, 1, 0, 1, -1},
                     {2, 1, 1, 1, 1, 1, 2},
                     {1, 1, 1, 0, 1, 1, 1},
                     {1, 0, 1, 1, 1, 0, 1},
-                    {0, 2, 1, 0, 1, 2, 0},
-                    {0, 0, 1, 1, 1, 0, 0}},
+                    {-1, 2, 1, 0, 1, 2, -1},
+                    {-1, -1, 1, 1, 1, -1, -1}},
             new float[][]{{0, -3.06f}, {-2.87f, -0.87f}, {2.87f, -0.87f}, {-1.75f, 2.375f}, {1.75f, 2.375f}});
 
     private static SummoningCirclePattern register(ResourceLocation name, boolean rotate, boolean mirror, int[][] pattern, float[][] candles) {
@@ -44,7 +45,7 @@ public class SummoningCircles {
     public static void tryPlace(World world, BlockPos pos) {
         SummoningCircle circle = findMatch(world, pos);
         if (circle == null) return;
-        circle.setBlocks(world);
+        circle.setBlocks(world, BlockChalkLine.RitualState.INACTIVE);
         RitualsServer.get((WorldServer) world).addRitual(circle);
     }
 

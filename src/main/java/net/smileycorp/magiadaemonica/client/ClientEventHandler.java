@@ -24,7 +24,9 @@ public class ClientEventHandler {
     @SubscribeEvent
     public void tick(TickEvent.ClientTickEvent event) {
         if (event.phase != TickEvent.Phase.START) return;
-        WorldClient world = Minecraft.getMinecraft().world;
+        Minecraft mc = Minecraft.getMinecraft();
+        if (mc.isGamePaused()) return;
+        WorldClient world = mc.world;
         if (world == null) return;
         Rituals.get(world).tick();
     }

@@ -1,5 +1,6 @@
 package net.smileycorp.magiadaemonica.common.rituals;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -42,6 +43,12 @@ public interface Ritual {
 
     NBTTagCompound writeToNBT();
 
+    void readFromNBT(NBTTagCompound nbt);
+
     boolean isActive();
+
+    boolean canPower();
+
+    void processInvocation(EntityPlayer player, String invocation);
 
 }

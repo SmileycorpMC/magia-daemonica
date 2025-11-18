@@ -9,6 +9,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
+import net.minecraftforge.event.ServerChatEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.world.ChunkWatchEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
@@ -20,7 +21,10 @@ import net.smileycorp.magiadaemonica.common.capabilities.Soul;
 import net.smileycorp.magiadaemonica.common.network.SyncSoulMessage;
 import net.smileycorp.magiadaemonica.common.rituals.Ritual;
 import net.smileycorp.magiadaemonica.common.rituals.Rituals;
+import net.smileycorp.magiadaemonica.common.rituals.RitualsRegistry;
 import net.smileycorp.magiadaemonica.common.rituals.RitualsServer;
+
+import java.util.Locale;
 
 public class DaemonicaEventHandler {
 
@@ -76,8 +80,13 @@ public class DaemonicaEventHandler {
 		if (!(event.getSource().getTrueSource() instanceof EntityPlayer)) return;
 		Ritual ritual = Rituals.get(entity.world).getRitual(entity.posX, entity.posY, entity.posZ, 2);
 		if (ritual == null) return;
-		if (ritual.isActive()) return;
-		ritual.addPower((int) (entity.getMaxHealth() * 10));
+		if (!ritual.canPower()) return;
+		ritual.addPower((int) (entity.getMaxHealth() * 100));
+	}
+
+	@SubscribeEvent
+	public void playerChat(ServerChatEvent event) {
+		RitualsRegistry.processInvocation(event.getPlayer(), event.getMessage().toLowerCase(Locale.US));
 	}
 	
 }

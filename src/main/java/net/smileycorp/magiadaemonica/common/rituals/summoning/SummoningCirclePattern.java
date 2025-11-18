@@ -20,9 +20,10 @@ public class SummoningCirclePattern {
     private final boolean rotate, mirror;
 
     /*summoning circle patten matcher
+            -1 - ignore
             0 - air
             1 - chalk
-            2 - candle
+            2 - chalk with candle
          */
     public SummoningCirclePattern(ResourceLocation name, boolean rotate, boolean mirror, int[][] pattern) {
         this.name = name;
@@ -93,7 +94,11 @@ public class SummoningCirclePattern {
                     for (int x = 0; x < pattern[0].length; x++) {
                         int i = pattern[z][x];
                         mutable.setPos(pos.getX() + x, pos.getY(), pos.getZ() + z);
-                        if (i == 0) continue;
+                        if (i < 0) continue;
+                        if (i == 0) {
+                            if (!world.isAirBlock(mutable)) continue;
+                            continue;
+                        }
                         IBlockState state = world.getBlockState(mutable);
                         if (state.getBlock() != DaemonicaBlocks.CHALK_LINE) return null;
                         if (i == 1) {

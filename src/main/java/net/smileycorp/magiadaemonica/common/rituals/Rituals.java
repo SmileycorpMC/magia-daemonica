@@ -5,6 +5,8 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.smileycorp.magiadaemonica.client.rituals.RitualsClient;
 
+import java.util.Collection;
+
 public interface Rituals {
 
     static Rituals get(World world) {
@@ -20,5 +22,7 @@ public interface Rituals {
     void removeRitual(BlockPos pos);
 
     void tick();
+
+    Collection<Ritual> getRituals();
 
 }

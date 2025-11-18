@@ -6,14 +6,17 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.smileycorp.magiadaemonica.client.rituals.renderers.RitualRenderer;
 import net.smileycorp.magiadaemonica.client.rituals.renderers.SummoningCircleRenderer;
 import net.smileycorp.magiadaemonica.common.rituals.Ritual;
 import net.smileycorp.magiadaemonica.common.rituals.Rituals;
+import net.smileycorp.magiadaemonica.common.rituals.RitualsRegistry;
 import net.smileycorp.magiadaemonica.common.rituals.summoning.SummoningCircle;
 
+import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
@@ -56,6 +59,17 @@ public class RitualsClient implements Rituals {
         rituals.put(ritual.getCenter(), ritual);
     }
 
+    public void addRitual(BlockPos pos, NBTTagCompound nbt) {
+        if (nbt == null) return;
+        Ritual ritual = getRitual(pos);
+        if (ritual != null) {
+            ritual.readFromNBT(nbt);
+            return;
+        }
+        ritual = RitualsRegistry.getRitualFromNBT(nbt);
+        rituals.put(ritual.getCenter(), ritual);
+    }
+
     @Override
     public void removeRitual(BlockPos pos) {
         rituals.remove(pos);
@@ -75,31 +89,33 @@ public class RitualsClient implements Rituals {
         for (BlockPos pos : toRemove) rituals.remove(pos);
     }
 
+    @Override
+    public Collection<Ritual> getRituals() {
+        return rituals.values();
+    }
+
     public void clear() {
         rituals.clear();
     }
 
     public void renderRituals() {
-        WorldClient world = Minecraft.getMinecraft().world;
+        Minecraft mc = Minecraft.getMinecraft();
+        WorldClient world = mc.world;
+        float partialTicks = mc.getRenderPartialTicks();
         for (Ritual ritual : rituals.values()) {
             if (!world.isBlockLoaded(ritual.getCenter())) continue;
-            renderRitual(ritual);
+            RitualRenderer renderer = RENDERERS.get(ritual.getID());
+            if (renderer == null) continue;
+            int width = ritual.getWidth();
+            int height = ritual.getHeight();
+            BlockPos pos = ritual.getPos();
+            GlStateManager.pushMatrix();
+            applyTransformations(ritual);
+            renderer.render(ritual, pos.getX() - TileEntityRendererDispatcher.staticPlayerX,
+                    pos.getY() - TileEntityRendererDispatcher.staticPlayerY,
+                    pos.getZ() - TileEntityRendererDispatcher.staticPlayerZ, width, height, partialTicks);
+            GlStateManager.popMatrix();
         }
-    }
-
-    public void renderRitual(Ritual ritual) {
-        if (ritual == null) return;
-        RitualRenderer renderer = RENDERERS.get(ritual.getID());
-        if (renderer == null) return;
-        int width = ritual.getWidth();
-        int height = ritual.getHeight();
-        BlockPos pos = ritual.getPos();
-        GlStateManager.pushMatrix();
-        applyTransformations(ritual);
-        renderer.render(ritual, pos.getX() - TileEntityRendererDispatcher.staticPlayerX,
-                pos.getY() - TileEntityRendererDispatcher.staticPlayerY,
-                pos.getZ() - TileEntityRendererDispatcher.staticPlayerZ, width, height);
-        GlStateManager.popMatrix();
     }
 
     public void applyTransformations(Ritual ritual) {

@@ -14,6 +14,7 @@ import net.smileycorp.magiadaemonica.common.network.PacketHandler;
 import net.smileycorp.magiadaemonica.common.network.RemoveRitualMessage;
 import net.smileycorp.magiadaemonica.common.network.SyncRitualMessage;
 
+import java.util.Collection;
 import java.util.Map;
 
 public class RitualsServer extends WorldSavedData implements Rituals {
@@ -77,9 +78,14 @@ public class RitualsServer extends WorldSavedData implements Rituals {
         }
     }
 
+    @Override
+    public Collection<Ritual> getRituals() {
+        return rituals.values();
+    }
+
     public void syncRitual(Ritual ritual) {
         BlockPos pos = ritual.getCenter();
-        PacketHandler.NETWORK_INSTANCE.sendToAllTracking(new SyncRitualMessage(ritual),
+        PacketHandler.NETWORK_INSTANCE.sendToAllTracking(new SyncRitualMessage(pos, ritual),
                 new NetworkRegistry.TargetPoint(world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 128));
         ritual.markDirty(false);
     }
