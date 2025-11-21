@@ -32,6 +32,11 @@ public class SummoningCircleRenderer implements RitualRenderer<SummoningCircle> 
             GlStateManager.setActiveTexture(OpenGlHelper.lightmapTexUnit);
             GlStateManager.enableTexture2D();
             GlStateManager.setActiveTexture(OpenGlHelper.defaultTexUnit);
+        } else {
+            RenderHelper.disableStandardItemLighting();
+            GlStateManager.setActiveTexture(OpenGlHelper.lightmapTexUnit);
+            GlStateManager.disableTexture2D();
+            GlStateManager.setActiveTexture(OpenGlHelper.defaultTexUnit);
         }
         //summoning circle
         float r;
