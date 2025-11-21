@@ -1,16 +1,16 @@
-package net.smileycorp.magiadaemonica.common.rituals.summoning.trades.rewards;
+package net.smileycorp.magiadaemonica.common.rituals.summoning.bargains.offerings;
 
 import net.minecraft.entity.ai.attributes.IAttribute;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.smileycorp.magiadaemonica.common.rituals.summoning.trades.TradeUtils;
+import net.smileycorp.magiadaemonica.common.rituals.summoning.bargains.BargainUtils;
 
-public interface Reward {
+public interface Offering {
 
     void grant(EntityPlayer player);
 
-    static Reward item(ItemStack stack) {
+    static Offering item(ItemStack stack) {
         return player -> {
             if (player.addItemStackToInventory(stack)) return;;
             EntityItem item = player.dropItem(stack, false);
@@ -20,8 +20,8 @@ public interface Reward {
         };
     }
 
-    static Reward attributeModifier(IAttribute attribute, double value) {
-        return player -> TradeUtils.addBonusAttribute(player, attribute, value);
+    static Offering attributeModifier(IAttribute attribute, double value) {
+        return player -> BargainUtils.addBonusAttribute(player, attribute, value);
     }
 
 }

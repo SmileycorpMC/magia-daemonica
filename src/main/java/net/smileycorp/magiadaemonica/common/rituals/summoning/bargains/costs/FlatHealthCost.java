@@ -1,21 +1,21 @@
-package net.smileycorp.magiadaemonica.common.rituals.summoning.trades.prices;
+package net.smileycorp.magiadaemonica.common.rituals.summoning.bargains.costs;
 
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.text.TextComponentBase;
-import net.smileycorp.magiadaemonica.common.rituals.summoning.trades.TradeUtils;
+import net.smileycorp.magiadaemonica.common.rituals.summoning.bargains.BargainUtils;
 
-public class FlatHealthPrice implements Price {
+public class FlatHealthCost implements Cost {
 
     private final float amount;
 
-    public FlatHealthPrice(float amount) {
+    public FlatHealthCost(float amount) {
         this.amount = amount;
     }
 
     @Override
     public void pay(EntityPlayer player, int tier) {
-        TradeUtils.addCostAttribute(player, SharedMonsterAttributes.MAX_HEALTH, amount);
+        BargainUtils.addCostAttribute(player, SharedMonsterAttributes.MAX_HEALTH, amount);
     }
 
     @Override

@@ -1,9 +1,9 @@
-package net.smileycorp.magiadaemonica.common.rituals.summoning.trades.prices;
+package net.smileycorp.magiadaemonica.common.rituals.summoning.bargains.costs;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.text.TextComponentBase;
 
-public interface Price {
+public interface Cost {
 
     void pay(EntityPlayer player, int tier);
 

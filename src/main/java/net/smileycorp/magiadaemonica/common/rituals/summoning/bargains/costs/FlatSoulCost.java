@@ -1,4 +1,4 @@
-package net.smileycorp.magiadaemonica.common.rituals.summoning.trades.prices;
+package net.smileycorp.magiadaemonica.common.rituals.summoning.bargains.costs;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -6,11 +6,11 @@ import net.minecraft.util.text.TextComponentBase;
 import net.smileycorp.magiadaemonica.common.capabilities.DaemonicaCapabilities;
 import net.smileycorp.magiadaemonica.common.network.SyncSoulMessage;
 
-public class FlatSoulPrice implements Price {
+public class FlatSoulCost implements Cost {
 
     private final float amount;
 
-    public FlatSoulPrice(float amount) {
+    public FlatSoulCost(float amount) {
         this.amount = amount;
     }
 

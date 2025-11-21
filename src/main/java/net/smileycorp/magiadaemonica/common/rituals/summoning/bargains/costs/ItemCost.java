@@ -1,15 +1,15 @@
-package net.smileycorp.magiadaemonica.common.rituals.summoning.trades.prices;
+package net.smileycorp.magiadaemonica.common.rituals.summoning.bargains.costs;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextComponentBase;
 import net.smileycorp.atlas.api.util.RecipeUtils;
 
-public class ItemPrice implements Price {
+public class ItemCost implements Cost {
 
     private final ItemStack ingredient;
 
-    public ItemPrice(ItemStack ingredient) {
+    public ItemCost(ItemStack ingredient) {
         this.ingredient = ingredient;
     }
 
