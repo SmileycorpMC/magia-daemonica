@@ -55,4 +55,8 @@ public enum Rotation {
         return posFunc.apply(pos);
     }
 
+    public int getAngle() {
+        return ordinal() * 90;
+    }
+
 }

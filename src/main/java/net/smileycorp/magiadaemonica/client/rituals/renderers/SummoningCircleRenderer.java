@@ -10,7 +10,6 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.smileycorp.magiadaemonica.common.Constants;
 import net.smileycorp.magiadaemonica.common.blocks.BlockChalkLine;
 import net.smileycorp.magiadaemonica.common.blocks.BlockScentedCandle;
 import net.smileycorp.magiadaemonica.common.blocks.DaemonicaBlocks;
@@ -19,14 +18,14 @@ import net.smileycorp.magiadaemonica.common.rituals.summoning.SummoningCircle;
 public class SummoningCircleRenderer implements RitualRenderer<SummoningCircle> {
 
     @Override
-    public void render(SummoningCircle ritual, double x, double y, double z, int width, int height, float partialTicks) {
+    public void render(SummoningCircle ritual, float partialTicks) {
         ResourceLocation name = ritual.getName();
         if (name == null) return;
         Minecraft mc = Minecraft.getMinecraft();
         TextureManager textureManager = mc.getTextureManager();
         boolean hasLighting = ritual.getTicksActive() <= 200;
-        float w = width * 0.5f;
-        float h = height * 0.5f;
+        float w = ritual.getWidth() * 0.5f;
+        float h = ritual.getHeight() * 0.5f;
         //setup lighting
         if (hasLighting) {
             RenderHelper.enableStandardItemLighting();

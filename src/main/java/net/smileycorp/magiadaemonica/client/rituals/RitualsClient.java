@@ -107,33 +107,14 @@ public class RitualsClient implements Rituals {
             if (!world.isBlockLoaded(ritual.getCenterPos())) continue;
             RitualRenderer renderer = RENDERERS.get(ritual.getID());
             if (renderer == null) continue;
-            int width = ritual.getWidth();
-            int height = ritual.getHeight();
-            BlockPos pos = ritual.getPos();
             GlStateManager.pushMatrix();
-            applyTransformations(ritual);
-            renderer.render(ritual, pos.getX() - TileEntityRendererDispatcher.staticPlayerX,
-                    pos.getY() - TileEntityRendererDispatcher.staticPlayerY,
-                    pos.getZ() - TileEntityRendererDispatcher.staticPlayerZ, width, height, partialTicks);
+            Vec3d pos = ritual.getCenter();
+            GlStateManager.translate(pos.x - TileEntityRendererDispatcher.staticPlayerX,
+                    pos.y - TileEntityRendererDispatcher.staticPlayerY,
+                    pos.z - TileEntityRendererDispatcher.staticPlayerZ);
+            GlStateManager.rotate(ritual.getRotation().getAngle(), 0, 1, 0);
+            renderer.render(ritual, partialTicks);
             GlStateManager.popMatrix();
-        }
-    }
-
-    public void applyTransformations(Ritual ritual) {
-        Vec3d pos = ritual.getCenter();
-        GlStateManager.translate(pos.x - TileEntityRendererDispatcher.staticPlayerX,
-                pos.y - TileEntityRendererDispatcher.staticPlayerY,
-                pos.z - TileEntityRendererDispatcher.staticPlayerZ);
-        switch (ritual.getRotation()) {
-            case EAST:
-                GlStateManager.rotate(90, 0, 1, 0);
-                break;
-            case SOUTH:
-                GlStateManager.rotate(180, 0, 1, 0);
-                break;
-            case WEST:
-                GlStateManager.rotate(-90, 0, 1, 0);
-                break;
         }
     }
 
