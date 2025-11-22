@@ -19,6 +19,7 @@ import net.smileycorp.magiadaemonica.common.rituals.summoning.SummoningCircle;
 public class SummoningCircleRenderer implements RitualRenderer<SummoningCircle> {
 
     private static final ResourceLocation SUMMONING_RUNES = Constants.loc("textures/summoning_circles/summoning_runes.png");
+    private static final ResourceLocation INFERNUM_SKY = Constants.loc("textures/misc/infernum_sky.png");
 
     @Override
     public void render(SummoningCircle ritual, float partialTicks) {
@@ -84,6 +85,16 @@ public class SummoningCircleRenderer implements RitualRenderer<SummoningCircle> 
             GlStateManager.setActiveTexture(OpenGlHelper.lightmapTexUnit);
             GlStateManager.disableTexture2D();
             GlStateManager.setActiveTexture(OpenGlHelper.defaultTexUnit);
+        }
+        //cracks
+        if (ritual.getTicksActive() >= 320) {
+            ResourceLocation crack = Constants.loc("textures/summoning_circles/crack_" +
+                    MathHelper.clamp((ritual.getTicksActive() - 320) / 40, 0, 6)  + ".png");
+            GlStateManager.enableBlend();
+            textureManager.bindTexture(crack);
+            GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+            renderPlane(-w, 0.02, -h, w, 0.01, h, 1, 1, 1, 1, false);
+            GlStateManager.disableBlend();
         }
         //candles
         WorldClient world = mc.world;

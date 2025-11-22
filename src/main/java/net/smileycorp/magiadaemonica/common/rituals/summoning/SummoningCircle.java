@@ -172,8 +172,10 @@ public class SummoningCircle implements Ritual {
                 world.setBlockState(mutable, world.getBlockState(mutable).withProperty(BlockChalkLine.CANDLE, BlockChalkLine.Candle.LIT));
             }
         }
-        if (ticksActive > 200 && ticksActive % 40 == 0)
+        if (ticksActive > 200 && ticksActive < 320 && ticksActive % 40 == 0)
             world.playSound(null, center.x, center.y, center.z, SoundEvents.ENTITY_GUARDIAN_ATTACK, SoundCategory.HOSTILE, 0.75f, 1);
+        if (ticksActive >= 320 && ticksActive <= 560  && ticksActive % 40 == 0)
+            world.playSound(null, center.x, center.y, center.z, SoundEvents.ENTITY_WITHER_BREAK_BLOCK, SoundCategory.HOSTILE, 0.75f, 1);
         ticksActive++;
         isDirty = true;
     }
