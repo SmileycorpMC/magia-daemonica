@@ -16,10 +16,16 @@ import net.smileycorp.magiadaemonica.common.blocks.BlockScentedCandle;
 import net.smileycorp.magiadaemonica.common.blocks.DaemonicaBlocks;
 import net.smileycorp.magiadaemonica.common.rituals.summoning.SummoningCircle;
 
+import java.nio.FloatBuffer;
+
 public class SummoningCircleRenderer implements RitualRenderer<SummoningCircle> {
 
     private static final ResourceLocation SUMMONING_RUNES = Constants.loc("textures/summoning_circles/summoning_runes.png");
     private static final ResourceLocation INFERNUM_SKY = Constants.loc("textures/misc/infernum_sky.png");
+    private static final String LAVA = "minecraft:blocks/lava_still";
+    private static final FloatBuffer MODELVIEW = GLAllocation.createDirectFloatBuffer(16);
+    private static final FloatBuffer PROJECTION = GLAllocation.createDirectFloatBuffer(16);
+    private final FloatBuffer buffer = GLAllocation.createDirectFloatBuffer(16);
 
     @Override
     public void render(SummoningCircle ritual, float partialTicks) {
@@ -61,7 +67,7 @@ public class SummoningCircleRenderer implements RitualRenderer<SummoningCircle> 
             int i = mc.world.getCombinedLight(ritual.getCenterPos(), 0);
             OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, i % 65536, i / 65536);
         }
-        GlStateManager.color(1, 1, 1, 1);
+        GlStateManager.color(1f, 1f, 1f, 1f);
         textureManager.bindTexture(new ResourceLocation(name.getResourceDomain(), "textures/summoning_circles/" + name.getResourcePath() + ".png"));
         renderPlane(-w, 0.01, -h, w, 0.01, h, r, g, b, 1, false);
         //runes
@@ -93,8 +99,110 @@ public class SummoningCircleRenderer implements RitualRenderer<SummoningCircle> 
             GlStateManager.enableBlend();
             textureManager.bindTexture(crack);
             GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
-            renderPlane(-w, 0.02, -h, w, 0.01, h, 1, 1, 1, 1, false);
+            renderPlane(-w, 0.02, -h, w, 0.01, h, 1f, 1f, 1f, 1f, false);
             GlStateManager.disableBlend();
+        }
+        if (ritual.getTicksActive() >= 520) {
+            GlStateManager.disableFog();
+            Minecraft.getMinecraft().entityRenderer.setupFogColor(true);
+            GlStateManager.getFloat(2982, MODELVIEW);
+            GlStateManager.getFloat(2983, PROJECTION);
+            textureManager.bindTexture(INFERNUM_SKY);
+            GlStateManager.texGen(GlStateManager.TexGen.S, 9216);
+            GlStateManager.texGen(GlStateManager.TexGen.T, 9216);
+            GlStateManager.texGen(GlStateManager.TexGen.R, 9216);
+            GlStateManager.texGen(GlStateManager.TexGen.S, 9474, getBuffer(1, 0, 0, 0));
+            GlStateManager.texGen(GlStateManager.TexGen.T, 9474, getBuffer(0, 1, 0, 0));
+            GlStateManager.texGen(GlStateManager.TexGen.R, 9474, getBuffer(0, 0, 1, 0));
+            GlStateManager.enableTexGenCoord(GlStateManager.TexGen.S);
+            GlStateManager.enableTexGenCoord(GlStateManager.TexGen.T);
+            GlStateManager.enableTexGenCoord(GlStateManager.TexGen.R);
+            GlStateManager.matrixMode(5890);
+            GlStateManager.enableBlend();
+            GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+            GlStateManager.pushMatrix();
+            GlStateManager.loadIdentity();
+            GlStateManager.translate(0.5, 0.5, 0);
+            GlStateManager.scale(0.5, 0.5, 1);
+            GlStateManager.translate(17, 2.334f * ((float)Minecraft.getSystemTime() % 800000f / 800000f), 0);
+            GlStateManager.rotate(18, 0, 0, 1);
+            GlStateManager.scale(4.25, 1.0625, 1);
+            GlStateManager.multMatrix(PROJECTION);
+            GlStateManager.multMatrix(MODELVIEW);
+            buffer.begin(7, DefaultVertexFormats.POSITION);
+            //crack5
+            if (ritual.getTicksActive() > 560) {
+                //quad1
+                buffer.pos(-1, 0.03, -0.125).endVertex();
+                buffer.pos(-1.125, 0.03, 0.125).endVertex();
+                buffer.pos(-1.0625, 0.03, 0.5625).endVertex();
+                buffer.pos(-0.6875, 0.03, 1.25).endVertex();
+                //quad2
+                buffer.pos(-1, 0.03, -0.125).endVertex();
+                buffer.pos(-0.6875, 0.03, 1.25).endVertex();
+                buffer.pos(-0.25, 0.03, 1.125).endVertex();
+                buffer.pos(-0.6875, 0.03, -0.437).endVertex();
+                //quad3
+                buffer.pos(-0.6875, 0.03, -0.437).endVertex();
+                buffer.pos(-0.25, 0.03, 1.125).endVertex();
+                buffer.pos(-0.125, 0.03, 0.875).endVertex();
+                buffer.pos(-0.25, 0.03, -0.125).endVertex();
+                //quad4
+                buffer.pos(-0.75, 0.03, -0.75).endVertex();
+                buffer.pos(-0.75, 0.03, -0.1875).endVertex();
+                buffer.pos(0.75, 0.03, 0.4375).endVertex();
+                buffer.pos(-0.5, 0.03, -0.8125).endVertex();
+                //quad5
+                buffer.pos(-0.25, 0.03, 0.75).endVertex();
+                buffer.pos(0.75, 0.03, 0.75).endVertex();
+                buffer.pos(0.75, 0.03, 0.4375).endVertex();
+                buffer.pos(-0.25, 0.03, -0.125).endVertex();
+                //quad6
+                buffer.pos(0.4375, 0.03, 0.75).endVertex();
+                buffer.pos(0.4375, 0.03, 1).endVertex();
+                buffer.pos(0.75, 0.03, 1.0625).endVertex();
+                buffer.pos(0.75, 0.03, 0.75).endVertex();
+                //quad7
+                buffer.pos(0.75, 0.03, 0.4375).endVertex();
+                buffer.pos(1.5, 0.03, -0.125).endVertex();
+                buffer.pos(1, 0.03, -0.125).endVertex();
+                buffer.pos(-0.5, 0.03, -0.8125).endVertex();
+                //quad8
+                buffer.pos(-0.25, 0.03, -0.6775).endVertex();
+                buffer.pos(0.875, 0.03, -0.125).endVertex();
+                buffer.pos(0.875, 0.03, -0.5).endVertex();
+                buffer.pos(1.125, 0.03, -0.875).endVertex();
+            } else {
+                //quad1
+                buffer.pos(-0.437, 0.03, 0.1875).endVertex();
+                buffer.pos(-0.25, 0.03, 0.437).endVertex();
+                buffer.pos(0.437, 0.03, 0.437).endVertex();
+                buffer.pos(0.0625, 0.03, -0.125).endVertex();
+                //quad2
+                buffer.pos(0.125, 0.03, -0.25).endVertex();
+                buffer.pos(0.0625, 0.03, -0.125).endVertex();
+                buffer.pos(0.437, 0.03, 0.0625).endVertex();
+                buffer.pos(0.5625, 0.03, -0.437).endVertex();
+                //quad3
+                buffer.pos(0.437, 0.03, 0.1875).endVertex();
+                buffer.pos(0.437, 0.03, 0.437).endVertex();
+                buffer.pos(0.8125, 0.03, 0.75).endVertex();
+                buffer.pos(0.5625, 0.03, 0.25).endVertex();
+                //center quad
+                buffer.pos(0.0625, 0.03, -0.125).endVertex();
+                buffer.pos(0.437, 0.03, 0.437).endVertex();
+                buffer.pos(0.5625, 0.03, 0.25).endVertex();
+                buffer.pos(0.437, 0.03, 0.0625).endVertex();
+            }
+            tessellator.draw();
+            GlStateManager.enableFog();
+            GlStateManager.popMatrix();
+            GlStateManager.matrixMode(5888);
+            GlStateManager.disableTexGenCoord(GlStateManager.TexGen.S);
+            GlStateManager.disableTexGenCoord(GlStateManager.TexGen.T);
+            GlStateManager.disableTexGenCoord(GlStateManager.TexGen.R);
+            GlStateManager.disableBlend();
+            mc.entityRenderer.setupFogColor(false);
         }
         //candles
         WorldClient world = mc.world;
@@ -117,6 +225,13 @@ public class SummoningCircleRenderer implements RitualRenderer<SummoningCircle> 
         tessellator.draw();
         GlStateManager.disableFog();
         GlStateManager.enableLighting();
+    }
+
+    private FloatBuffer getBuffer(float p_147525_1_, float p_147525_2_, float p_147525_3_, float p_147525_4_) {
+        this.buffer.clear();
+        this.buffer.put(p_147525_1_).put(p_147525_2_).put(p_147525_3_).put(p_147525_4_);
+        this.buffer.flip();
+        return this.buffer;
     }
 
 }
