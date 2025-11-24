@@ -20,6 +20,7 @@ import net.smileycorp.atlas.api.util.DirectionUtils;
 import net.smileycorp.magiadaemonica.common.Constants;
 import net.smileycorp.magiadaemonica.common.blocks.BlockChalkLine;
 import net.smileycorp.magiadaemonica.common.blocks.DaemonicaBlocks;
+import net.smileycorp.magiadaemonica.common.potions.DaemonicaPotions;
 import net.smileycorp.magiadaemonica.common.rituals.Ritual;
 import net.smileycorp.magiadaemonica.common.rituals.Rotation;
 
@@ -161,7 +162,7 @@ public class SummoningCircle implements Ritual {
             }
             world.playSound(null, center.x, center.y, center.z, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.HOSTILE, 0.75f, 1);
             for (EntityPlayerMP player : world.getPlayers(EntityPlayerMP.class, player -> player.getDistanceSq(center.x, center.y, center.z) <= 256))
-                player.addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 140, 4, true, true));
+                player.addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 140, 4, true, false));
         }
         if (ticksActive == 200) {
             BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos(pos);
@@ -172,6 +173,8 @@ public class SummoningCircle implements Ritual {
                 world.setBlockState(mutable, world.getBlockState(mutable).withProperty(BlockChalkLine.CANDLE, BlockChalkLine.Candle.LIT));
             }
         }
+        if (ticksActive == 250) for (EntityPlayerMP player : world.getPlayers(EntityPlayerMP.class, player -> player.getDistanceSq(center.x, center.y, center.z) <= 256))
+            player.addPotionEffect(new PotionEffect(DaemonicaPotions.TREMOR, 360, 0, true, false));
         if (ticksActive > 200 && ticksActive < 320 && ticksActive % 40 == 0)
             world.playSound(null, center.x, center.y, center.z, SoundEvents.ENTITY_GUARDIAN_ATTACK, SoundCategory.HOSTILE, 0.75f, 1);
         if (ticksActive >= 320 && ticksActive <= 560  && ticksActive % 40 == 0)

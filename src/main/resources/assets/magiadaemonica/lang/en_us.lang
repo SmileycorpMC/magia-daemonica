@@ -10,6 +10,8 @@ tile.magiadaemonica.ChalkSlab.name=Chalk Slab
 tile.magiadaemonica.lavender.name=Lavender
 tile.magiadaemonica.scented_candle.name=Scented Candle
 
+effect.magiadaemonica.tremor=Tremor
+
 command.magiadaemonica.soul.get.success=%1$s has %2$s soul remaining.
 command.magiadaemonica.soul.change.success=Channged soul for %1$s from %2$s to %3$s.
 command.magiadaemonica.soul.failure=%1$s is not a recognized subcommand.
