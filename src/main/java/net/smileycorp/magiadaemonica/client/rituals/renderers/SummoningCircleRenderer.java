@@ -126,6 +126,8 @@ public class SummoningCircleRenderer implements RitualRenderer<SummoningCircle> 
             GlStateManager.scale(0.5, 0.5, 1);
             GlStateManager.translate(17, 2.334f * ((float)Minecraft.getSystemTime() % 800000f / 800000f), 0);
             GlStateManager.rotate(18, 0, 0, 1);
+            GlStateManager.pushMatrix();
+            GlStateManager.rotate(MathHelper.wrapDegrees(Minecraft.getSystemTime() * 3), 0, 1, 0);
             GlStateManager.scale(4.25, 1.0625, 1);
             GlStateManager.multMatrix(PROJECTION);
             GlStateManager.multMatrix(MODELVIEW);
