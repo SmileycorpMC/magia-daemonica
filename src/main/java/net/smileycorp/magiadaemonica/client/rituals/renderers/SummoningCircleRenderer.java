@@ -69,7 +69,7 @@ public class SummoningCircleRenderer implements RitualRenderer<SummoningCircle> 
         }
         GlStateManager.color(1f, 1f, 1f, 1f);
         textureManager.bindTexture(new ResourceLocation(name.getResourceDomain(), "textures/summoning_circles/" + name.getResourcePath() + ".png"));
-        renderPlane(-w, 0.01, -h, w, 0.01, h, r, g, b, 1, false);
+        renderPlane(-w, 0.005, -h, w, 0.005, h, r, g, b, 1, false);
         //runes
         if (!hasLighting) {
             GlStateManager.enableBlend();
@@ -99,7 +99,7 @@ public class SummoningCircleRenderer implements RitualRenderer<SummoningCircle> 
             GlStateManager.enableBlend();
             textureManager.bindTexture(crack);
             GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
-            renderPlane(-w, 0.02, -h, w, 0.01, h, 1f, 1f, 1f, 1f, false);
+            renderPlane(-w, 0.015, -h, w, 0.015, h, 1f, 1f, 1f, 0.85f, false);
             GlStateManager.disableBlend();
         }
         if (ritual.getTicksActive() >= 520) {
@@ -135,66 +135,51 @@ public class SummoningCircleRenderer implements RitualRenderer<SummoningCircle> 
             //crack5
             if (ritual.getTicksActive() > 560) {
                 //quad1
-                buffer.pos(-1, 0.03, -0.125).endVertex();
-                buffer.pos(-1.125, 0.03, 0.125).endVertex();
-                buffer.pos(-1.0625, 0.03, 0.5625).endVertex();
-                buffer.pos(-0.6875, 0.03, 1.25).endVertex();
+                buffer.pos(-0.8125, 0.01, -0.75).endVertex();
+                buffer.pos(-0.8125, 0.01, 0.75).endVertex();
+                buffer.pos(0.880, 0.01, 0.75).endVertex();
+                buffer.pos(0.880, 0.01, -0.75).endVertex();
                 //quad2
-                buffer.pos(-1, 0.03, -0.125).endVertex();
-                buffer.pos(-0.6875, 0.03, 1.25).endVertex();
-                buffer.pos(-0.25, 0.03, 1.125).endVertex();
-                buffer.pos(-0.6875, 0.03, -0.437).endVertex();
+                buffer.pos(0.125, 0.01, -0.9375).endVertex();
+                buffer.pos(0.125, 0.01, -0.5).endVertex();
+                buffer.pos(1.125, 0.01, -0.5).endVertex();
+                buffer.pos(1.125, 0.01, -0.9375).endVertex();
                 //quad3
-                buffer.pos(-0.6875, 0.03, -0.437).endVertex();
-                buffer.pos(-0.25, 0.03, 1.125).endVertex();
-                buffer.pos(-0.125, 0.03, 0.875).endVertex();
-                buffer.pos(-0.25, 0.03, -0.125).endVertex();
+                buffer.pos(-1.1875, 0.01, -0.25).endVertex();
+                buffer.pos(-1.1875, 0.01, 0.75).endVertex();
+                buffer.pos(-0.8125, 0.01, 0.75).endVertex();
+                buffer.pos(-0.8125, 0.01, -0.25).endVertex();
                 //quad4
-                buffer.pos(-0.75, 0.03, -0.75).endVertex();
-                buffer.pos(-0.75, 0.03, -0.1875).endVertex();
-                buffer.pos(0.75, 0.03, 0.4375).endVertex();
-                buffer.pos(-0.5, 0.03, -0.8125).endVertex();
+                buffer.pos(0.880, 0.01, -0.125).endVertex();
+                buffer.pos(0.880, 0.01, 0.20).endVertex();
+                buffer.pos(1.25, 0.01, 0.20).endVertex();
+                buffer.pos(1.25, 0.01, -0.125).endVertex();
                 //quad5
-                buffer.pos(-0.25, 0.03, 0.75).endVertex();
-                buffer.pos(0.75, 0.03, 0.75).endVertex();
-                buffer.pos(0.75, 0.03, 0.4375).endVertex();
-                buffer.pos(-0.25, 0.03, -0.125).endVertex();
+                buffer.pos(-0.875, 0.01, 0.75).endVertex();
+                buffer.pos(-0.875, 0.01, 1.25).endVertex();
+                buffer.pos(-0.25, 0.01, 1.25).endVertex();
+                buffer.pos(-0.25, 0.01, 0.75).endVertex();
                 //quad6
-                buffer.pos(0.4375, 0.03, 0.75).endVertex();
-                buffer.pos(0.4375, 0.03, 1).endVertex();
-                buffer.pos(0.75, 0.03, 1.0625).endVertex();
-                buffer.pos(0.75, 0.03, 0.75).endVertex();
-                //quad7
-                buffer.pos(0.75, 0.03, 0.4375).endVertex();
-                buffer.pos(1.5, 0.03, -0.125).endVertex();
-                buffer.pos(1, 0.03, -0.125).endVertex();
-                buffer.pos(-0.5, 0.03, -0.8125).endVertex();
-                //quad8
-                buffer.pos(-0.25, 0.03, -0.6775).endVertex();
-                buffer.pos(0.875, 0.03, -0.125).endVertex();
-                buffer.pos(0.875, 0.03, -0.5).endVertex();
-                buffer.pos(1.125, 0.03, -0.875).endVertex();
+                buffer.pos(0.5, 0.01, 0.75).endVertex();
+                buffer.pos(0.5, 0.01, 1.0625).endVertex();
+                buffer.pos(0.875, 0.01, 1.0625).endVertex();
+                buffer.pos(0.875, 0.01, 0.75).endVertex();
             } else {
                 //quad1
-                buffer.pos(-0.437, 0.03, 0.1875).endVertex();
-                buffer.pos(-0.25, 0.03, 0.437).endVertex();
-                buffer.pos(0.437, 0.03, 0.437).endVertex();
-                buffer.pos(0.0625, 0.03, -0.125).endVertex();
+                buffer.pos(-0.375, 0.01, -0.1875).endVertex();
+                buffer.pos(-0.375, 0.01, 0.4375).endVertex();
+                buffer.pos(0.5, 0.01, 0.4375).endVertex();
+                buffer.pos(0.5, 0.01, -0.1875).endVertex();
                 //quad2
-                buffer.pos(0.125, 0.03, -0.25).endVertex();
-                buffer.pos(0.0625, 0.03, -0.125).endVertex();
-                buffer.pos(0.437, 0.03, 0.0625).endVertex();
-                buffer.pos(0.5625, 0.03, -0.437).endVertex();
+                buffer.pos(0.1875, 0.01, -0.4375).endVertex();
+                buffer.pos(0.1875, 0.01, -0.1875).endVertex();
+                buffer.pos(0.625, 0.01, -0.1875).endVertex();
+                buffer.pos(0.625, 0.01, -0.4375).endVertex();
                 //quad3
-                buffer.pos(0.437, 0.03, 0.1875).endVertex();
-                buffer.pos(0.437, 0.03, 0.437).endVertex();
-                buffer.pos(0.8125, 0.03, 0.75).endVertex();
-                buffer.pos(0.5625, 0.03, 0.25).endVertex();
-                //center quad
-                buffer.pos(0.0625, 0.03, -0.125).endVertex();
-                buffer.pos(0.437, 0.03, 0.437).endVertex();
-                buffer.pos(0.5625, 0.03, 0.25).endVertex();
-                buffer.pos(0.437, 0.03, 0.0625).endVertex();
+                buffer.pos(0.1875, 0.01, 0.25).endVertex();
+                buffer.pos(0.1875, 0.01, 0.6).endVertex();
+                buffer.pos(0.875, 0.01, 0.6).endVertex();
+                buffer.pos(0.875, 0.01, 0.25).endVertex();
             }
             tessellator.draw();
             GlStateManager.enableFog();
