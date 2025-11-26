@@ -1,7 +1,10 @@
 package net.smileycorp.magiadaemonica.common.rituals.summoning.bargains.offerings;
 
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.text.TextComponentBase;
 
 public class ItemOffering implements Offering {
 
@@ -14,7 +17,27 @@ public class ItemOffering implements Offering {
     @Override
     public void grant(EntityPlayer player) {
         ItemStack stack = this.stack.copy();
-        if (!player.addItemStackToInventory(stack)) player.dropItem(stack, false, true);
+        if (player.addItemStackToInventory(stack)) return;;
+        EntityItem item = player.dropItem(stack, false);
+        if (item == null) return;
+        item.setNoPickupDelay();
+        item.setOwner(player.getName());
+    }
+
+    @Override
+    public TextComponentBase getDescription(int tier) {
+        return null;
+    }
+
+    @Override
+    public NBTTagCompound writeToNBT() {
+        NBTTagCompound nbt = new NBTTagCompound();
+        nbt.setTag("stack", stack.writeToNBT(new NBTTagCompound()));
+        return nbt;
+    }
+
+    public static ItemOffering fromNBT(NBTTagCompound nbt) {
+        return new ItemOffering(new ItemStack(nbt.getCompoundTag("stack")));
     }
 
 }

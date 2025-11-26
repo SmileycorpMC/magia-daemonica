@@ -2,34 +2,46 @@ package net.smileycorp.magiadaemonica.common.rituals.summoning.bargains.costs;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.text.TextComponentBase;
 import net.smileycorp.magiadaemonica.common.capabilities.DaemonicaCapabilities;
 import net.smileycorp.magiadaemonica.common.network.SyncSoulMessage;
 
-public class FlatSoulCost implements Cost {
+public class SoulPercentCost implements Cost {
 
     private final float amount;
 
-    public FlatSoulCost(float amount) {
+    public SoulPercentCost(float amount) {
         this.amount = amount;
     }
 
     @Override
     public void pay(EntityPlayer player, int tier) {
         if (!player.hasCapability(DaemonicaCapabilities.SOUL, null)) return;
-        player.getCapability(DaemonicaCapabilities.SOUL, null).consumeSoul(amount, true);
+        player.getCapability(DaemonicaCapabilities.SOUL, null).consumeSoul(amount, false);
         if (player instanceof EntityPlayerMP) SyncSoulMessage.send((EntityPlayerMP) player);
     }
 
     @Override
     public boolean canPay(EntityPlayer player, int tier) {
         if (!player.hasCapability(DaemonicaCapabilities.SOUL, null)) return false;
-        return player.getCapability(DaemonicaCapabilities.SOUL, null).getSoul() >= amount;
+        return player.getCapability(DaemonicaCapabilities.SOUL, null).getSoul() > 0;
     }
 
     @Override
     public TextComponentBase getDescription(int tier) {
         return null;
+    }
+
+    @Override
+    public NBTTagCompound writeToNBT() {
+        NBTTagCompound nbt =new NBTTagCompound();
+        nbt.setFloat("amount", amount);
+        return nbt;
+    }
+
+    public static SoulPercentCost fromNBT(NBTTagCompound nbt) {
+        return new SoulPercentCost(nbt.getFloat("amount"));
     }
 
 }

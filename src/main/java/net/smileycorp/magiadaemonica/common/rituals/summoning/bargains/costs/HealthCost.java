@@ -2,14 +2,15 @@ package net.smileycorp.magiadaemonica.common.rituals.summoning.bargains.costs;
 
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.text.TextComponentBase;
 import net.smileycorp.magiadaemonica.common.rituals.summoning.bargains.BargainUtils;
 
-public class FlatHealthCost implements Cost {
+public class HealthCost implements Cost {
 
     private final float amount;
 
-    public FlatHealthCost(float amount) {
+    public HealthCost(float amount) {
         this.amount = amount;
     }
 
@@ -26,6 +27,17 @@ public class FlatHealthCost implements Cost {
     @Override
     public TextComponentBase getDescription(int tier) {
         return null;
+    }
+
+    @Override
+    public NBTTagCompound writeToNBT() {
+        NBTTagCompound nbt = new NBTTagCompound();
+        nbt.setFloat("amount", amount);
+        return nbt;
+    }
+
+    public static HealthCost fromNBT(NBTTagCompound nbt) {
+        return new HealthCost(nbt.getFloat("amount"));
     }
 
 }

@@ -11,11 +11,9 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.smileycorp.magiadaemonica.client.rituals.renderers.RitualRenderer;
-import net.smileycorp.magiadaemonica.client.rituals.renderers.SummoningCircleRenderer;
 import net.smileycorp.magiadaemonica.common.rituals.Ritual;
 import net.smileycorp.magiadaemonica.common.rituals.Rituals;
 import net.smileycorp.magiadaemonica.common.rituals.RitualsRegistry;
-import net.smileycorp.magiadaemonica.common.rituals.summoning.SummoningCircle;
 
 import java.util.Collection;
 import java.util.Map;
@@ -26,10 +24,6 @@ public class RitualsClient implements Rituals {
     private static final Map<ResourceLocation, RitualRenderer> RENDERERS = Maps.newHashMap();
     private static RitualsClient instance;
     private final Map<BlockPos, Ritual> rituals = Maps.newHashMap();
-
-    static {
-        registerRitualRenderer(SummoningCircle.ID, new SummoningCircleRenderer());
-    }
 
     public static void registerRitualRenderer(ResourceLocation id, RitualRenderer renderer) {
         RENDERERS.put(id, renderer);

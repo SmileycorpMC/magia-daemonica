@@ -18,6 +18,8 @@ import net.smileycorp.magiadaemonica.common.capabilities.Soul;
 import net.smileycorp.magiadaemonica.common.command.CommandSoul;
 import net.smileycorp.magiadaemonica.common.items.DaemonicaItems;
 import net.smileycorp.magiadaemonica.common.network.PacketHandler;
+import net.smileycorp.magiadaemonica.common.rituals.RitualsRegistry;
+import net.smileycorp.magiadaemonica.common.rituals.summoning.bargains.BargainRegistry;
 import net.smileycorp.magiadaemonica.common.world.DaemonicaWorldGen;
 import net.smileycorp.magiadaemonica.config.WorldConfig;
 import net.smileycorp.magiadaemonica.integration.FutureMCIntegration;
@@ -31,6 +33,8 @@ public class CommonProxy {
 		PacketHandler.initPackets();
 		CapabilityManager.INSTANCE.register(Soul.class, new Soul.Storage(), Soul.Impl::new);
 		GameRegistry.registerWorldGenerator(new DaemonicaWorldGen(), 99);
+		RitualsRegistry.registerDefaults();
+		BargainRegistry.registerDefaults();
 	}
 
 	public void init(FMLInitializationEvent event) {

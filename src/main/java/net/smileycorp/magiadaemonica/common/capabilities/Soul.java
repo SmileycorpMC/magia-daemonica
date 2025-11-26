@@ -37,16 +37,16 @@ public interface Soul {
 
     }
 
-    class Storage implements Capability.IStorage<net.smileycorp.magiadaemonica.common.capabilities.Soul> {
+    class Storage implements Capability.IStorage<Soul> {
 
         @Nullable
         @Override
-        public NBTBase writeNBT(Capability<net.smileycorp.magiadaemonica.common.capabilities.Soul> capability, net.smileycorp.magiadaemonica.common.capabilities.Soul soul, EnumFacing enumFacing) {
+        public NBTBase writeNBT(Capability<Soul> capability, Soul soul, EnumFacing enumFacing) {
             return new NBTTagFloat(soul.getSoul());
         }
 
         @Override
-        public void readNBT(Capability<net.smileycorp.magiadaemonica.common.capabilities.Soul> capability, net.smileycorp.magiadaemonica.common.capabilities.Soul soul, EnumFacing enumFacing, NBTBase nbtBase) {
+        public void readNBT(Capability<Soul> capability, Soul soul, EnumFacing enumFacing, NBTBase nbtBase) {
             soul.setSoul(((NBTTagFloat)nbtBase).getFloat());
         }
 
@@ -54,7 +54,7 @@ public interface Soul {
 
     class Provider implements ICapabilitySerializable<NBTBase> {
 
-        protected net.smileycorp.magiadaemonica.common.capabilities.Soul instance = DaemonicaCapabilities.SOUL.getDefaultInstance();
+        protected Soul instance = DaemonicaCapabilities.SOUL.getDefaultInstance();
 
         @Override
         public boolean hasCapability(Capability<?> capability, EnumFacing facing) {

@@ -12,12 +12,12 @@ public class RitualsRegistry {
 
     private static final Map<ResourceLocation, Function<NBTTagCompound, Ritual>> RITUAL_TYPES = Maps.newHashMap();
 
-    static {
-       registerRitualType(SummoningCircle.ID, SummoningCircle::fromNBT);
-    }
-
     public static void registerRitualType(ResourceLocation id, Function<NBTTagCompound, Ritual> factory) {
         RITUAL_TYPES.put(id, factory);
+    }
+
+    public static void registerDefaults() {
+        registerRitualType(SummoningCircle.ID, SummoningCircle::fromNBT);
     }
 
     public static Ritual getRitualFromNBT(NBTTagCompound nbt) {

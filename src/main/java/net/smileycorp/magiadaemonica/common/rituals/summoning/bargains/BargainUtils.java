@@ -1,8 +1,6 @@
 package net.smileycorp.magiadaemonica.common.rituals.summoning.bargains;
 
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.IAttribute;
-import net.minecraft.entity.ai.attributes.IAttributeInstance;
+import net.minecraft.entity.ai.attributes.*;
 import net.minecraft.entity.player.EntityPlayer;
 
 import java.util.UUID;
@@ -19,8 +17,10 @@ public class BargainUtils {
         attributes.applyModifier(new AttributeModifier(COST, "magicadaemonicosts", value, 0));
     }
 
-    public static void addBonusAttribute(EntityPlayer player, IAttribute attribute, double value) {
-        IAttributeInstance attributes = player.getEntityAttribute(attribute);
+    public static void addBonusAttribute(EntityPlayer player, String attribute, double value) {
+        AbstractAttributeMap map = player.getAttributeMap();
+        IAttributeInstance attributes = map.getAttributeInstanceByName(attribute);
+        if (attributes == null) attributes = map.registerAttribute(new RangedAttribute(null, attribute, 0, -Double.MAX_VALUE, Double.MAX_VALUE));
         AttributeModifier modifier = attributes.getModifier(BONUS);
         if (modifier != null) value += modifier.getAmount();
         attributes.applyModifier(new AttributeModifier(BONUS, "magicadaemonibonus", value, 0));

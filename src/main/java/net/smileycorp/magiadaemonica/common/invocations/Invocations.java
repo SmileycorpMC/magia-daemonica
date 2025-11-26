@@ -2,7 +2,6 @@ package net.smileycorp.magiadaemonica.common.invocations;
 
 import com.google.common.collect.Maps;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.ResourceLocation;
 import net.smileycorp.magiadaemonica.common.rituals.summoning.SummoningCircle;
 
 import java.util.Map;

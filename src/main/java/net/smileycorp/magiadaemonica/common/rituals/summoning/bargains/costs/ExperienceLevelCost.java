@@ -1,6 +1,7 @@
 package net.smileycorp.magiadaemonica.common.rituals.summoning.bargains.costs;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.text.TextComponentBase;
 
 public class ExperienceLevelCost implements Cost {
@@ -24,6 +25,17 @@ public class ExperienceLevelCost implements Cost {
     @Override
     public TextComponentBase getDescription(int tier) {
         return null;
+    }
+
+    @Override
+    public NBTTagCompound writeToNBT() {
+        NBTTagCompound nbt = new NBTTagCompound();
+        nbt.setInteger("amount", amount);
+        return nbt;
+    }
+
+    public static ExperienceLevelCost fromNBT(NBTTagCompound nbt) {
+        return new ExperienceLevelCost(nbt.getInteger("amount"));
     }
 
 }
