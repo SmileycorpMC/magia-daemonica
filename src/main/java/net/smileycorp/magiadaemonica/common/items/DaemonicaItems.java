@@ -21,6 +21,9 @@ public class DaemonicaItems {
     public static final ItemChalkStick CHALK_STICK = new ItemChalkStick();
     public static final ItemDaemonicaFood MATERIAL = new ItemDaemonicaFood();
 
+    //artifacts
+    public static final ItemSicaInfernalem SICA_INFERNALEM = new ItemSicaInfernalem();
+
     @SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> event) {
         IForgeRegistry<Item> registry = event.getRegistry();
@@ -28,6 +31,7 @@ public class DaemonicaItems {
         DaemonicaBlocks.CHALK.registerItems(registry);
         register(registry, CHALK_STICK);
         register(registry, MATERIAL);
+        register(registry, SICA_INFERNALEM);
     }
 
     private static <T extends Item> void register(IForgeRegistry<Item> registry, T item) {

@@ -2,6 +2,7 @@ package net.smileycorp.magiadaemonica.common;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.IEntityOwnable;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -76,7 +77,9 @@ public class DaemonicaEventHandler {
 		EntityLivingBase entity = event.getEntityLiving();
 		if (entity == null) return;
 		if (entity.world.isRemote) return;
+		if (entity.world.isDaytime()) return;
 		if (entity instanceof IMob || entity instanceof EntityPlayer) return;
+		if (entity instanceof IEntityOwnable) if (((IEntityOwnable) entity).getOwner() != null) return;
 		if (!(event.getSource().getTrueSource() instanceof EntityPlayer)) return;
 		Ritual ritual = Rituals.get(entity.world).getRitual(entity.posX, entity.posY, entity.posZ, 2);
 		if (ritual == null) return;
