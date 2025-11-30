@@ -5,7 +5,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.text.TextComponentBase;
 import net.smileycorp.atlas.api.util.RecipeUtils;
-import net.smileycorp.magiadaemonica.common.rituals.summoning.bargains.offerings.ItemOffering;
 
 public class ItemCost implements Cost {
 
@@ -51,8 +50,8 @@ public class ItemCost implements Cost {
         return nbt;
     }
 
-    public static ItemOffering fromNBT(NBTTagCompound nbt) {
-        return new ItemOffering(new ItemStack(nbt.getCompoundTag("stack")));
+    public static ItemCost fromNBT(NBTTagCompound nbt) {
+        return new ItemCost(new ItemStack(nbt.getCompoundTag("stack")));
     }
 
 }

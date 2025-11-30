@@ -14,7 +14,7 @@ public interface Cost {
 
     NBTTagCompound writeToNBT();
 
-    interface NBTReader<T extends Cost> {
+    interface Reader<T extends Cost> {
 
         T apply(NBTTagCompound nbt);
 

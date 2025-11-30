@@ -6,11 +6,11 @@ import net.smileycorp.magiadaemonica.common.rituals.summoning.SummoningCircle;
 
 import java.util.Map;
 
-public class Invocations {
+public class InvocationsRegistry {
 
     private static final Map<String, Invocation> INVOCATIONS = Maps.newHashMap();
 
-    static {
+    public static void registerDefaults() {
         registerInvocation("te infernale invoco pacisci volo", new RitualInvocation(SummoningCircle.ID));
     }
 

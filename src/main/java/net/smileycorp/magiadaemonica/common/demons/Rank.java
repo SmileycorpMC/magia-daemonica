@@ -8,16 +8,19 @@ import java.util.Random;
 public enum Rank {
 
     PRINCE,
-    ARCHBARRON,
-    BARRON,
+    ARCHBARON,
+    BARON,
     ARCHLORD,
     GREATER_LORD,
     LESSER_LORD,
+    ARCHDEMON,
     GREATER_DEMON,
     LESSER_DEMON,
+    CAMBION,
     GREATER_IMP,
     LESSER_IMP;
 
+    private static final float MULTIPLIER = (float) Math.sqrt(values().length);
     private final String name;
 
     Rank() {
@@ -33,6 +36,10 @@ public enum Rank {
         return DemonNameGenerator.generate(rand);
     }
 
+    public boolean isPersistent() {
+        return this == PRINCE;
+    }
+
     public static Rank get(String name) {
         if (name == null) return null;
         name = name.toLowerCase(Locale.US);
@@ -41,8 +48,8 @@ public enum Rank {
     }
 
     public static Rank get(Random rand, int points) {
-        int mult = (int) MathHelper.clamp(( ((rand.nextGaussian() * rand.nextGaussian()) + 1) * points) / 1000f, 0, values().length);
-        return values()[mult];
+        int mult = (int) Math.round(MathHelper.clamp(points/1000f + (1 + rand.nextGaussian() * MULTIPLIER), 1, values().length));
+        return values()[values().length - mult];
     }
 
 }

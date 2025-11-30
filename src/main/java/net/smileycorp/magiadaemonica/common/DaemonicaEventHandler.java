@@ -19,7 +19,7 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.smileycorp.magiadaemonica.common.capabilities.DaemonicaCapabilities;
 import net.smileycorp.magiadaemonica.common.capabilities.Soul;
-import net.smileycorp.magiadaemonica.common.invocations.Invocations;
+import net.smileycorp.magiadaemonica.common.invocations.InvocationsRegistry;
 import net.smileycorp.magiadaemonica.common.network.SyncSoulMessage;
 import net.smileycorp.magiadaemonica.common.rituals.Ritual;
 import net.smileycorp.magiadaemonica.common.rituals.Rituals;
@@ -89,7 +89,7 @@ public class DaemonicaEventHandler {
 
 	@SubscribeEvent
 	public void playerChat(ServerChatEvent event) {
-		Invocations.processInvocation(event.getPlayer(), event.getMessage().toLowerCase(Locale.US));
+		InvocationsRegistry.processInvocation(event.getPlayer(), event.getMessage().toLowerCase(Locale.US));
 	}
 	
 }

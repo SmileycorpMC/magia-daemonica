@@ -5,11 +5,12 @@ import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.chunk.Chunk;
-import net.minecraft.world.storage.WorldSavedData;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.smileycorp.magiadaemonica.common.Constants;
+import net.smileycorp.magiadaemonica.common.WorldDataDaemonica;
 import net.smileycorp.magiadaemonica.common.network.PacketHandler;
 import net.smileycorp.magiadaemonica.common.network.RemoveRitualMessage;
 import net.smileycorp.magiadaemonica.common.network.SyncRitualMessage;
@@ -17,15 +18,15 @@ import net.smileycorp.magiadaemonica.common.network.SyncRitualMessage;
 import java.util.Collection;
 import java.util.Map;
 
-public class RitualsServer extends WorldSavedData implements Rituals {
+public class RitualsServer implements Rituals {
 
     public static final String DATA = Constants.MODID + "_rituals";
 
     private final Map<BlockPos, Ritual> rituals = Maps.newHashMap();
-    private WorldServer world;
+    private final WorldDataDaemonica data;
 
-    public RitualsServer(String data) {
-        super(data);
+    public RitualsServer(WorldDataDaemonica data) {
+        this.data = data;
     }
 
     @Override
@@ -51,28 +52,30 @@ public class RitualsServer extends WorldSavedData implements Rituals {
     public void addRitual(Ritual ritual) {
         rituals.put(ritual.getCenterPos(), ritual);
         syncRitual(ritual);
-        markDirty();
+        data.markDirty();
     }
 
     @Override
     public void removeRitual(BlockPos pos) {
         Ritual ritual = getRitual(pos);
         if (ritual == null) return;
-        ritual.removeBlocks(world);
+        WorldServer world = data.getWorld();
+        ritual.removeBlocks(data.getWorld());
         pos = ritual.getCenterPos();
         rituals.remove(pos);
         PacketHandler.NETWORK_INSTANCE.sendToAllTracking(new RemoveRitualMessage(pos),
                 new NetworkRegistry.TargetPoint(world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(),
                         128));
-        markDirty();
+        data.markDirty();
     }
 
     @Override
     public void tick() {
+        WorldServer world = data.getWorld();
         for (Ritual ritual : rituals.values()) {
             ritual.tick(world);
             if (ritual.isDirty()) {
-                markDirty();
+                data.markDirty();
                 syncRitual(ritual);
             }
         }
@@ -86,18 +89,18 @@ public class RitualsServer extends WorldSavedData implements Rituals {
     public void syncRitual(Ritual ritual) {
         BlockPos pos = ritual.getCenterPos();
         PacketHandler.NETWORK_INSTANCE.sendToAllTracking(new SyncRitualMessage(pos, ritual),
-                new NetworkRegistry.TargetPoint(world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 128));
+                new NetworkRegistry.TargetPoint(data.getWorld().provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 128));
         ritual.markDirty(false);
     }
 
     public void syncRituals(Chunk chunk) {
+        World world = chunk.getWorld();
         for (Ritual ritual : rituals.values()) {
             BlockPos pos = ritual.getCenterPos();
             if (world.getChunkFromBlockCoords(pos) == chunk) syncRitual(ritual);
         }
     }
 
-    @Override
     public void readFromNBT(NBTTagCompound nbt) {
         if (!nbt.hasKey("rituals")) return;
         for (NBTBase tag : nbt.getTagList("rituals", 10)) {
@@ -106,7 +109,6 @@ public class RitualsServer extends WorldSavedData implements Rituals {
         }
     }
 
-    @Override
     public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
         NBTTagList rituals = new NBTTagList();
         for (Ritual ritual : this.rituals.values()) {
@@ -119,13 +121,7 @@ public class RitualsServer extends WorldSavedData implements Rituals {
     }
 
     public static RitualsServer get(WorldServer world) {
-        RitualsServer data = (RitualsServer) world.getMapStorage().getOrLoadData(RitualsServer.class, DATA);
-        if (data == null) {
-            data = new RitualsServer(DATA);
-            world.getMapStorage().setData(DATA, data);
-        }
-        if (data.world == null) data.world = world;
-        return data;
+        return WorldDataDaemonica.get(world).getRituals();
     }
 
 }

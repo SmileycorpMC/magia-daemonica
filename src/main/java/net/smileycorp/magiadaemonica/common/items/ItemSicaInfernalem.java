@@ -1,7 +1,6 @@
 package net.smileycorp.magiadaemonica.common.items;
 
 import com.google.common.collect.Multimap;
-import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityOwnable;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -11,15 +10,10 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraft.world.World;
 import net.smileycorp.magiadaemonica.common.rituals.Ritual;
 import net.smileycorp.magiadaemonica.common.rituals.Rituals;
 
-import javax.annotation.Nullable;
-import java.util.List;
-
-public class ItemSicaInfernalem extends ItemDaemonica {
+public class ItemSicaInfernalem extends ItemRelic {
 
     public ItemSicaInfernalem() {
         super("sica_infernalem");
@@ -49,12 +43,6 @@ public class ItemSicaInfernalem extends ItemDaemonica {
         entity.attackEntityFrom(DamageSource.causeIndirectMagicDamage(attacker, attacker), Integer.MAX_VALUE);
         ritual.addPower((int) (entity.getMaxHealth() * 1000));
         return false;
-    }
-
-    @Override
-    public void addInformation(ItemStack stack, @Nullable World world, List<String> tooltip, ITooltipFlag flag) {
-        super.addInformation(stack, world, tooltip, flag);
-        tooltip.add(new TextComponentTranslation("item.magicadaemonica.sica_infernalem.tooltip").getFormattedText());
     }
 
 }

@@ -185,15 +185,27 @@ public class SummoningCircle implements Ritual {
 
     private void spawnParticles(World world, EnumParticleTypes type) {
         Random rand = world.rand;
-        int r = width/2;
+        int r = width / 2;
         for (int i = 0; i < rand.nextInt(3); i++) {
             Vec3d dir = DirectionUtils.getRandomDirectionVecXZ(world.rand);
             world.spawnParticle(type, center.x + dir.x * r, center.y + 0.05, center.z + dir.z * r, 0, 0, 0);
         }
+        double innerRad = 0;
+        double mult = 1;
+        if (ticksActive >= 560) {
+            innerRad = 1;
+            mult = 20;
+        }
+        else if (ticksActive >= 520) {
+            innerRad = 0.3;
+            mult = 5;
+        }
         for (int i = 0; i < rand.nextInt(3) + 2; i++) {
             Vec3d dir = DirectionUtils.getRandomDirectionVecXZ(world.rand);
             float magnitude = rand.nextFloat() * r;
-            world.spawnParticle(type, center.x + dir.x * magnitude, center.y + 0.05, center.z + dir.z * magnitude, 0, 0.01 * (r - magnitude), 0);
+            double speed = 0.01 * (r - magnitude);
+            if (magnitude < innerRad) speed *= mult;
+            world.spawnParticle(type, center.x + dir.x * magnitude, center.y + 0.05, center.z + dir.z * magnitude, 0, speed, 0);
         }
     }
 

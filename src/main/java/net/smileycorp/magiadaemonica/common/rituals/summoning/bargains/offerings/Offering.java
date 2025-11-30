@@ -3,7 +3,6 @@ package net.smileycorp.magiadaemonica.common.rituals.summoning.bargains.offering
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.text.TextComponentBase;
-import net.smileycorp.magiadaemonica.common.rituals.summoning.bargains.costs.Cost;
 
 public interface Offering {
 
@@ -13,7 +12,7 @@ public interface Offering {
 
     NBTTagCompound writeToNBT();
 
-    interface NBTReader<T extends Cost> {
+    interface Reader<T extends Offering> {
 
         T apply(NBTTagCompound nbt);
 
