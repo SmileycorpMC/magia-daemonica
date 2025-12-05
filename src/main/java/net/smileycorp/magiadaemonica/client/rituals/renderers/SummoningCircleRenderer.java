@@ -51,6 +51,7 @@ public class SummoningCircleRenderer implements RitualRenderer<SummoningCircle> 
             GlStateManager.setActiveTexture(OpenGlHelper.defaultTexUnit);
         }
         GlStateManager.enableFog();
+        GlStateManager.enableAlpha();
         //summoning circle
         float r;
         float g;
@@ -210,6 +211,7 @@ public class SummoningCircleRenderer implements RitualRenderer<SummoningCircle> 
         }
         buffer.setTranslation(0, 0, 0);
         tessellator.draw();
+        GlStateManager.disableAlpha();
         GlStateManager.disableFog();
         GlStateManager.enableLighting();
     }

@@ -1,18 +1,27 @@
-package net.smileycorp.magiadaemonica.common.rituals.summoning.bargains.costs;
+package net.smileycorp.magiadaemonica.common.demons.contracts.costs;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentBase;
+import net.smileycorp.magiadaemonica.common.Constants;
 import net.smileycorp.magiadaemonica.common.capabilities.DaemonicaCapabilities;
 import net.smileycorp.magiadaemonica.common.network.SyncSoulMessage;
 
 public class SoulPercentCost implements Cost {
 
+    public static ResourceLocation ID = Constants.loc("soul_percent");
+
     private final float amount;
 
     public SoulPercentCost(float amount) {
         this.amount = amount;
+    }
+
+    @Override
+    public ResourceLocation getRegistryName() {
+        return ID;
     }
 
     @Override

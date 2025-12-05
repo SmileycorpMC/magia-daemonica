@@ -16,15 +16,22 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.smileycorp.atlas.api.util.DirectionUtils;
 import net.smileycorp.magiadaemonica.common.Constants;
 import net.smileycorp.magiadaemonica.common.blocks.BlockChalkLine;
 import net.smileycorp.magiadaemonica.common.blocks.DaemonicaBlocks;
+import net.smileycorp.magiadaemonica.common.demons.DemonRegistry;
+import net.smileycorp.magiadaemonica.common.entities.EntityAbstractDemon;
+import net.smileycorp.magiadaemonica.common.entities.EntityDemonicTrader;
 import net.smileycorp.magiadaemonica.common.potions.DaemonicaPotions;
 import net.smileycorp.magiadaemonica.common.rituals.Ritual;
 import net.smileycorp.magiadaemonica.common.rituals.Rotation;
 
+import java.util.Optional;
 import java.util.Random;
+import java.util.UUID;
 
 public class SummoningCircle implements Ritual {
 
@@ -41,6 +48,9 @@ public class SummoningCircle implements Ritual {
     private int power, lastPower = 0;
     private boolean active = false;
     private int ticksActive;
+    private EntityDemonicTrader demon;
+    private UUID playerUUID;
+    private EntityPlayer player;
 
     public SummoningCircle(ResourceLocation name, BlockPos pos, int width, int height) {
         this.pos = pos;
@@ -64,8 +74,9 @@ public class SummoningCircle implements Ritual {
     }
 
     @Override
-    public void removeBlocks(World world) {
+    public void remove(World world) {
        setBlocks(world, BlockChalkLine.RitualState.NONE);
+       if (demon != null) demon.setPose(EntityDemonicTrader.Pose.DESPAWNING);
     }
 
     @Override
@@ -174,11 +185,19 @@ public class SummoningCircle implements Ritual {
             }
         }
         if (ticksActive == 250) for (EntityPlayerMP player : world.getPlayers(EntityPlayerMP.class, player -> player.getDistanceSq(center.x, center.y, center.z) <= 256))
-            player.addPotionEffect(new PotionEffect(DaemonicaPotions.TREMOR, 360, 0, true, false));
+            player.addPotionEffect(new PotionEffect(DaemonicaPotions.TREMOR, 460, 0, true, false));
         if (ticksActive > 200 && ticksActive < 320 && ticksActive % 40 == 0)
             world.playSound(null, center.x, center.y, center.z, SoundEvents.ENTITY_GUARDIAN_ATTACK, SoundCategory.HOSTILE, 0.75f, 1);
         if (ticksActive >= 320 && ticksActive <= 560  && ticksActive % 40 == 0)
             world.playSound(null, center.x, center.y, center.z, SoundEvents.ENTITY_WITHER_BREAK_BLOCK, SoundCategory.HOSTILE, 0.75f, 1);
+        if (ticksActive == 600) {
+            demon = new EntityDemonicTrader(world);
+            demon.setDemon(DemonRegistry.get((WorldServer) world).create(world.rand, power));
+            demon.setPose(EntityDemonicTrader.Pose.SUMMONING);
+            demon.setPosition(center.x, center.y, center.z);
+            demon.setRitual(getCenterPos());
+            world.spawnEntity(demon);
+        }
         ticksActive++;
         isDirty = true;
     }
@@ -229,6 +248,31 @@ public class SummoningCircle implements Ritual {
         return ticksActive;
     }
 
+    public Optional<EntityPlayer> getPlayer() {
+        if (playerUUID == null) return Optional.empty();
+        if (player == null) player = FMLCommonHandler.instance().getMinecraftServerInstance()
+                .getPlayerList().getPlayerByUUID(playerUUID);
+        return player == null ? Optional.empty() : Optional.of(player);
+    }
+
+    @Override
+    public void setPlayer(UUID player) {
+        playerUUID = player;
+        this.player = FMLCommonHandler.instance().getMinecraftServerInstance()
+                .getPlayerList().getPlayerByUUID(player);
+    }
+
+    @Override
+    public void setDemon(EntityAbstractDemon demon) {
+        if (!(demon instanceof EntityDemonicTrader)) return;
+        this.demon = (EntityDemonicTrader) demon;
+    }
+
+    @Override
+    public EntityAbstractDemon getDemon() {
+        return demon;
+    }
+
     @Override
     public NBTTagCompound writeToNBT() {
         NBTTagCompound nbt = new NBTTagCompound();
@@ -241,6 +285,7 @@ public class SummoningCircle implements Ritual {
         nbt.setBoolean("active", active);
         nbt.setInteger("power", power);
         nbt.setInteger("ticksActive", ticksActive);
+        if (playerUUID != null) nbt.setUniqueId("player", playerUUID);
         return nbt;
     }
 
@@ -251,6 +296,7 @@ public class SummoningCircle implements Ritual {
         active = nbt.getBoolean("active");
         power = nbt.getInteger("power");
         ticksActive = nbt.getInteger("ticksActive");
+        if (nbt.hasKey("player")) setPlayer(nbt.getUniqueId("player"));
     }
 
     @Override
@@ -280,6 +326,8 @@ public class SummoningCircle implements Ritual {
         world.spawnEntity(bolt);
         setBlocks(world, BlockChalkLine.RitualState.ACTIVE);
         active = true;
+        this.player = player;
+        playerUUID = player.getUniqueID();
     }
 
     public static SummoningCircle fromNBT(NBTTagCompound nbt) {

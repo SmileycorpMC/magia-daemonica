@@ -6,6 +6,10 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.smileycorp.magiadaemonica.common.entities.EntityAbstractDemon;
+
+import java.util.Optional;
+import java.util.UUID;
 
 public interface Ritual {
 
@@ -40,11 +44,15 @@ public interface Ritual {
         return pos.getZ() >= origin.getZ() && pos.getZ() <= origin.getZ() + getHeight();
     }
 
-    void removeBlocks(World world);
+    void remove(World world);
 
     boolean isDirty();
 
     void markDirty(boolean dirty);
+
+    void setDemon(EntityAbstractDemon demon);
+
+    EntityAbstractDemon getDemon();
 
     NBTTagCompound writeToNBT();
 
@@ -55,5 +63,9 @@ public interface Ritual {
     boolean canPower();
 
     void processInvocation(EntityPlayer player, String invocation);
+
+    Optional<EntityPlayer> getPlayer();
+
+    void setPlayer(UUID player);
 
 }

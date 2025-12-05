@@ -57,18 +57,29 @@ public class BlockChalkLine extends BlockBase implements Lightable {
 
     @Override
     public ItemStack getPickBlock(IBlockState state, RayTraceResult raytrace, World world, BlockPos pos, EntityPlayer player) {
-        return new ItemStack(DaemonicaItems.CHALK_STICK);
+        return state.getValue(CANDLE) == Candle.NONE ? new ItemStack(DaemonicaItems.CHALK_STICK) :
+                new ItemStack(DaemonicaBlocks.SCENTED_CANDLE);
+    }
+
+    @Override
+    public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest) {
+        if (state.getValue(CANDLE) == Candle.NONE) return super.removedByPlayer(state, world, pos, player, willHarvest);
+        world.setBlockState(pos, state.withProperty(CANDLE, Candle.NONE));
+        if (world.isRemote) return false;
+        if (willHarvest) {
+            EntityItem entityitem = new EntityItem(world, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f,
+                    new ItemStack(DaemonicaBlocks.SCENTED_CANDLE));
+            entityitem.setDefaultPickupDelay();
+            world.spawnEntity(entityitem);
+        }
+        if (state.getValue(RITUAL_STATE) != RitualState.NONE) RitualsServer.get((WorldServer) world).removeRitual(pos);
+        return false;
     }
 
     @Override
     public void breakBlock(World world, BlockPos pos, IBlockState state) {
         if (world.isRemote) return;
         if (state.getValue(RITUAL_STATE) != RitualState.NONE) RitualsServer.get((WorldServer) world).removeRitual(pos);
-        if (state.getValue(CANDLE) == Candle.NONE) return;
-        EntityItem entityitem = new EntityItem(world, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f,
-                new ItemStack(DaemonicaBlocks.SCENTED_CANDLE));
-        entityitem.setDefaultPickupDelay();
-        world.spawnEntity(entityitem);
     }
 
     @Override

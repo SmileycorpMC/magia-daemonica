@@ -21,7 +21,8 @@ public class DemonRegistry {
     }
 
     public Demon get(UUID uuid) {
-        return demons.get(uuid);
+        Demon demon = demons.get(uuid);
+        return demon == null ? Demon.DEFAULT : demon;
     }
 
     public void remove(Demon demon) {

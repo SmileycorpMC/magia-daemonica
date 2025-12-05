@@ -1,15 +1,24 @@
-package net.smileycorp.magiadaemonica.common.rituals.summoning.bargains.costs;
+package net.smileycorp.magiadaemonica.common.demons.contracts.costs;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentBase;
+import net.smileycorp.magiadaemonica.common.Constants;
 
 public class ExperienceLevelCost implements Cost {
+
+    public static ResourceLocation ID = Constants.loc("experience_level");
 
     private final int amount;
 
     public ExperienceLevelCost(int amount) {
         this.amount = amount;
+    }
+
+    @Override
+    public ResourceLocation getRegistryName() {
+        return ID;
     }
 
     @Override

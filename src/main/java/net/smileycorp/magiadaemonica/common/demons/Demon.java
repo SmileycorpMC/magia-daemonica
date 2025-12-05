@@ -86,7 +86,7 @@ public class Demon {
 
         @Override
         public Demon copyValue(Demon demon) {
-            return new Demon(demon.name, demon.domain, demon.rank);
+            return demon == null ? DEFAULT : new Demon(demon.name, demon.domain, demon.rank);
         }
 
     }

@@ -1,11 +1,15 @@
-package net.smileycorp.magiadaemonica.common.rituals.summoning.bargains.offerings;
+package net.smileycorp.magiadaemonica.common.demons.contracts.offerings;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentBase;
-import net.smileycorp.magiadaemonica.common.rituals.summoning.bargains.BargainUtils;
+import net.smileycorp.magiadaemonica.common.Constants;
+import net.smileycorp.magiadaemonica.common.demons.contracts.ContractsUtils;
 
 public class AttributeOffering implements Offering {
+
+    public static ResourceLocation ID = Constants.loc("attribute");
 
     private final String attribute;
     private final double value;
@@ -16,8 +20,13 @@ public class AttributeOffering implements Offering {
     }
 
     @Override
+    public ResourceLocation getRegistryName() {
+        return ID;
+    }
+
+    @Override
     public void grant(EntityPlayer player) {
-        BargainUtils.addBonusAttribute(player, attribute, value);
+        ContractsUtils.addBonusAttribute(player, attribute, value);
     }
 
     @Override

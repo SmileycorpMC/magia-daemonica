@@ -1,17 +1,26 @@
-package net.smileycorp.magiadaemonica.common.rituals.summoning.bargains.costs;
+package net.smileycorp.magiadaemonica.common.demons.contracts.costs;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentBase;
 import net.smileycorp.atlas.api.util.RecipeUtils;
+import net.smileycorp.magiadaemonica.common.Constants;
 
 public class ItemCost implements Cost {
+
+    public static ResourceLocation ID = Constants.loc("item");
 
     private final ItemStack stack;
 
     public ItemCost(ItemStack ingredient) {
         this.stack = ingredient;
+    }
+
+    @Override
+    public ResourceLocation getRegistryName() {
+        return ID;
     }
 
     @Override

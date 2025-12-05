@@ -1,17 +1,26 @@
-package net.smileycorp.magiadaemonica.common.rituals.summoning.bargains.offerings;
+package net.smileycorp.magiadaemonica.common.demons.contracts.offerings;
 
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentBase;
+import net.smileycorp.magiadaemonica.common.Constants;
 
 public class ItemOffering implements Offering {
+
+    public static ResourceLocation ID = Constants.loc("item");
 
     private final ItemStack stack;
 
     public ItemOffering(ItemStack stack) {
         this.stack = stack;
+    }
+
+    @Override
+    public ResourceLocation getRegistryName() {
+        return ID;
     }
 
     @Override

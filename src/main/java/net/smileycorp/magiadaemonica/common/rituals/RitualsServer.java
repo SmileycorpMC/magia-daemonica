@@ -60,7 +60,7 @@ public class RitualsServer implements Rituals {
         Ritual ritual = getRitual(pos);
         if (ritual == null) return;
         WorldServer world = data.getWorld();
-        ritual.removeBlocks(data.getWorld());
+        ritual.remove(data.getWorld());
         pos = ritual.getCenterPos();
         rituals.remove(pos);
         PacketHandler.NETWORK_INSTANCE.sendToAllTracking(new RemoveRitualMessage(pos),
