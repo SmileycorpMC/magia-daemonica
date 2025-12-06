@@ -33,7 +33,7 @@ public class RenderContract extends Render<EntityContract> {
         GlStateManager.translate((float)x, (float)y, (float)z);
         rm.renderEngine.bindTexture(TEXTURE);
         RenderHelper.enableStandardItemLighting();
-        final float height = Math.min(entity.ticksExisted * 0.025f, 0.5f);
+        final float height = Math.min(entity.ticksExisted * 0.0125f, 0.5f);
         GlStateManager.rotate(180.0F - rm.playerViewY, 0, 1, 0);
         GlStateManager.rotate((float)(rm.options.thirdPersonView == 2 ? -1 : 1) * -rm.playerViewX, 1, 0, 0);
         GlStateManager.enableNormalize();

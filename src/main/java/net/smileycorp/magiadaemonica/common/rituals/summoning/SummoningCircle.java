@@ -201,6 +201,7 @@ public class SummoningCircle implements Ritual {
             demon.setPose(EntityDemonicTrader.Pose.SUMMONING);
             demon.setPosition(center.x, center.y, center.z);
             demon.setRitual(getCenterPos());
+            demon.getLookHelper().setLookPositionWithEntity(player, 0, 0);
             world.spawnEntity(demon);
         }
         if (ticksActive == 680) {
