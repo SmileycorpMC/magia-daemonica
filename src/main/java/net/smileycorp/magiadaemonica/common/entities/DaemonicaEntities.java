@@ -21,6 +21,7 @@ public class DaemonicaEntities {
     public static void registerEntities(RegistryEvent.Register<EntityEntry> event) {
         IForgeRegistry<EntityEntry> registry = event.getRegistry();
         register(registry, "demonic_trader", EntityDemonicTrader.class, 80);
+        register(registry, "contract", EntityContract.class, 80);
     }
 
     public static void register(IForgeRegistry<EntityEntry> registry, String name, Class<? extends Entity> clazz, int range) {

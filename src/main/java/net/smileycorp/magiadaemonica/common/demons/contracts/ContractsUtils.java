@@ -2,6 +2,7 @@ package net.smileycorp.magiadaemonica.common.demons.contracts;
 
 import net.minecraft.entity.ai.attributes.*;
 import net.minecraft.entity.player.EntityPlayer;
+import net.smileycorp.magiadaemonica.common.demons.Demon;
 
 import java.util.UUID;
 
@@ -47,6 +48,15 @@ public class ContractsUtils {
     public static int xpBarCap(int xp) {
         return xp >= 30 ? 112 + (xp - 30) * 9 :
             xp >= 15 ? 37 + (xp - 15) * 5 : 7 + xp * 2;
+    }
+
+    public static int getContractCount(Demon demon, EntityPlayer player) {
+        int contracts = demon == null ? 1 : demon.getRank().getBaseContractCount();
+        while (true) {
+            if (player.getRNG().nextFloat() > 0.1) break;
+            contracts += 1;
+        }
+        return contracts;
     }
 
 }

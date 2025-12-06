@@ -16,12 +16,14 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.smileycorp.atlas.api.block.BlockProperties;
 import net.smileycorp.atlas.api.client.MetaStateMapper;
 import net.smileycorp.atlas.api.item.IMetaItem;
+import net.smileycorp.magiadaemonica.client.entities.RenderContract;
 import net.smileycorp.magiadaemonica.client.entities.RenderDemon;
 import net.smileycorp.magiadaemonica.client.rituals.RitualsClient;
 import net.smileycorp.magiadaemonica.client.rituals.renderers.SummoningCircleRenderer;
 import net.smileycorp.magiadaemonica.common.CommonProxy;
 import net.smileycorp.magiadaemonica.common.Constants;
 import net.smileycorp.magiadaemonica.common.blocks.DaemonicaBlocks;
+import net.smileycorp.magiadaemonica.common.entities.EntityContract;
 import net.smileycorp.magiadaemonica.common.entities.EntityDemonicTrader;
 import net.smileycorp.magiadaemonica.common.items.DaemonicaItems;
 import net.smileycorp.magiadaemonica.common.rituals.summoning.SummoningCircle;
@@ -64,6 +66,7 @@ public class ClientProxy extends CommonProxy {
 		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(DaemonicaBlocks.FLOWER), 0,
 				new ModelResourceLocation(Constants.locStr("lavender"), "inventory"));
 		RenderingRegistry.registerEntityRenderingHandler(EntityDemonicTrader.class, RenderDemon::new);
+		RenderingRegistry.registerEntityRenderingHandler(EntityContract.class, RenderContract::new);
 	}
 	
 }

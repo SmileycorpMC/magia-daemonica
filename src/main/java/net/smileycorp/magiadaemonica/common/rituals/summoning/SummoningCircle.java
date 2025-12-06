@@ -13,6 +13,7 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -23,7 +24,9 @@ import net.smileycorp.magiadaemonica.common.Constants;
 import net.smileycorp.magiadaemonica.common.blocks.BlockChalkLine;
 import net.smileycorp.magiadaemonica.common.blocks.DaemonicaBlocks;
 import net.smileycorp.magiadaemonica.common.demons.DemonRegistry;
+import net.smileycorp.magiadaemonica.common.demons.contracts.ContractsUtils;
 import net.smileycorp.magiadaemonica.common.entities.EntityAbstractDemon;
+import net.smileycorp.magiadaemonica.common.entities.EntityContract;
 import net.smileycorp.magiadaemonica.common.entities.EntityDemonicTrader;
 import net.smileycorp.magiadaemonica.common.potions.DaemonicaPotions;
 import net.smileycorp.magiadaemonica.common.rituals.Ritual;
@@ -77,6 +80,8 @@ public class SummoningCircle implements Ritual {
     public void remove(World world) {
        setBlocks(world, BlockChalkLine.RitualState.NONE);
        if (demon != null) demon.setPose(EntityDemonicTrader.Pose.DESPAWNING);
+       for (EntityContract contract : world.getEntitiesWithinAABB(EntityContract.class,
+               new AxisAlignedBB(getCenterPos()).grow(width, 10, height))) contract.setDead();
     }
 
     @Override
@@ -197,6 +202,18 @@ public class SummoningCircle implements Ritual {
             demon.setPosition(center.x, center.y, center.z);
             demon.setRitual(getCenterPos());
             world.spawnEntity(demon);
+        }
+        if (ticksActive == 680) {
+            int count = ContractsUtils.getContractCount(demon.getDemon(), player);
+            double angle = Math.atan2(player.posZ - center.z, player.posX - center.x);
+            double step = Math.PI * 0.25f / ((float)count * 0.75f);
+            angle -= step * (count -1) * 0.5;
+            for (int i = 0 ; i < count; i++) {
+                EntityContract contract = new EntityContract(world);
+                contract.setPosition(center.x + Math.cos(angle) * 2, center.y + 1, center.z + Math.sin(angle) * 2);
+                angle += step;
+                world.spawnEntity(contract);
+            }
         }
         ticksActive++;
         isDirty = true;
