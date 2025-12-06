@@ -42,6 +42,7 @@ public class EntityDemonicTrader extends EntityAbstractDemon {
         super.entityInit();
         dataManager.register(POSE, (byte) 0);
         enablePersistence();
+        setSize(1.5f, 3.2f);
     }
 
     @Override

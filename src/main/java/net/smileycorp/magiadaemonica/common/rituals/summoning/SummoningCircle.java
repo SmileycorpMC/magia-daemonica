@@ -211,7 +211,7 @@ public class SummoningCircle implements Ritual {
             angle -= step * (count -1) * 0.5;
             for (int i = 0 ; i < count; i++) {
                 EntityContract contract = new EntityContract(world);
-                contract.setPosition(center.x + Math.cos(angle) * 2, center.y + 1, center.z + Math.sin(angle) * 2);
+                contract.setPosition(center.x + Math.cos(angle) * 2, center.y + 1.5, center.z + Math.sin(angle) * 2);
                 angle += step;
                 world.spawnEntity(contract);
             }

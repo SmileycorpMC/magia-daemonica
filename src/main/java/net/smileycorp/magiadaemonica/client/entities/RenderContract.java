@@ -43,7 +43,7 @@ public class RenderContract extends Render<EntityContract> {
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder buffer = tessellator.getBuffer();
         buffer.begin(7, DefaultVertexFormats.POSITION_TEX);
-        float yOffset = 0.5f;
+        float yOffset = 0;
         if (entity.ticksExisted > 40) yOffset += Math.sin((entity.ticksExisted - 40) * 0.1) * 0.05;
         GlStateManager.translate(-0.25f, yOffset, -0.25f);
         //contract

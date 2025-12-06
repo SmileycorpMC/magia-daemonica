@@ -19,12 +19,11 @@ public class EntityContract extends Entity {
 
     public EntityContract(World worldIn) {
         super(worldIn);
+        setSize(0.5f, 0.5f);
     }
 
     @Override
-    protected void entityInit() {
-
-    }
+    protected void entityInit() {}
 
     @Override
     public boolean hasNoGravity() {
