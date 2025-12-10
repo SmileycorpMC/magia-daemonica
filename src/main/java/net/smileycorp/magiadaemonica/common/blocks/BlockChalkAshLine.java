@@ -1,5 +1,6 @@
 package net.smileycorp.magiadaemonica.common.blocks;
 
+import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
@@ -11,6 +12,7 @@ public class BlockChalkAshLine extends BlockLine {
 
     public BlockChalkAshLine() {
         super("chalk_ash_line");
+        setSoundType(SoundType.SAND);
     }
 
     @Override

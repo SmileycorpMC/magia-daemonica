@@ -2,9 +2,12 @@ package net.smileycorp.magiadaemonica.client;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.color.ItemColors;
 import net.minecraft.client.resources.IReloadableResourceManager;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.potion.PotionUtils;
+import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
@@ -72,6 +75,12 @@ public class ClientProxy extends CommonProxy {
 				new ModelResourceLocation(Constants.locStr("lavender"), "inventory"));
 		RenderingRegistry.registerEntityRenderingHandler(EntityDemonicTrader.class, RenderDemon::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityContract.class, RenderContract::new);
+	}
+
+	@SubscribeEvent
+	public static void itemColourHandler(ColorHandlerEvent.Item event) {
+		ItemColors registry = event.getItemColors();
+		registry.registerItemColorHandler(((stack, tintIndex) -> tintIndex > 0 ? PotionUtils.getColor(stack) : -1), DaemonicaItems.CALIX_PERPETUUS);
 	}
 	
 }

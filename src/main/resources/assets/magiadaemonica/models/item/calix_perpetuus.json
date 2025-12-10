@@ -1,0 +1,12 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "magiadaemonica:items/calix_perpetuus"
+    },
+	"overrides": [
+    {
+      "predicate": { "magiadaemonica:filled": 1 },
+      "model": "magiadaemonica:item/calix_perpetuus_filled"
+    }
+  ]
+}

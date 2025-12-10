@@ -54,11 +54,11 @@ public class GUIContract extends GuiScreen {
         }
         if (signTicks >= 0) {
             String name = mc.player.getDisplayName().getFormattedText();
-            if (signTicks++/20 > name.length() + 20) {
+            if (signTicks++/5 > name.length() + 20) {
                 mc.displayGuiScreen(null);
             }
-            if (signTicks > 20) mc.fontRenderer.drawString(signTicks/20 >= name.length() ? name :
-                            name.substring(0, (signTicks/20) - 1),
+            if (signTicks > 5) mc.fontRenderer.drawString(signTicks/5 >= name.length() ? name :
+                            name.substring(0, (signTicks/5) - 1),
                     x + SIGN_X + 1, y + SIGN_Y + 1, 0x7A0000, false);
         }
         GlStateManager.pushMatrix();

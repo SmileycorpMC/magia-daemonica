@@ -25,6 +25,8 @@ public class DaemonicaItems {
     //artifacts
     public static final ItemSicaInfernalem SICA_INFERNALEM = new ItemSicaInfernalem();
     public static final ItemPeccatumPrimordiale PECCATUM_PRIMORDIALE = new ItemPeccatumPrimordiale();
+    public static final ItemCretaAeterna CRETA_AETERNA = new ItemCretaAeterna();
+    public static final ItemCalixPerpetuus CALIX_PERPETUUS = new ItemCalixPerpetuus();
 
     @SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> event) {

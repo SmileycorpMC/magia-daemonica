@@ -10,6 +10,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
+import net.smileycorp.magiadaemonica.common.Constants;
 import net.smileycorp.magiadaemonica.common.rituals.Ritual;
 import net.smileycorp.magiadaemonica.common.rituals.Rituals;
 
@@ -18,6 +19,13 @@ public class ItemSicaInfernalem extends ItemRelic {
     public ItemSicaInfernalem() {
         super("sica_infernalem");
         setMaxStackSize(1);
+        addPropertyOverride(Constants.loc("glowing"), (stack, world, entity) -> {
+            if (entity == null || world == null) return 0;
+            if(world.getWorldTime() % 24000 < 13000) return 0;
+            Ritual ritual = Rituals.get(world).getRitual(entity.posX, entity.posY, entity.posZ, 7);
+            if (ritual == null) return 0;
+            return ritual.isActive() ? 0 : 1;
+        });
     }
 
     @Override

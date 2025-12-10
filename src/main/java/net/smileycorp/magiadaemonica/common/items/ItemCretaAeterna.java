@@ -14,13 +14,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.smileycorp.magiadaemonica.common.blocks.DaemonicaBlocks;
 
-public class ItemChalkStick extends ItemDaemonicaEdible {
+public class ItemCretaAeterna extends ItemRelic {
 
-    public ItemChalkStick() {
-        super("chalk_stick", 1, 0.8f);
-        setMaxStackSize(1);
-        setMaxDamage(75);
-        setAlwaysEdible();
+    public ItemCretaAeterna() {
+        super("creta_aeterna");
     }
 
     @Override
@@ -29,18 +26,30 @@ public class ItemChalkStick extends ItemDaemonicaEdible {
         if (side != EnumFacing.UP || player.isSneaking() |! player.canPlayerEdit(pos, side, stack)
                 || stack.getItem() != this) return super.onItemUse(player, world, pos, hand, side, hitX, hitY, hitZ);
         IBlockState state = world.getBlockState(pos);
-        if (state.getBlock() != DaemonicaBlocks.CHALK_ASH_LINE) {
-            if (!world.isSideSolid(pos, EnumFacing.UP)) return super.onItemUse(player, world, pos, hand, side, hitX, hitY, hitZ);
-            pos = pos.up();
-            state = world.getBlockState(pos);
-            if (!state.getBlock().isReplaceable(world, pos)) return super.onItemUse(player, world, pos, hand, side, hitX, hitY, hitZ);
+        if (state.getBlock() == DaemonicaBlocks.CHALK_ASH_LINE) {
+            replaceAsh(world, pos);
+            SoundType sound = SoundType.STONE;
+            world.playSound(player, pos, sound.getPlaceSound(), SoundCategory.BLOCKS, (sound.getVolume() + 1) / 2f, sound.getPitch() * 0.8f);
+            if (player instanceof EntityPlayerMP) CriteriaTriggers.PLACED_BLOCK.trigger((EntityPlayerMP)player, pos, stack);
+            return EnumActionResult.SUCCESS;
         }
+        if (!world.isSideSolid(pos, EnumFacing.UP)) return super.onItemUse(player, world, pos, hand, side, hitX, hitY, hitZ);
+        pos = pos.up();
+        state = world.getBlockState(pos);
+        if (!state.getBlock().isReplaceable(world, pos)) return super.onItemUse(player, world, pos, hand, side, hitX, hitY, hitZ);
         if (!world.setBlockState(pos, DaemonicaBlocks.CHALK_LINE.getDefaultState(), 11)) return EnumActionResult.PASS;
         SoundType sound = SoundType.STONE;
         world.playSound(player, pos, sound.getPlaceSound(), SoundCategory.BLOCKS, (sound.getVolume() + 1) / 2f, sound.getPitch() * 0.8f);
         if (player instanceof EntityPlayerMP) CriteriaTriggers.PLACED_BLOCK.trigger((EntityPlayerMP)player, pos, stack);
-        if (stack.isItemStackDamageable()) stack.damageItem(1, player);
         return EnumActionResult.SUCCESS;
+    }
+
+    public void replaceAsh(World world, BlockPos pos) {
+        world.setBlockState(pos, DaemonicaBlocks.CHALK_LINE.getDefaultState(), 11);
+        for (EnumFacing facing : EnumFacing.HORIZONTALS) {
+            BlockPos pos1 = pos.offset(facing);
+            if (world.getBlockState(pos1).getBlock() == DaemonicaBlocks.CHALK_ASH_LINE) replaceAsh(world, pos1);
+        }
     }
 
 }

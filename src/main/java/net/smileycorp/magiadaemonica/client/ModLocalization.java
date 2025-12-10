@@ -40,7 +40,6 @@ public class ModLocalization implements ISelectiveResourceReloadListener {
                     byte[] data = new byte[resource.getInputStream().available()];
                     resource.getInputStream().read(data);
                     localeMap.put(lang, new String(data));
-                    System.out.println(loc.toString());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

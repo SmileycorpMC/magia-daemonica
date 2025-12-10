@@ -5,6 +5,7 @@ import com.google.common.collect.Maps;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.ai.attributes.*;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumRarity;
@@ -14,7 +15,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.common.IRarity;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.smileycorp.magiadaemonica.common.DaemonicaAttributes;
 import net.smileycorp.magiadaemonica.common.demons.Demon;
+import net.smileycorp.magiadaemonica.common.demons.Rank;
 import net.smileycorp.magiadaemonica.common.items.ItemRelic;
 
 import java.math.BigDecimal;
@@ -28,6 +31,7 @@ public class ContractsUtils {
 
     private static final UUID COST = UUID.fromString("cdc852af-afe8-4eac-85bc-3f90e670a8da");
     private static final UUID BONUS = UUID.fromString("77f9ece5-8597-4b7a-8705-898598878e06");
+    private static final UUID SUMMON_AFFINITY = UUID.fromString("6143429d-3091-47dd-a1ff-d2116f53fb35");
 
     private static Map<EnumRarity, List<ItemStack>> ITEMS_BY_RARITY;
     private static List<ItemStack> ENCHANTABLE_ITEMS;
@@ -41,7 +45,7 @@ public class ContractsUtils {
             value -= modifier.getAmount();
             attributes.removeModifier(modifier);
         }
-        attributes.applyModifier(new AttributeModifier(COST, "magiadaemonicosts", value, 0));
+        attributes.applyModifier(new AttributeModifier(COST, "magiadaemonicacosts", value, 0));
     }
 
     public static void addBonusAttribute(EntityPlayer player, String attribute, double value) {
@@ -53,7 +57,7 @@ public class ContractsUtils {
             value += modifier.getAmount();
             attributes.removeModifier(modifier);
         }
-        attributes.applyModifier(new AttributeModifier(BONUS, "magiadaemonibonus", value, 0));
+        attributes.applyModifier(new AttributeModifier(BONUS, "magiadaemonicabonus", value, 0));
     }
 
     public static void takeExperience(EntityPlayer player, int amount) {
@@ -154,6 +158,17 @@ public class ContractsUtils {
 
     public static float round(float amount, int places) {
         return BigDecimal.valueOf(amount).setScale(places, RoundingMode.HALF_UP).floatValue();
+    }
+
+    public static void addAffinity(EntityPlayerMP player, Demon demon) {
+        IAttributeInstance attributes = player.getEntityAttribute(DaemonicaAttributes.INFERNAL_AFFINITY);
+        AttributeModifier modifier = attributes.getModifier(BONUS);
+        double value = 0.005 * (Rank.values().length - demon.getRank().ordinal() + 1);
+        if (modifier != null) {
+            value += modifier.getAmount();
+            attributes.removeModifier(modifier);
+        }
+        attributes.applyModifier(new AttributeModifier(SUMMON_AFFINITY, "summon_affinity", value, 0));
     }
 
 }

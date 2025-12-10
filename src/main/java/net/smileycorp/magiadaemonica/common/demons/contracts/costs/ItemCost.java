@@ -62,7 +62,6 @@ public class ItemCost implements Cost {
 
     @Override
     public Object[] getDescriptionArguments() {
-        System.out.println("contract.magiadaemonica.cost.item");
         StringBuilder builder = new StringBuilder();
         builder.append(stack.getCount() + "x ");
         builder.append(stack.getDisplayName());
