@@ -13,7 +13,7 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class ItemPeccatumPrimordiale extends ItemDaemonicaEdible {
+public class ItemPeccatumPrimordiale extends ItemDaemonicaEdible implements DemonRelic {
 
     public ItemPeccatumPrimordiale() {
         super("peccatum_primordiale", 4, 0.3f);
