@@ -1,23 +1,59 @@
 itemGroup.magiadaemonica.tab=Magia Daemonica
 
-item.magiadaemonica.chalk_stick.name=Chalk Stick
+item.magiadaemonica.chalk_ash_stick.name=Chalk Stick
 item.magiadaemonica.suet.name=Beef Suet
 item.magiadaemonica.tallow.name=Tallow
 
 item.magiadaemonica.sica_infernalem.name=Sica Infernalem
-item.magicadaemonica.sica_infernalem.tooltip=A strange dagger made of some blackened stone
+item.magiadaemonica.sica_infernalem.tooltip=A strange dagger made of some blackened stone
 item.magiadaemonica.peccatum_primordiale.name=Peccatum Primordiale
-item.magicadaemonica.peccatum_primordiale.tooltip=An odd apple, someone seems to have taken a bite out of it
+item.magiadaemonica.peccatum_primordiale.tooltip=An odd apple, someone seems to have taken a bite out of it
 
 tile.magiadaemonica.chalk.name=Chalk
-tile.magiadaemonica.chalk_stairs.name=Chalk Stairs
+tile.magiadaemonica.chalk_ash_stairs.name=Chalk Stairs
 tile.magiadaemonica.ChalkSlab.name=Chalk Slab
 tile.magiadaemonica.lavender.name=Lavender
 tile.magiadaemonica.scented_candle.name=Scented Candle
 
 effect.magiadaemonica.tremor=Tremor
 
-entity.magicadaemonica.demonic_trader.name=Demonic Trader
+entity.magiadaemonica.demonic_trader.name=Demonic Trader
+
+demon.magiadaemonica.name=%2$s of %3$s, %1$s
+
+demon.magiadaemonica.rank.prince=Prince
+demon.magiadaemonica.rank.archbaron=Archbaron
+demon.magiadaemonica.rank.baron=Baron
+demon.magiadaemonica.rank.tyrant=Tyrant
+demon.magiadaemonica.rank.greater_lord=Greater Lord
+demon.magiadaemonica.rank.lesser_lord=Lesser Lord
+demon.magiadaemonica.rank.archfiend=Archfiend
+demon.magiadaemonica.rank.greater_demon=Greater Demon
+demon.magiadaemonica.rank.lesser_demon=Lesser Demon
+demon.magiadaemonica.rank.cambion=Cambion
+demon.magiadaemonica.rank.greater_imp=Greater Imp
+demon.magiadaemonica.rank.lesser_imp=Lesser Imp
+
+demon.magiadaemonica.domain.pride=Pride
+demon.magiadaemonica.domain.greed=Greed
+demon.magiadaemonica.domain.lust=Lust
+demon.magiadaemonica.domain.envy=Envy
+demon.magiadaemonica.domain.gluttony=Gluttony
+demon.magiadaemonica.domain.wrath=Wrath
+demon.magiadaemonica.domain.sloth=Sloth
+
+contract.magiadaemonica.cost.experience=%1$s experience
+contract.magiadaemonica.cost.experience_level=%1$s experience levels
+contract.magiadaemonica.cost.health=%1$s max health
+contract.magiadaemonica.cost.item=%1$s
+contract.magiadaemonica.cost.soul=%1$s share in your soul
+contract.magiadaemonica.cost.soul_percentage=%1$s share of your remaining soul
+
+contract.magiadaemonica.offering.item=%1$s
+contract.magiadaemonica.offering.item.enchanted=Enchanted
+contract.magiadaemonica.offering.effect=permanent %1$s until your death**
+
+contract.magiadaemonica.sign=Sign
 
 command.magiadaemonica.soul.get.success=%1$s has %2$s soul remaining.
 command.magiadaemonica.soul.change.success=Changed soul for %1$s from %2$s to %3$s.

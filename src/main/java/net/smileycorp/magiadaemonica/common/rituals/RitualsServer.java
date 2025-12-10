@@ -9,7 +9,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
-import net.smileycorp.magiadaemonica.common.Constants;
 import net.smileycorp.magiadaemonica.common.WorldDataDaemonica;
 import net.smileycorp.magiadaemonica.common.network.PacketHandler;
 import net.smileycorp.magiadaemonica.common.network.RemoveRitualMessage;
@@ -19,8 +18,6 @@ import java.util.Collection;
 import java.util.Map;
 
 public class RitualsServer implements Rituals {
-
-    public static final String DATA = Constants.MODID + "_rituals";
 
     private final Map<BlockPos, Ritual> rituals = Maps.newHashMap();
     private final WorldDataDaemonica data;
@@ -101,27 +98,25 @@ public class RitualsServer implements Rituals {
         }
     }
 
-    public void readFromNBT(NBTTagCompound nbt) {
-        if (!nbt.hasKey("rituals")) return;
-        for (NBTBase tag : nbt.getTagList("rituals", 10)) {
+    public void readFromNBT(NBTTagList nbt) {
+        for (NBTBase tag : nbt) {
             Ritual ritual = RitualsRegistry.getRitualFromNBT((NBTTagCompound) tag);
             if (ritual != null) rituals.put(ritual.getCenterPos(), ritual);
         }
     }
 
-    public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
-        NBTTagList rituals = new NBTTagList();
-        for (Ritual ritual : this.rituals.values()) {
+    public NBTTagList writeToNBT() {
+        NBTTagList nbt = new NBTTagList();
+        for (Ritual ritual : rituals.values()) {
             NBTTagCompound tag = ritual.writeToNBT();
             tag.setString("id", ritual.getID().toString());
-            rituals.appendTag(tag);
+            nbt.appendTag(tag);
         }
-        nbt.setTag("rituals", rituals);
         return nbt;
     }
 
     public static RitualsServer get(WorldServer world) {
-        return WorldDataDaemonica.get(world).getRituals();
+        return WorldDataDaemonica.get().getRituals(world);
     }
 
 }

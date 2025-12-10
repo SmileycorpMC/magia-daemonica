@@ -27,9 +27,10 @@ public class EntityDemonicTrader extends EntityAbstractDemon {
     protected static final AnimationBuilder SUMMON = new AnimationBuilder().playAndHold("animation.demon.summon");
     protected static final AnimationBuilder IDLE = new AnimationBuilder().loop("animation.demon.idle");
     protected static final AnimationBuilder STATIC = new AnimationBuilder().loop("animation.demon.static");
+    public static final DataParameter<Byte> POSE = EntityDataManager.createKey(EntityDemonicTrader.class, DataSerializers.BYTE);
 
     private final AnimationFactory factory = new AnimationFactory(this);
-    public static final DataParameter<Byte> POSE = EntityDataManager.createKey(EntityDemonicTrader.class, DataSerializers.BYTE);
+
     private BlockPos ritual = null;
     private EntityPlayer player;
 

@@ -24,12 +24,12 @@ public class ItemPeccatumPrimordiale extends ItemDaemonicaEdible {
     @Override
     public void addInformation(ItemStack stack, @Nullable World world, List<String> tooltip, ITooltipFlag flag) {
         super.addInformation(stack, world, tooltip, flag);
-        tooltip.add(new TextComponentTranslation("item.magicadaemonica.peccatum_primordiale.tooltip").getFormattedText());
+        tooltip.add(new TextComponentTranslation("item.magiadaemonica.peccatum_primordiale.tooltip").getFormattedText());
     }
 
     @Override
     public IRarity getForgeRarity(ItemStack stack) {
-        return ItemRelic.RARITY;
+        return DemonRelic.RARITY;
     }
 
     @Override

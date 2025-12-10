@@ -1,5 +1,6 @@
 package net.smileycorp.magiadaemonica.common.entities;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
@@ -41,6 +42,14 @@ public abstract class EntityAbstractDemon extends EntityLiving implements IAnima
         return false;
     }
 
+    @Override
+    public boolean canBeCollidedWith() {
+        return false;
+    }
+
+    @Override
+    public void collideWithEntity(Entity entity) {}
+
     public Demon getDemon() {
         return dataManager.get(DEMON);
     }
@@ -53,7 +62,7 @@ public abstract class EntityAbstractDemon extends EntityLiving implements IAnima
     public void readEntityFromNBT(NBTTagCompound nbt) {
         super.readEntityFromNBT(nbt);
         if (nbt.hasKey("demonID") && world instanceof WorldServer)
-            setDemon(DemonRegistry.get((WorldServer) world).get(UUID.fromString(nbt.getString("demonID"))));
+            setDemon(DemonRegistry.get().get(UUID.fromString(nbt.getString("demonID"))));
         if (nbt.hasKey("animationTicks")) dataManager.set(ANIMATION_TICKS, nbt.getInteger("animationTicks"));
     }
 

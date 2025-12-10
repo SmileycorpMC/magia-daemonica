@@ -4,6 +4,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializer;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 
 import java.io.IOException;
@@ -42,8 +43,8 @@ public class Demon {
         return rank;
     }
 
-    public boolean isPersistent() {
-        return rank.isPersistent();
+    public ITextComponent getFormalName() {
+        return domain.getFormalName(name, rank);
     }
 
     @Override

@@ -17,19 +17,20 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.smileycorp.atlas.api.util.DirectionUtils;
 import net.smileycorp.magiadaemonica.common.Constants;
 import net.smileycorp.magiadaemonica.common.blocks.BlockChalkLine;
 import net.smileycorp.magiadaemonica.common.blocks.DaemonicaBlocks;
 import net.smileycorp.magiadaemonica.common.demons.DemonRegistry;
+import net.smileycorp.magiadaemonica.common.demons.contracts.ContractRegistry;
 import net.smileycorp.magiadaemonica.common.demons.contracts.ContractsUtils;
 import net.smileycorp.magiadaemonica.common.entities.EntityAbstractDemon;
 import net.smileycorp.magiadaemonica.common.entities.EntityContract;
 import net.smileycorp.magiadaemonica.common.entities.EntityDemonicTrader;
 import net.smileycorp.magiadaemonica.common.potions.DaemonicaPotions;
 import net.smileycorp.magiadaemonica.common.rituals.Ritual;
+import net.smileycorp.magiadaemonica.common.rituals.Rituals;
 import net.smileycorp.magiadaemonica.common.rituals.Rotation;
 
 import java.util.Optional;
@@ -54,6 +55,7 @@ public class SummoningCircle implements Ritual {
     private EntityDemonicTrader demon;
     private UUID playerUUID;
     private EntityPlayer player;
+    private boolean end;
 
     public SummoningCircle(ResourceLocation name, BlockPos pos, int width, int height) {
         this.pos = pos;
@@ -71,16 +73,27 @@ public class SummoningCircle implements Ritual {
                 mutable = new BlockPos.MutableBlockPos(pos.getX() + x, pos.getY(), pos.getZ() + z);
                 IBlockState state = world.getBlockState(mutable);
                 if (state.getBlock() != DaemonicaBlocks.CHALK_LINE) continue;
-                world.setBlockState(mutable, state.withProperty(BlockChalkLine.RITUAL_STATE, ritualState));
+                state = state.withProperty(BlockChalkLine.RITUAL_STATE, ritualState);
+                world.setBlockState(mutable, state);
             }
         }
     }
 
     @Override
     public void remove(World world) {
-       setBlocks(world, BlockChalkLine.RitualState.NONE);
-       if (demon != null) demon.setPose(EntityDemonicTrader.Pose.DESPAWNING);
-       for (EntityContract contract : world.getEntitiesWithinAABB(EntityContract.class,
+        if (end) {
+            BlockPos.MutableBlockPos mutable;
+            for (int x = 0; x < width; x++) {
+                for (int z = 0; z < height; z++) {
+                    mutable = new BlockPos.MutableBlockPos(pos.getX() + x, pos.getY(), pos.getZ() + z);
+                    if (world.getBlockState(mutable).getBlock() != DaemonicaBlocks.CHALK_LINE) continue;
+                    world.setBlockState(mutable, DaemonicaBlocks.CHALK_ASH_LINE.getDefaultState());
+                }
+            }
+        }
+        else setBlocks(world, BlockChalkLine.RitualState.INACTIVE);
+        if (demon != null) demon.setPose(EntityDemonicTrader.Pose.DESPAWNING);
+        for (EntityContract contract : world.getEntitiesWithinAABB(EntityContract.class,
                new AxisAlignedBB(getCenterPos()).grow(width, 10, height))) contract.setDead();
     }
 
@@ -166,6 +179,7 @@ public class SummoningCircle implements Ritual {
             return;
         }
         if (!active) return;
+        if (!getPlayer().isPresent()) return;
         //if (ticksActive == 3) world.setBlockState(new BlockPos(center), Blocks.FIRE.getDefaultState());
         if (ticksActive == 80) {
             world.setBlockState(new BlockPos(center), Blocks.AIR.getDefaultState());
@@ -197,24 +211,33 @@ public class SummoningCircle implements Ritual {
             world.playSound(null, center.x, center.y, center.z, SoundEvents.ENTITY_WITHER_BREAK_BLOCK, SoundCategory.HOSTILE, 0.75f, 1);
         if (ticksActive == 600) {
             demon = new EntityDemonicTrader(world);
-            demon.setDemon(DemonRegistry.get((WorldServer) world).create(world.rand, power));
+            demon.setDemon(DemonRegistry.get().create(world.rand, power));
             demon.setPose(EntityDemonicTrader.Pose.SUMMONING);
             demon.setPosition(center.x, center.y, center.z);
             demon.setRitual(getCenterPos());
-            demon.getLookHelper().setLookPositionWithEntity(player, 0, 0);
+            demon.getLookHelper().setLookPositionWithEntity(getPlayer().get(), 0, 0);
             world.spawnEntity(demon);
         }
         if (ticksActive == 680) {
+            EntityPlayer player = getPlayer().get();
             int count = ContractsUtils.getContractCount(demon.getDemon(), player);
             double angle = Math.atan2(player.posZ - center.z, player.posX - center.x);
-            double step = Math.PI * 0.25f / ((float)count * 0.75f);
+            double step = Math.PI * 0.25f / ((float)count * 0.5f);
             angle -= step * (count -1) * 0.5;
+            System.out.println(demon.getDemon());
             for (int i = 0 ; i < count; i++) {
                 EntityContract contract = new EntityContract(world);
                 contract.setPosition(center.x + Math.cos(angle) * 2, center.y + 1.5, center.z + Math.sin(angle) * 2);
-                angle += step;
+                contract.setContract(ContractRegistry.generateContract(demon.getDemon(), player));
+                contract.setRitual(getCenterPos());
                 world.spawnEntity(contract);
+                System.out.println(contract.getContract().writeToNBT().toString());
+                angle += step;
             }
+        }
+        if (power-- < 0 || world.isDaytime()) {
+            end = true;
+            Rituals.get(world).removeRitual(getCenterPos());
         }
         ticksActive++;
         isDirty = true;
@@ -289,6 +312,11 @@ public class SummoningCircle implements Ritual {
     @Override
     public EntityAbstractDemon getDemon() {
         return demon;
+    }
+
+    public void accept(World world) {
+        end = true;
+        Rituals.get(world).removeRitual(getCenterPos());
     }
 
     @Override

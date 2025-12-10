@@ -1,6 +1,7 @@
 package net.smileycorp.magiadaemonica.common.demons;
 
 import net.minecraft.util.math.MathHelper;
+import net.smileycorp.magiadaemonica.common.Constants;
 
 import java.util.Locale;
 import java.util.Random;
@@ -10,10 +11,10 @@ public enum Rank {
     PRINCE(5),
     ARCHBARON(4),
     BARON(4),
-    ARCHLORD(3),
+    TYRANT(3),
     GREATER_LORD(3),
     LESSER_LORD(3),
-    ARCHDEMON(2),
+    ARCHFIEND(2),
     GREATER_DEMON(2),
     LESSER_DEMON(2),
     CAMBION(1),
@@ -33,13 +34,17 @@ public enum Rank {
         return name;
     }
 
+    public int getBaseContractCount() {
+        return contracts;
+    }
+
+    public String getTranslationKey() {
+        return "demon." + Constants.MODID + ".rank." + name;
+    }
+
     public String getDemonName(Random rand, Domain domain) {
         if (this == PRINCE) return domain.getPrince();
         return DemonNameGenerator.generate(rand);
-    }
-
-    public boolean isPersistent() {
-        return this == PRINCE;
     }
 
     public static Rank get(String name) {
@@ -50,12 +55,8 @@ public enum Rank {
     }
 
     public static Rank get(Random rand, int points) {
-        int mult = (int) Math.round(MathHelper.clamp(points/1000f + (1 + rand.nextGaussian() * MULTIPLIER), 1, values().length));
+        int mult = (int) Math.round(MathHelper.clamp(points/1000f + (1 + rand.nextGaussian() * MULTIPLIER), 2, values().length));
         return values()[values().length - mult];
-    }
-
-    public int getBaseContractCount() {
-        return contracts;
     }
 
 }

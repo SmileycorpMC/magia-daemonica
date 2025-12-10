@@ -1,25 +1,29 @@
 package net.smileycorp.magiadaemonica.common;
 
+import com.google.common.collect.Maps;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.storage.WorldSavedData;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.smileycorp.magiadaemonica.common.demons.DemonRegistry;
 import net.smileycorp.magiadaemonica.common.rituals.RitualsServer;
+
+import java.util.Map;
 
 public class WorldDataDaemonica extends WorldSavedData {
 
     public static final String DATA = Constants.MODID;
 
     private WorldServer world;
-    private final RitualsServer rituals = new RitualsServer(this);
+    private final Map<Integer, RitualsServer> rituals = Maps.newHashMap();
     private final DemonRegistry demonRegistry = new DemonRegistry(this);
 
     public WorldDataDaemonica(String data) {
         super(data);
     }
 
-    public RitualsServer getRituals() {
-        return rituals;
+    public RitualsServer getRituals(WorldServer world) {
+        return rituals.computeIfAbsent(world.provider.getDimension(), id -> new RitualsServer(this));
     }
 
     public DemonRegistry getDemonRegistry() {
@@ -32,18 +36,29 @@ public class WorldDataDaemonica extends WorldSavedData {
 
     @Override
     public void readFromNBT(NBTTagCompound nbt) {
-        rituals.readFromNBT(nbt);
+        if (nbt.hasKey("rituals")) {
+            NBTTagCompound compound = nbt.getCompoundTag("rituals");
+            for (String key : compound.getKeySet()) {
+                RitualsServer rituals = new RitualsServer(this);
+                rituals.readFromNBT(compound.getTagList(key, 10));
+                this.rituals.put(Integer.parseInt(key), rituals);
+            }
+        }
         demonRegistry.readFromNBT(nbt);
     }
 
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
-        rituals.writeToNBT(nbt);
+        NBTTagCompound rituals = new NBTTagCompound();
+        for (Map.Entry<Integer, RitualsServer> entry : this.rituals.entrySet())
+            rituals.setTag(entry.getKey().toString(), entry.getValue().writeToNBT());
+        nbt.setTag("rituals", rituals);
         demonRegistry.writeToNBT(nbt);
         return nbt;
     }
 
-    public static WorldDataDaemonica get(WorldServer world) {
+    public static WorldDataDaemonica get() {
+        WorldServer world = FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(0);
         WorldDataDaemonica data = (WorldDataDaemonica) world.getMapStorage().getOrLoadData(WorldDataDaemonica.class, DATA);
         if (data == null) {
             data = new WorldDataDaemonica(DATA);

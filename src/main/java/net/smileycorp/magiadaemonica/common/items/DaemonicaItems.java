@@ -31,8 +31,6 @@ public class DaemonicaItems {
         IForgeRegistry<Item> registry = event.getRegistry();
         for (Block block : DaemonicaBlocks.BLOCKS) if (block instanceof BlockProperties) register(registry, new ItemDaemonicaBlock(block));
         DaemonicaBlocks.CHALK.registerItems(registry);
-        register(registry, CHALK_STICK);
-        register(registry, MATERIAL);
         for (Field field : DaemonicaItems.class.getDeclaredFields()) {
             try {
                 Object object = field.get(null);

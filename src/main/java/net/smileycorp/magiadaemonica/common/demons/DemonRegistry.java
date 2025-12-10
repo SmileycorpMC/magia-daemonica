@@ -4,7 +4,6 @@ import com.google.common.collect.Maps;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.world.WorldServer;
 import net.smileycorp.magiadaemonica.common.WorldDataDaemonica;
 
 import java.util.Map;
@@ -68,8 +67,8 @@ public class DemonRegistry {
         return nbt;
     }
 
-    public static DemonRegistry get(WorldServer world) {
-        return WorldDataDaemonica.get(world).getDemonRegistry();
+    public static DemonRegistry get() {
+        return WorldDataDaemonica.get().getDemonRegistry();
     }
 
 }

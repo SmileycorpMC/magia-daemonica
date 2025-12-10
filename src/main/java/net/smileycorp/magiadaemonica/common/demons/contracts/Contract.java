@@ -1,9 +1,13 @@
 package net.smileycorp.magiadaemonica.common.demons.contracts;
 
 import com.google.common.collect.Lists;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.world.WorldServer;
+import net.smileycorp.magiadaemonica.common.demons.Demon;
+import net.smileycorp.magiadaemonica.common.demons.DemonRegistry;
 import net.smileycorp.magiadaemonica.common.demons.contracts.costs.Cost;
 import net.smileycorp.magiadaemonica.common.demons.contracts.offerings.Offering;
 
@@ -36,6 +40,38 @@ public class Contract {
         return this;
     }
 
+    public Demon getDemon(WorldServer world) {
+        return DemonRegistry.get().get(demon);
+    }
+
+    public String getCostText() {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < costs.size(); i++) {
+            if (i > 0) builder.append(", ");
+            builder.append(costs.get(i).getDescription().getFormattedText());
+        }
+        return builder.toString();
+    }
+
+    public String getOfferingText() {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < offerings.size(); i++) {
+            if (i > 0) builder.append(", ");
+            builder.append(offerings.get(i).getDescription().getFormattedText());
+        }
+        return builder.toString();
+    }
+
+    public boolean canPay(EntityPlayerMP player) {
+        for (Cost cost : costs) if (!cost.canPay(player)) return false;
+        return true;
+    }
+
+    public void accept(EntityPlayerMP player) {
+        costs.forEach(cost -> cost.pay(player));
+        offerings.forEach(offering -> offering.grant(player));
+    }
+
     public NBTTagCompound writeToNBT() {
         NBTTagCompound nbt = new NBTTagCompound();
         nbt.setUniqueId("demon", demon);
@@ -56,6 +92,5 @@ public class Contract {
             contract.addOfferings(ContractRegistry.readOffering((NBTTagCompound) offering));
         return contract;
     }
-
 
 }

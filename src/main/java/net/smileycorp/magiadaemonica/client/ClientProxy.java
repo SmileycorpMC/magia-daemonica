@@ -1,6 +1,8 @@
 package net.smileycorp.magiadaemonica.client;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.resources.IReloadableResourceManager;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -36,11 +38,14 @@ public class ClientProxy extends CommonProxy {
 		super.preInit(event);
 		MinecraftForge.EVENT_BUS.register(new ClientEventHandler());
 		RitualsClient.registerRitualRenderer(SummoningCircle.ID, new SummoningCircleRenderer());
+		ModLocalization.INSTANCE.register(Constants.loc("contract"));
+		ModLocalization.INSTANCE.register(Constants.loc("contract_fineprint"));
 	}
 	
 	@Override
 	public void init(FMLInitializationEvent event) {
 		super.init(event);
+		((IReloadableResourceManager)Minecraft.getMinecraft().getResourceManager()).registerReloadListener(ModLocalization.INSTANCE);
 	}
 	
 	@Override

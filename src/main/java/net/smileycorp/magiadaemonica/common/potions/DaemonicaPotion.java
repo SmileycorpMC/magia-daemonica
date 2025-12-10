@@ -16,6 +16,7 @@ public class DaemonicaPotion extends Potion {
 
     public DaemonicaPotion(boolean isBad, int colour, String name) {
         super(isBad, colour);
+        if (!isBad) setBeneficial();
         setPotionName("effect.magiadaemonica." + name);
         setRegistryName(Constants.loc(name));
         texture = Constants.loc("textures/mob_effect/" + name + ".png");

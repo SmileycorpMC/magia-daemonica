@@ -76,7 +76,7 @@ public class SummoningCircleRenderer implements RitualRenderer<SummoningCircle> 
             GlStateManager.enableBlend();
             textureManager.bindTexture(SUMMONING_RUNES);
             GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
-            float t = ritual.getTicksActive() + partialTicks;
+            float t = Minecraft.getSystemTime() * 0.03f;
             GlStateManager.pushMatrix();
             GlStateManager.rotate(MathHelper.wrapDegrees(t * 18), 0, 1, 0);
             renderPlane(-w - 0.25, 0.5, -h -0.25, w + 0.25, 4, h + 0.25,  0.678f, 0, 0, 0.5f, true);
@@ -127,7 +127,6 @@ public class SummoningCircleRenderer implements RitualRenderer<SummoningCircle> 
             GlStateManager.scale(0.5, 0.5, 1);
             GlStateManager.translate(17, 2.334f * ((float)Minecraft.getSystemTime() % 800000f / 800000f), 0);
             GlStateManager.rotate(18, 0, 0, 1);
-            GlStateManager.pushMatrix();
             GlStateManager.rotate(MathHelper.wrapDegrees(Minecraft.getSystemTime() * 3), 0, 1, 0);
             GlStateManager.scale(4.25, 1.0625, 1);
             GlStateManager.multMatrix(PROJECTION);
@@ -211,7 +210,6 @@ public class SummoningCircleRenderer implements RitualRenderer<SummoningCircle> 
         }
         buffer.setTranslation(0, 0, 0);
         tessellator.draw();
-        GlStateManager.disableAlpha();
         GlStateManager.disableFog();
         GlStateManager.enableLighting();
     }

@@ -37,8 +37,8 @@ apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'java'
 
 version = "1.12.2-0.1.0-DEV"
-group = "net.smileycorp.magicadaemonica"
-archivesBaseName = "Magica-Daemonica"
+group = "net.smileycorp.magiadaemonica"
+archivesBaseName = "magia-Daemonica"
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 

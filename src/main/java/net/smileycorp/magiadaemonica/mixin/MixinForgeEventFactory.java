@@ -28,7 +28,7 @@ public class MixinForgeEventFactory {
     and honestly considering that's already been done to call this method I'm not doing that shit
     */
     @Inject(at = @At(value = "TAIL"), method = "onPlayerBlockPlace")
-    private static void magicadaemonica$onPlayerBlockPlaced(EntityPlayer player, BlockSnapshot snapshot, EnumFacing direction, EnumHand hand, CallbackInfoReturnable<BlockEvent.PlaceEvent> callback) {
+    private static void magiadaemonica$onPlayerBlockPlaced(EntityPlayer player, BlockSnapshot snapshot, EnumFacing direction, EnumHand hand, CallbackInfoReturnable<BlockEvent.PlaceEvent> callback) {
         BlockEvent.PlaceEvent event = callback.getReturnValue();
         IBlockState state = event.getPlacedAgainst();
         World world = event.getWorld();
