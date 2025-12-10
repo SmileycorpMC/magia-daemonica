@@ -1,0 +1,7 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "magiadaemonica:items/calix_perpetuus",
+        "layer1": "magiadaemonica:items/calix_perpetuus_fluid"
+    }
+}

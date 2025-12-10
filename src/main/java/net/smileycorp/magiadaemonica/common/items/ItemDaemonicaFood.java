@@ -8,7 +8,7 @@ import net.smileycorp.magiadaemonica.common.Constants;
 public class ItemDaemonicaFood extends ItemDaemonicaEdible {
 
     public ItemDaemonicaFood() {
-        super("food", 1, 0.2f);
+        super("food", 1, 0.6f);
         setHasSubtypes(true);
     }
     

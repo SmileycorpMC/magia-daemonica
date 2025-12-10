@@ -4,16 +4,23 @@ item.magiadaemonica.chalk_stick.name=Chalk Stick
 item.magiadaemonica.suet.name=Beef Suet
 item.magiadaemonica.tallow.name=Tallow
 
+item.magiadaemonica.infernal_relic=§4§oInfernal Relic
+
 item.magiadaemonica.sica_infernalem.name=Sica Infernalem
-item.magiadaemonica.sica_infernalem.tooltip=A strange dagger made of some blackened stone
+item.magiadaemonica.sica_infernalem.tooltip=A strange dagger made of some blackened stone, it gives off a red glow when standing in a ritual circle
 item.magiadaemonica.peccatum_primordiale.name=Peccatum Primordiale
 item.magiadaemonica.peccatum_primordiale.tooltip=An odd apple, someone seems to have taken a bite out of it
+item.magiadaemonica.creta_aeterna.name=Creta Aeterna
+item.magiadaemonica.creta_aeterna.tooltip=A piece of chalk, it never seems to decay and glows warm when held near ash
+item.magiadaemonica.calix_perpetuus.name=Calix Perpetuus
+item.magiadaemonica.calix_perpetuus.tooltip=An old chalice, when filled with a fluid it can never be emptied
 
 tile.magiadaemonica.chalk.name=Chalk
 tile.magiadaemonica.chalk_stairs.name=Chalk Stairs
 tile.magiadaemonica.ChalkSlab.name=Chalk Slab
 tile.magiadaemonica.lavender.name=Lavender
 tile.magiadaemonica.scented_candle.name=Scented Candle
+tile.magiadaemonica.chalk_ash_line.name=Chalk Ash
 
 effect.magiadaemonica.tremor=Tremor
 
@@ -49,8 +56,11 @@ contract.magiadaemonica.cost.item=%1$s
 contract.magiadaemonica.cost.soul=%1$s share in your soul
 contract.magiadaemonica.cost.soul_percentage=%1$s share of your remaining soul
 
+attribute.name.magiadaemonica.infernal_affinity=Infernal Affinity
+
 contract.magiadaemonica.offering.item=%1$s
 contract.magiadaemonica.offering.item.enchanted=Enchanted
+contract.magiadaemonica.offering.item.infernal_relic=Infernal Relic
 contract.magiadaemonica.offering.effect=permanent %1$s until your death**
 
 contract.magiadaemonica.sign=Sign

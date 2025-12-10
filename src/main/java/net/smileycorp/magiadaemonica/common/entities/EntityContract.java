@@ -14,6 +14,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.smileycorp.magiadaemonica.common.demons.Demon;
 import net.smileycorp.magiadaemonica.common.demons.contracts.Contract;
+import net.smileycorp.magiadaemonica.common.demons.contracts.ContractsUtils;
 import net.smileycorp.magiadaemonica.common.network.OpenContractMessage;
 import net.smileycorp.magiadaemonica.common.network.ValidateContractMessage;
 import net.smileycorp.magiadaemonica.common.rituals.Ritual;
@@ -63,11 +64,13 @@ public class EntityContract extends Entity {
 
     public void accept(EntityPlayerMP player) {
         if (!contract.canPay(player)) return;
+        if (player.getHealth() <= 0.5) return;
+        player.attackEntityFrom(DamageSource.causeIndirectMagicDamage(player, null), 0.5f);
         accepted = true;
         ValidateContractMessage.send(player, this);
+        ContractsUtils.addAffinity(player, getDemon());
         contract.accept(player);
-        System.out.println(ritual);
-        getRitual().accept(world);
+        getRitual().dispel(world);
     }
 
     public void setRitual(BlockPos ritual) {

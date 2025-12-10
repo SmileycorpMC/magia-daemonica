@@ -59,7 +59,6 @@ public class ContractRegistry {
             if (rand.nextFloat() > 0.1) break;
             searchTier++;
         }
-        System.out.println(tier + ", " + searchTier);
         Offering.Entry<?>[] offerings = OFFERINGS.values().toArray(new Offering.Entry[OFFERINGS.size()]);
         Cost.Entry<?>[] costs = COSTS.values().toArray(new Cost.Entry[COSTS.size()]);
         Cost.Entry<?> cost = null;

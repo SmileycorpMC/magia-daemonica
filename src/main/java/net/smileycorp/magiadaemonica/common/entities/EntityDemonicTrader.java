@@ -9,6 +9,7 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.smileycorp.magiadaemonica.common.rituals.Ritual;
@@ -62,7 +63,12 @@ public class EntityDemonicTrader extends EntityAbstractDemon {
     @Override
     protected void updateAITasks() {
         super.updateAITasks();
-        if (world.isRemote) return;
+        if (world.isRemote) {
+            if (getPose() == Pose.DESPAWNING) for (int i = 0; i < 8; i++)
+                    world.spawnParticle(rand.nextInt(3) == 0 ? EnumParticleTypes.SMOKE_NORMAL : EnumParticleTypes.FLAME,
+                            posX, posY + 0.05, posZ, (0.5 - rand.nextFloat()) * 0.3, rand.nextFloat() * 0.05, (0.5 - rand.nextFloat()) * 0.3);
+            return;
+        }
         if (getPose() == Pose.DESPAWNING && getAnimationTicks() > 60) setDead();
         if (getPose() == Pose.SUMMONING && getAnimationTicks() >= 100) setPose(Pose.IDLE);
     }

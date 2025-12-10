@@ -9,13 +9,12 @@ import net.minecraftforge.common.IRarity;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class ItemRelic extends ItemDaemonica implements InfernalRelic {
+public class ItemEdibleRelic extends ItemDaemonicaEdible implements InfernalRelic {
 
-    public ItemRelic(String name) {
-        super(name);
+    public ItemEdibleRelic(String name, int hunger, float saturation) {
+        super(name, hunger, saturation);
         setMaxStackSize(1);
     }
-
     @Override
     public void addInformation(ItemStack stack, @Nullable World world, List<String> tooltip, ITooltipFlag flag) {
         super.addInformation(stack, world, tooltip, flag);

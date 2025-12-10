@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:item/handheld",
   "textures": {
-    "layer0": "magiadaemonica:items/sica_infernalem"
+    "layer0": "magiadaemonica:items/sica_infernalem_glowing"
   },
   "display": {
     "thirdperson_righthand": {
@@ -24,11 +24,5 @@
       "translation": [1.13, 3.2, 1.13],
       "scale": [0.6, 0.6, 0.6]
     }
-  },
-  "overrides": [
-    {
-      "predicate": { "magiadaemonica:glowing": 1 },
-      "model": "magiadaemonica:item/sica_infernalem_glowing"
-    }
-  ]
+  }
 }

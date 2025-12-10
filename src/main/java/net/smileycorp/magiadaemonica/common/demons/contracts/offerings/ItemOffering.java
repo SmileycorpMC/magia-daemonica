@@ -12,6 +12,7 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.smileycorp.magiadaemonica.common.Constants;
 import net.smileycorp.magiadaemonica.common.demons.Demon;
 import net.smileycorp.magiadaemonica.common.demons.contracts.ContractsUtils;
+import net.smileycorp.magiadaemonica.common.items.InfernalRelic;
 
 import java.util.Random;
 
@@ -21,10 +22,12 @@ public class ItemOffering implements Offering {
 
     private final ItemStack stack;
     private final boolean enchanted;
+    private final boolean relic;
 
     public ItemOffering(ItemStack stack) {
         this.stack = stack;
         this.enchanted = !stack.getEnchantmentTagList().hasNoTags();
+        this.relic = stack.getItem() instanceof InfernalRelic;
     }
 
     @Override
@@ -51,6 +54,8 @@ public class ItemOffering implements Offering {
 
     @Override
     public Object[] getDescriptionArguments() {
+        if (relic) return new Object[] {new TextComponentTranslation("contract." + Constants.MODID +
+                ".offering.item.infernal_relic").getFormattedText()};
         StringBuilder builder = new StringBuilder();
         if (stack.getCount() > 1) builder.append(stack.getCount() + "x ");
         if (enchanted) builder.append(new TextComponentTranslation("contract." + Constants.MODID

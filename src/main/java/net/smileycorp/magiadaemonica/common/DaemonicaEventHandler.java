@@ -3,6 +3,9 @@ package net.smileycorp.magiadaemonica.common;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityOwnable;
+import net.minecraft.entity.ai.attributes.AbstractAttributeMap;
+import net.minecraft.entity.ai.attributes.IAttributeInstance;
+import net.minecraft.entity.ai.attributes.RangedAttribute;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -16,6 +19,7 @@ import net.minecraftforge.event.world.ChunkWatchEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent.Clone;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.smileycorp.magiadaemonica.common.capabilities.DaemonicaCapabilities;
 import net.smileycorp.magiadaemonica.common.capabilities.Soul;
@@ -42,10 +46,13 @@ public class DaemonicaEventHandler {
 		if (event.player == null) return;
 		if (!(event.player instanceof EntityPlayerMP)) return;
 		SyncSoulMessage.send((EntityPlayerMP) event.player);
+		AbstractAttributeMap map = event.player.getAttributeMap();
+		IAttributeInstance attributes = map.getAttributeInstance(DaemonicaAttributes.INFERNAL_AFFINITY);
+		if (attributes == null) map.registerAttribute(DaemonicaAttributes.INFERNAL_AFFINITY);
 	}
 
 	@SubscribeEvent
-	public void clone(net.minecraftforge.event.entity.player.PlayerEvent.Clone event) {
+	public void clone(Clone event) {
 		EntityPlayer original = event.getOriginal();
 		EntityPlayer player = event.getEntityPlayer();
 		if (!original.hasCapability(DaemonicaCapabilities.SOUL, null) |!

@@ -57,9 +57,9 @@ public class RitualsServer implements Rituals {
     public void removeRitual(BlockPos pos) {
         Ritual ritual = getRitual(pos);
         if (ritual == null) return;
-        ritual.remove(world);
         pos = ritual.getCenterPos();
         rituals.remove(pos);
+        ritual.remove(world);
         PacketHandler.NETWORK_INSTANCE.sendToAllTracking(new RemoveRitualMessage(pos),
                 new NetworkRegistry.TargetPoint(world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(),
                         128));

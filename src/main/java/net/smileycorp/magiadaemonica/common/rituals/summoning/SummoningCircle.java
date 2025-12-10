@@ -20,6 +20,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.smileycorp.atlas.api.util.DirectionUtils;
 import net.smileycorp.magiadaemonica.common.Constants;
+import net.smileycorp.magiadaemonica.common.DaemonicaAttributes;
 import net.smileycorp.magiadaemonica.common.blocks.BlockChalkLine;
 import net.smileycorp.magiadaemonica.common.blocks.DaemonicaBlocks;
 import net.smileycorp.magiadaemonica.common.demons.DemonRegistry;
@@ -46,6 +47,7 @@ public class SummoningCircle implements Ritual {
     private final Vec3d center;
     private final ResourceLocation name;
     private final float[][] candles;
+    private final int maxPower;
     private boolean mirror;
     private Rotation rotation = Rotation.NORTH;
     private boolean isDirty;
@@ -64,6 +66,7 @@ public class SummoningCircle implements Ritual {
         this.center = new Vec3d(pos.getX() + width  * 0.5f, pos.getY(), pos.getZ() + height  * 0.5f);
         this.name = name;
         this.candles = SummoningCircles.getCandles(name);
+        maxPower = SummoningCircles.getMaxPower(name);
     }
 
     public void setBlocks(World world, BlockChalkLine.RitualState ritualState) {
@@ -94,7 +97,6 @@ public class SummoningCircle implements Ritual {
         if (demon != null) demon.setPose(EntityDemonicTrader.Pose.DESPAWNING);
         for (EntityContract contract : world.getEntitiesWithinAABB(EntityContract.class,
                new AxisAlignedBB(getCenterPos()).grow(width, 10, height))) contract.setDead();
-        markDirty(true);
     }
 
     @Override
@@ -160,6 +162,7 @@ public class SummoningCircle implements Ritual {
 
     @Override
     public void tick(World world) {
+        if (end) return;
         if (world.isRemote) {
             lastPower = power;
             Random rand = world.rand;
@@ -180,7 +183,6 @@ public class SummoningCircle implements Ritual {
         }
         if (!active) return;
         if (!getPlayer().isPresent()) return;
-        //if (ticksActive == 3) world.setBlockState(new BlockPos(center), Blocks.FIRE.getDefaultState());
         if (ticksActive == 80) {
             world.setBlockState(new BlockPos(center), Blocks.AIR.getDefaultState());
             BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos(pos);
@@ -224,23 +226,21 @@ public class SummoningCircle implements Ritual {
             double angle = Math.atan2(player.posZ - center.z, player.posX - center.x);
             double step = Math.PI * 0.25f / ((float)count * 0.5f);
             angle -= step * (count -1) * 0.5;
-            System.out.println(demon.getDemon());
             for (int i = 0 ; i < count; i++) {
                 EntityContract contract = new EntityContract(world);
                 contract.setPosition(center.x + Math.cos(angle) * 2, center.y + 1.5, center.z + Math.sin(angle) * 2);
                 contract.setContract(ContractRegistry.generateContract(demon.getDemon(), player));
                 contract.setRitual(getCenterPos());
                 world.spawnEntity(contract);
-                System.out.println(contract.getContract().writeToNBT().toString());
                 angle += step;
             }
         }
-        if (power-- < 0 || world.isDaytime()) {
-            end = true;
-            Rituals.get(world).removeRitual(getCenterPos());
+        if (ticksActive > 4000 || world.isDaytime()) {
+            dispel(world);
+            return;
         }
         ticksActive++;
-        isDirty = true;
+        markDirty(true);
     }
 
     private void spawnParticles(World world, EnumParticleTypes type) {
@@ -272,8 +272,8 @@ public class SummoningCircle implements Ritual {
     @Override
     public void addPower(int power) {
         this.power += power;
-        if (this.power > 2000) this.power = 2000;
-        isDirty = true;
+        if (this.power > maxPower) this.power = maxPower;
+        markDirty(true);
     }
 
     @Override
@@ -314,7 +314,7 @@ public class SummoningCircle implements Ritual {
         return demon;
     }
 
-    public void accept(World world) {
+    public void dispel(World world) {
         end = true;
         Rituals.get(world).removeRitual(getCenterPos());
     }
@@ -374,6 +374,7 @@ public class SummoningCircle implements Ritual {
         active = true;
         this.player = player;
         playerUUID = player.getUniqueID();
+        power += (int) (1000 * player.getEntityAttribute(DaemonicaAttributes.INFERNAL_AFFINITY).getAttributeValue());
     }
 
     public static SummoningCircle fromNBT(NBTTagCompound nbt) {
