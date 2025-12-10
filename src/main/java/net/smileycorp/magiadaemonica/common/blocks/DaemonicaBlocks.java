@@ -26,7 +26,7 @@ public class DaemonicaBlocks {
     public static final BlockDaemonicaFlower FLOWER = new BlockDaemonicaFlower();
     public static final BlockScentedCandle SCENTED_CANDLE = new BlockScentedCandle();
     public static final BlockChalkLine CHALK_LINE = new BlockChalkLine();
-    public static final BlockBase CHALK_ASH_LINE = new BlockLine("chalk_ash_line");
+    public static final BlockBase CHALK_ASH_LINE = new BlockChalkAshLine();
 
     @SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> event) {
