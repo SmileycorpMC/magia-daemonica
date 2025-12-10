@@ -6,6 +6,7 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.smileycorp.magiadaemonica.common.Constants;
@@ -37,7 +38,10 @@ public class EffectOffering implements Offering {
     @Override
     public Object[] getDescriptionArguments() {
         ITextComponent component = new TextComponentTranslation(effect.getName());
-        if (amplifier > 1) component.appendSibling(new TextComponentTranslation("potion.potency." + amplifier));
+        if (amplifier > 1) {
+            component.appendSibling(new TextComponentString(" "));
+            component.appendSibling(new TextComponentTranslation("potion.potency." + amplifier));
+        }
         return new Object[] {component};
     }
 
