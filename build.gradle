@@ -16,6 +16,18 @@ repositories {
 	maven {
         url "https://www.cursemaven.com"
     }
+    maven {
+        name = "DVS1 Maven FS"
+        url = "http://dvs1.progwml6.com/files/maven"
+    }
+    maven {
+        name = "ModMaven"
+        url = "http://modmaven.k-4u.nl"
+    }
+    maven {
+        name = 'GeckoLib'
+        url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
+    }
 }
         
 apply plugin: 'net.minecraftforge.gradle'
@@ -25,8 +37,8 @@ apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'java'
 
 version = "1.12.2-0.1.0-DEV"
-group = "net.smileycorp.magicadaemonica"
-archivesBaseName = "Magica-Daemonica"
+group = "net.smileycorp.magiadaemonica"
+archivesBaseName = "magia-Daemonica"
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
@@ -35,12 +47,12 @@ minecraft {
     
     accessTransformer = file('src/main/resources/META-INF/magia-daemonica_at.cfg')
 
-    // Default run configurations.
-    // These can be tweaked, removed, or duplicated as needed.
     runs {
         client {
             workingDirectory project.file('run')
-
+            args("-Dmixin.debug.export=true",
+                    '-Dmixin.hotSwap=true',
+                    '-Dmixin.checks.interfaces=true')
             // Recommended logging data for a userdev environment
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
 
@@ -59,8 +71,13 @@ minecraft {
     }
 }
 
+sourceSets { main { output.resourcesDir = output.classesDir } }
+
 mixin {
     add sourceSets.main, "mixins.magiadaemonica.refmap.json"
+    config 'mixins.magiadaemonica.json'
+    debug.verbose = true
+    debug.export = true
 }
 
 repositories {
@@ -74,11 +91,14 @@ configurations {
 
 dependencies {
     minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2860'
+    implementation "curse.maven:atlas-463826:6981112"
+    implementation fg.deobf('software.bernie.geckolib:geckolib-forge-1.12.2:3.0.31')
+    //implementation fg.de("mezz.jei:jei_1.12.2:4.16.1.1013")
     implementation "org.spongepowered:mixin:0.8"
     implementation "io.github.llamalad7:mixinextras-common:0.4.1"
-    implementation "curse.maven:atlas-463826:6981034"
-    implementation "curse.maven:jei-238222:4393461"
-    implementation "curse.maven:futuremc-310059:6162819"
+    //implementation "curse.maven:futuremc-310059:6162819"
+    //implementation "curse.maven:forgelin-456403:7182824"
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..

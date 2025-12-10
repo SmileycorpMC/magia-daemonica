@@ -1,20 +1,50 @@
 package net.smileycorp.magiadaemonica.client;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.multiplayer.WorldClient;
+import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
-import net.smileycorp.magiadaemonica.client.rituals.RitualRendererDispatcher;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
+import net.smileycorp.magiadaemonica.client.rituals.RitualsClient;
+import net.smileycorp.magiadaemonica.common.potions.DaemonicaPotions;
+import net.smileycorp.magiadaemonica.common.rituals.Rituals;
 
 public class ClientEventHandler {
 
     @SubscribeEvent
     public void onRenderWorldLastEvent(RenderWorldLastEvent event) {
-        RitualRendererDispatcher.renderRituals();
+        RitualsClient.getInstance().renderRituals();
     }
 
     @SubscribeEvent
     public void logOut(PlayerEvent.PlayerLoggedOutEvent event) {
-        RitualRendererDispatcher.clear();
+        RitualsClient.getInstance().clear();
+    }
+
+    @SubscribeEvent
+    public void tick(TickEvent.ClientTickEvent event) {
+        if (event.phase != TickEvent.Phase.START) return;
+        Minecraft mc = Minecraft.getMinecraft();
+        if (mc.isGamePaused()) return;
+        WorldClient world = mc.world;
+        if (world == null) return;
+        Rituals.get(world).tick();
+    }
+
+    @SubscribeEvent
+    public void tick(EntityViewRenderEvent.CameraSetup event) {
+        Minecraft mc = Minecraft.getMinecraft();
+        EntityPlayerSP player = mc.player;
+        if (player.isPotionActive(DaemonicaPotions.TREMOR)) {
+            float a = (player.getActivePotionEffect(DaemonicaPotions.TREMOR).getAmplifier() + 4) * 0.25f;
+            float t = (mc.getRenderPartialTicks() + player.ticksExisted) * a * 0.75f;
+            event.setPitch((float) (event.getPitch() + a * Math.sin((2*t) + 3)));
+            event.setYaw((float) (event.getYaw() + a * Math.cos(t)));
+            event.setRoll((float) (event.getRoll() + a * Math.sin(5 - (t*3))));
+        }
     }
 
 }

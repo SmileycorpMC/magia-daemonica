@@ -14,10 +14,13 @@ import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
-import net.smileycorp.magiadaemonica.common.capabilities.ISoul;
+import net.smileycorp.magiadaemonica.common.capabilities.Soul;
 import net.smileycorp.magiadaemonica.common.command.CommandSoul;
+import net.smileycorp.magiadaemonica.common.demons.contracts.ContractRegistry;
+import net.smileycorp.magiadaemonica.common.invocations.InvocationsRegistry;
 import net.smileycorp.magiadaemonica.common.items.DaemonicaItems;
 import net.smileycorp.magiadaemonica.common.network.PacketHandler;
+import net.smileycorp.magiadaemonica.common.rituals.RitualsRegistry;
 import net.smileycorp.magiadaemonica.common.world.DaemonicaWorldGen;
 import net.smileycorp.magiadaemonica.config.WorldConfig;
 import net.smileycorp.magiadaemonica.integration.FutureMCIntegration;
@@ -29,8 +32,11 @@ public class CommonProxy {
 		WorldConfig.syncConfig(event);
 		MinecraftForge.EVENT_BUS.register(new DaemonicaEventHandler());
 		PacketHandler.initPackets();
-		CapabilityManager.INSTANCE.register(ISoul.class, new ISoul.Storage(), ISoul.Soul::new);
+		CapabilityManager.INSTANCE.register(Soul.class, new Soul.Storage(), Soul.Impl::new);
 		GameRegistry.registerWorldGenerator(new DaemonicaWorldGen(), 99);
+		RitualsRegistry.registerDefaults();
+		ContractRegistry.registerDefaults();
+		InvocationsRegistry.registerDefaults();
 	}
 
 	public void init(FMLInitializationEvent event) {

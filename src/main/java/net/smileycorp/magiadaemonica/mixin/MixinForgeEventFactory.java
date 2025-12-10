@@ -11,7 +11,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.BlockSnapshot;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.event.world.BlockEvent;
-import net.smileycorp.magiadaemonica.common.blocks.ILightable;
+import net.smileycorp.magiadaemonica.common.blocks.Lightable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -28,16 +28,16 @@ public class MixinForgeEventFactory {
     and honestly considering that's already been done to call this method I'm not doing that shit
     */
     @Inject(at = @At(value = "TAIL"), method = "onPlayerBlockPlace")
-    private static void magicadaemonica$onPlayerBlockPlaced(EntityPlayer player, BlockSnapshot snapshot, EnumFacing direction, EnumHand hand, CallbackInfoReturnable<BlockEvent.PlaceEvent> callback) {
+    private static void magiadaemonica$onPlayerBlockPlaced(EntityPlayer player, BlockSnapshot snapshot, EnumFacing direction, EnumHand hand, CallbackInfoReturnable<BlockEvent.PlaceEvent> callback) {
         BlockEvent.PlaceEvent event = callback.getReturnValue();
         IBlockState state = event.getPlacedAgainst();
         World world = event.getWorld();
         if (event.getPlacedBlock().getBlock() != Blocks.FIRE) return;
         Block block = state.getBlock();
-        if (!(block instanceof ILightable)) return;
+        if (!(block instanceof Lightable)) return;
         BlockPos pos = event.getPos().offset(direction.getOpposite());
-        if (!((ILightable) block).isLightable(world, pos, state)) return;
-        if (!event.getWorld().isRemote) ((ILightable) block).light(world, pos, state);
+        if (!((Lightable) block).isLightable(world, pos, state)) return;
+        if (!event.getWorld().isRemote) ((Lightable) block).light(world, pos, state);
         event.setCanceled(true);
     }
 

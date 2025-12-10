@@ -11,6 +11,7 @@ import net.smileycorp.atlas.api.block.BlockProperties;
 import net.smileycorp.magiadaemonica.common.Constants;
 import net.smileycorp.magiadaemonica.common.blocks.DaemonicaBlocks;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
 @Mod.EventBusSubscriber(modid = Constants.MODID)
@@ -21,13 +22,22 @@ public class DaemonicaItems {
     public static final ItemChalkStick CHALK_STICK = new ItemChalkStick();
     public static final ItemDaemonicaFood MATERIAL = new ItemDaemonicaFood();
 
+    //artifacts
+    public static final ItemSicaInfernalem SICA_INFERNALEM = new ItemSicaInfernalem();
+    public static final ItemPeccatumPrimordiale PECCATUM_PRIMORDIALE = new ItemPeccatumPrimordiale();
+
     @SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> event) {
         IForgeRegistry<Item> registry = event.getRegistry();
         for (Block block : DaemonicaBlocks.BLOCKS) if (block instanceof BlockProperties) register(registry, new ItemDaemonicaBlock(block));
         DaemonicaBlocks.CHALK.registerItems(registry);
-        register(registry, CHALK_STICK);
-        register(registry, MATERIAL);
+        for (Field field : DaemonicaItems.class.getDeclaredFields()) {
+            try {
+                Object object = field.get(null);
+                if (!(object instanceof Item) || object == null) continue;
+                register(registry, (Item) object);
+            } catch (Exception e) {}
+        }
     }
 
     private static <T extends Item> void register(IForgeRegistry<Item> registry, T item) {

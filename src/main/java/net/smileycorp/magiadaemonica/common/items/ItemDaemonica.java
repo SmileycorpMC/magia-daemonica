@@ -7,10 +7,13 @@ import net.smileycorp.magiadaemonica.common.MagiaDaemonica;
 
 public class ItemDaemonica extends Item implements IMetaItem {
 
+    protected final String name;
+
     public ItemDaemonica(String name) {
         setRegistryName(Constants.loc(name));
         setUnlocalizedName(Constants.name(name));
         setCreativeTab(MagiaDaemonica.CREATIVE_TAB);
+        this.name = name;
     }
     
 }

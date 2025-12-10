@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.At;
 public class MixinGuiIngameForge {
 
     @WrapOperation(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/storage/WorldInfo;isHardcoreModeEnabled()Z", remap = true), method = "renderHealth")
-    public boolean magicadaemonica$isHardcoreModeEnabled(WorldInfo instance, Operation<Boolean> original) {
+    public boolean magiadaemonica$isHardcoreModeEnabled(WorldInfo instance, Operation<Boolean> original) {
         EntityPlayerSP player = Minecraft.getMinecraft().player;
         if (player == null) return false;
         if (player.world == null) return false;
