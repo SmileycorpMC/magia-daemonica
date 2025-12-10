@@ -12,7 +12,6 @@ import net.smileycorp.atlas.api.block.BlockBase;
 import net.smileycorp.atlas.api.block.ShapedBlock;
 import net.smileycorp.magiadaemonica.common.Constants;
 import net.smileycorp.magiadaemonica.common.MagiaDaemonica;
-import net.smileycorp.magiadaemonica.common.items.DaemonicaItems;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -43,6 +42,7 @@ public class DaemonicaBlocks {
 
     private static <T extends Block> void register(IForgeRegistry<Block> registry, T block) {
         registry.register(block);
+        if (block instanceof BlockLine) return;
         BLOCKS.add(block);
     }
 

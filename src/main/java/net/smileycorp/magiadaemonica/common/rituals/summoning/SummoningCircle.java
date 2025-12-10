@@ -55,7 +55,7 @@ public class SummoningCircle implements Ritual {
     private EntityDemonicTrader demon;
     private UUID playerUUID;
     private EntityPlayer player;
-    private boolean end;
+    private boolean end = false;
 
     public SummoningCircle(ResourceLocation name, BlockPos pos, int width, int height) {
         this.pos = pos;
@@ -73,8 +73,7 @@ public class SummoningCircle implements Ritual {
                 mutable = new BlockPos.MutableBlockPos(pos.getX() + x, pos.getY(), pos.getZ() + z);
                 IBlockState state = world.getBlockState(mutable);
                 if (state.getBlock() != DaemonicaBlocks.CHALK_LINE) continue;
-                state = state.withProperty(BlockChalkLine.RITUAL_STATE, ritualState);
-                world.setBlockState(mutable, state);
+                world.setBlockState(mutable, state.withProperty(BlockChalkLine.RITUAL_STATE, ritualState));
             }
         }
     }
@@ -91,10 +90,11 @@ public class SummoningCircle implements Ritual {
                 }
             }
         }
-        else setBlocks(world, BlockChalkLine.RitualState.INACTIVE);
+        else setBlocks(world, BlockChalkLine.RitualState.NONE);
         if (demon != null) demon.setPose(EntityDemonicTrader.Pose.DESPAWNING);
         for (EntityContract contract : world.getEntitiesWithinAABB(EntityContract.class,
                new AxisAlignedBB(getCenterPos()).grow(width, 10, height))) contract.setDead();
+        markDirty(true);
     }
 
     @Override

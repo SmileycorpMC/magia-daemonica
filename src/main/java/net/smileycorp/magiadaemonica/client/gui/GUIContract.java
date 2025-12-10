@@ -57,7 +57,7 @@ public class GUIContract extends GuiScreen {
             if (signTicks++/20 > name.length() + 20) {
                 mc.displayGuiScreen(null);
             }
-            mc.fontRenderer.drawString(signTicks/20 >= name.length() ? name :
+            if (signTicks > 20) mc.fontRenderer.drawString(signTicks/20 >= name.length() ? name :
                             name.substring(0, (signTicks/20) - 1),
                     x + SIGN_X + 1, y + SIGN_Y + 1, 0x7A0000, false);
         }

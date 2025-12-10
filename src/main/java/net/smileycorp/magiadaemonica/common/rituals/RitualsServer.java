@@ -21,6 +21,7 @@ public class RitualsServer implements Rituals {
 
     private final Map<BlockPos, Ritual> rituals = Maps.newHashMap();
     private final WorldDataDaemonica data;
+    private WorldServer world;
 
     public RitualsServer(WorldDataDaemonica data) {
         this.data = data;
@@ -56,8 +57,7 @@ public class RitualsServer implements Rituals {
     public void removeRitual(BlockPos pos) {
         Ritual ritual = getRitual(pos);
         if (ritual == null) return;
-        WorldServer world = data.getWorld();
-        ritual.remove(data.getWorld());
+        ritual.remove(world);
         pos = ritual.getCenterPos();
         rituals.remove(pos);
         PacketHandler.NETWORK_INSTANCE.sendToAllTracking(new RemoveRitualMessage(pos),
@@ -68,7 +68,7 @@ public class RitualsServer implements Rituals {
 
     @Override
     public void tick() {
-        WorldServer world = data.getWorld();
+        if (world == null) return;
         for (Ritual ritual : rituals.values()) {
             ritual.tick(world);
             if (ritual.isDirty()) {
@@ -86,7 +86,7 @@ public class RitualsServer implements Rituals {
     public void syncRitual(Ritual ritual) {
         BlockPos pos = ritual.getCenterPos();
         PacketHandler.NETWORK_INSTANCE.sendToAllTracking(new SyncRitualMessage(pos, ritual),
-                new NetworkRegistry.TargetPoint(data.getWorld().provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 128));
+                new NetworkRegistry.TargetPoint(world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 128));
         ritual.markDirty(false);
     }
 
@@ -96,6 +96,14 @@ public class RitualsServer implements Rituals {
             BlockPos pos = ritual.getCenterPos();
             if (world.getChunkFromBlockCoords(pos) == chunk) syncRitual(ritual);
         }
+    }
+
+    public WorldServer getWorld() {
+        return world;
+    }
+
+    public void setWorld(WorldServer world) {
+        this.world = world;
     }
 
     public void readFromNBT(NBTTagList nbt) {
@@ -118,5 +126,5 @@ public class RitualsServer implements Rituals {
     public static RitualsServer get(WorldServer world) {
         return WorldDataDaemonica.get().getRituals(world);
     }
-
+    
 }

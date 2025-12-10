@@ -6,7 +6,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
-import net.smileycorp.atlas.api.util.RecipeUtils;
 import net.smileycorp.magiadaemonica.common.Constants;
 import net.smileycorp.magiadaemonica.common.demons.Demon;
 import net.smileycorp.magiadaemonica.common.demons.Domain;
@@ -32,14 +31,33 @@ public class ItemCost implements Cost {
     @Override
     public void pay(EntityPlayer player) {
         int count = stack.getCount();
-        for (ItemStack stack : player.inventory.mainInventory)
-            if (RecipeUtils.compareItemStacksWithSize(stack, this.stack, this.stack.hasTagCompound())) {
-                int toRemove = count;
-                if (count > stack.getCount()) toRemove = count - stack.getCount();
-                stack.shrink(toRemove);
-                count -= toRemove;
-                if (count <= 0) return;
+        for (ItemStack stack : player.inventory.mainInventory) {
+            if (stack.isItemEqual(this.stack)) continue;
+            if (this.stack.hasTagCompound()) {
+                if (!stack.hasTagCompound()) continue;
+                if (!stack.getTagCompound().equals(this.stack.getTagCompound())) continue;
             }
+            int toRemove = count;
+            if (count > stack.getCount()) toRemove = count - stack.getCount();
+            stack.shrink(toRemove);
+            count -= toRemove;
+            if (count <= 0) return;
+        }
+    }
+
+    @Override
+    public boolean canPay(EntityPlayer player) {
+        int count = stack.getCount();
+        for (ItemStack stack : player.inventory.mainInventory) {
+            if (!stack.isItemEqual(this.stack)) continue;
+            if (this.stack.hasTagCompound()) {
+                if (!stack.hasTagCompound()) continue;
+                if (!stack.getTagCompound().equals(this.stack.getTagCompound())) continue;
+            }
+            count -= stack.getCount();
+            if (count <= 0) return true;
+        }
+        return false;
     }
 
     @Override
@@ -49,17 +67,6 @@ public class ItemCost implements Cost {
         builder.append(stack.getCount() + "x ");
         builder.append(stack.getDisplayName());
         return new Object[] {builder.toString()};
-    }
-
-    @Override
-    public boolean canPay(EntityPlayer player) {
-        int count = stack.getCount();
-        for (ItemStack stack : player.inventory.mainInventory)
-            if (RecipeUtils.compareItemStacksWithSize(stack, this.stack, this.stack.hasTagCompound())) {
-                count -= stack.getCount();
-                if (count <= 0) return true;
-            }
-        return false;
     }
 
     @Override

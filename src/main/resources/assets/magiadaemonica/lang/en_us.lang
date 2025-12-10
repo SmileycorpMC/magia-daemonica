@@ -1,6 +1,6 @@
 itemGroup.magiadaemonica.tab=Magia Daemonica
 
-item.magiadaemonica.chalk_ash_stick.name=Chalk Stick
+item.magiadaemonica.chalk_stick.name=Chalk Stick
 item.magiadaemonica.suet.name=Beef Suet
 item.magiadaemonica.tallow.name=Tallow
 
@@ -10,7 +10,7 @@ item.magiadaemonica.peccatum_primordiale.name=Peccatum Primordiale
 item.magiadaemonica.peccatum_primordiale.tooltip=An odd apple, someone seems to have taken a bite out of it
 
 tile.magiadaemonica.chalk.name=Chalk
-tile.magiadaemonica.chalk_ash_stairs.name=Chalk Stairs
+tile.magiadaemonica.chalk_stairs.name=Chalk Stairs
 tile.magiadaemonica.ChalkSlab.name=Chalk Slab
 tile.magiadaemonica.lavender.name=Lavender
 tile.magiadaemonica.scented_candle.name=Scented Candle

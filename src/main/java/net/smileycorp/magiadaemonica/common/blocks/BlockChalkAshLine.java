@@ -16,7 +16,7 @@ public class BlockChalkAshLine extends BlockLine {
     @Override
     public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand) {
         if (rand.nextInt(3) > 0) return;
-        world.spawnParticle(rand.nextInt(10) == 0 ?  EnumParticleTypes.FLAME : EnumParticleTypes.SMOKE_NORMAL,
+        world.spawnParticle(rand.nextInt(10) == 0 ? EnumParticleTypes.FLAME : EnumParticleTypes.SMOKE_NORMAL,
                 pos.getX() + rand.nextFloat(), pos.getY() + 0.05, pos.getZ() + rand.nextFloat(), 0, 0, 0);
     }
 

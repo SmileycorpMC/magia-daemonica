@@ -82,10 +82,10 @@ public class BlockLine extends BlockBase {
 
     @Override
     public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos) {
-        if (world.getBlockState(pos.north()).getBlock() == this) state = state.withProperty(NORTH, true);
-        if (world.getBlockState(pos.south()).getBlock() == this) state = state.withProperty(SOUTH, true);
-        if (world.getBlockState(pos.east()).getBlock() == this) state = state.withProperty(EAST, true);
-        if (world.getBlockState(pos.west()).getBlock() == this) state = state.withProperty(WEST, true);
+        if (world.getBlockState(pos.north()).getBlock() instanceof BlockLine) state = state.withProperty(NORTH, true);
+        if (world.getBlockState(pos.south()).getBlock() instanceof BlockLine) state = state.withProperty(SOUTH, true);
+        if (world.getBlockState(pos.east()).getBlock() instanceof BlockLine) state = state.withProperty(EAST, true);
+        if (world.getBlockState(pos.west()).getBlock() instanceof BlockLine) state = state.withProperty(WEST, true);
         return state;
     }
 

@@ -14,7 +14,6 @@ public class WorldDataDaemonica extends WorldSavedData {
 
     public static final String DATA = Constants.MODID;
 
-    private WorldServer world;
     private final Map<Integer, RitualsServer> rituals = Maps.newHashMap();
     private final DemonRegistry demonRegistry = new DemonRegistry(this);
 
@@ -23,15 +22,13 @@ public class WorldDataDaemonica extends WorldSavedData {
     }
 
     public RitualsServer getRituals(WorldServer world) {
-        return rituals.computeIfAbsent(world.provider.getDimension(), id -> new RitualsServer(this));
+        RitualsServer rituals = this.rituals.computeIfAbsent(world.provider.getDimension(), id -> new RitualsServer(this));
+        if (rituals.getWorld() != world) rituals.setWorld(world);
+        return rituals;
     }
 
     public DemonRegistry getDemonRegistry() {
         return demonRegistry;
-    }
-
-    public WorldServer getWorld() {
-        return world;
     }
 
     @Override
@@ -65,7 +62,6 @@ public class WorldDataDaemonica extends WorldSavedData {
             world.getMapStorage().setData(DATA, data);
             data.getDemonRegistry().setup();
         }
-        if (data.world == null) data.world = world;
         return data;
     }
 
