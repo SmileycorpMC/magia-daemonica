@@ -16,6 +16,7 @@ import net.smileycorp.magiadaemonica.common.network.PacketHandler;
 import net.smileycorp.magiadaemonica.common.rituals.RitualsRegistry;
 import net.smileycorp.magiadaemonica.common.world.DaemonicaWorldGen;
 import net.smileycorp.magiadaemonica.config.WorldConfig;
+import software.bernie.geckolib3.GeckoLib;
 
 @Mod.EventBusSubscriber
 public class CommonProxy {
@@ -29,6 +30,7 @@ public class CommonProxy {
 		RitualsRegistry.registerDefaults();
 		ContractRegistry.registerDefaults();
 		InvocationsRegistry.registerDefaults();
+		GeckoLib.initialize();
 	}
 
 	public void init(FMLInitializationEvent event) {
