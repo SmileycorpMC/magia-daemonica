@@ -22,6 +22,8 @@ tile.magiadaemonica.lavender.name=Lavender
 tile.magiadaemonica.scented_candle.name=Scented Candle
 tile.magiadaemonica.chalk_ash_line.name=Chalk Ash
 
+fluid.milk=Milk
+
 effect.magiadaemonica.tremor=Tremor
 
 entity.magiadaemonica.demonic_trader.name=Demonic Trader

@@ -31,6 +31,7 @@ import net.smileycorp.magiadaemonica.common.blocks.DaemonicaBlocks;
 import net.smileycorp.magiadaemonica.common.entities.EntityContract;
 import net.smileycorp.magiadaemonica.common.entities.EntityDemonicTrader;
 import net.smileycorp.magiadaemonica.common.items.DaemonicaItems;
+import net.smileycorp.magiadaemonica.common.items.ItemCalixPerpetuus;
 import net.smileycorp.magiadaemonica.common.rituals.summoning.SummoningCircle;
 
 @EventBusSubscriber(value = Side.CLIENT, modid= Constants.MODID)
@@ -80,7 +81,8 @@ public class ClientProxy extends CommonProxy {
 	@SubscribeEvent
 	public static void itemColourHandler(ColorHandlerEvent.Item event) {
 		ItemColors registry = event.getItemColors();
-		registry.registerItemColorHandler(((stack, tintIndex) -> tintIndex > 0 ? PotionUtils.getColor(stack) : -1), DaemonicaItems.CALIX_PERPETUUS);
+		registry.registerItemColorHandler(((stack, tintIndex) -> tintIndex > 0 && ItemCalixPerpetuus.hasPotion(stack)
+				? PotionUtils.getColor(stack) : -1), DaemonicaItems.CALIX_PERPETUUS);
 	}
 	
 }

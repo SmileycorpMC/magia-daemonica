@@ -36,7 +36,7 @@ apply plugin: 'eclipse'
 apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'java'
 
-version = "1.12.2-beta-0.5.0"
+version = "1.12.2-beta-0.5.1"
 group = "net.smileycorp.magiadaemonica"
 archivesBaseName = "Magia-Daemonica"
 
@@ -93,7 +93,7 @@ dependencies {
     minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2860'
     implementation "curse.maven:atlas-463826:6981112"
     implementation fg.deobf('software.bernie.geckolib:geckolib-forge-1.12.2:3.0.31')
-    //implementation fg.de("mezz.jei:jei_1.12.2:4.16.1.1013")
+    implementation fg.deobf("mezz.jei:jei_1.12.2:4.16.1.1013")
     implementation "org.spongepowered:mixin:0.8"
     implementation "io.github.llamalad7:mixinextras-common:0.4.1"
     implementation "curse.maven:futuremc-310059:6162819"

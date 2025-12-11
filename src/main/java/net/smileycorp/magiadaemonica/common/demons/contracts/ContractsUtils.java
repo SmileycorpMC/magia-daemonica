@@ -2,6 +2,7 @@ package net.smileycorp.magiadaemonica.common.demons.contracts;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.ai.attributes.*;
 import net.minecraft.entity.player.EntityPlayer;
@@ -22,10 +23,7 @@ import net.smileycorp.magiadaemonica.common.items.ItemRelic;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 
 public class ContractsUtils {
 
@@ -93,8 +91,8 @@ public class ContractsUtils {
     }
 
     private static void buildItemLists() {
-        Item[] blacklist = {Items.SPAWN_EGG, Items.FILLED_MAP, Items.POTIONITEM, Items.SPLASH_POTION, Items.LINGERING_POTION,
-            Items.TIPPED_ARROW, Item.getItemFromBlock(Blocks.BEDROCK), Item.getItemFromBlock(Blocks.END_PORTAL_FRAME)};
+        Set<Item> blacklist = Sets.newHashSet(Items.SPAWN_EGG, Items.FILLED_MAP, Items.POTIONITEM, Items.SPLASH_POTION, Items.LINGERING_POTION,
+            Items.TIPPED_ARROW, Item.getItemFromBlock(Blocks.BEDROCK), Item.getItemFromBlock(Blocks.END_PORTAL_FRAME));
         ITEMS_BY_RARITY = Maps.newEnumMap(EnumRarity.class);
         for (EnumRarity rarity : EnumRarity.values()) ITEMS_BY_RARITY.put(rarity, Lists.newArrayList());
         ENCHANTABLE_ITEMS = Lists.newArrayList();
@@ -114,7 +112,7 @@ public class ContractsUtils {
                 ENCHANTABLE_ITEMS.add(new ItemStack(item));
                 continue;
             }
-            for (Item banned : blacklist) if (item == banned) continue;
+            if (blacklist.contains(item)) continue;
             NonNullList<ItemStack> stacks = NonNullList.create();
             item.getSubItems(CreativeTabs.SEARCH, stacks);
             if (item instanceof ItemFood) {
