@@ -76,13 +76,6 @@ public class BlockChalkLine extends BlockLine implements Lightable {
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         ItemStack stack = player.getHeldItem(hand);
         if (player.isSneaking()) return false;
-        if (state.getValue(CANDLE) == Candle.UNLIT) {
-            if (stack.getItem() != Items.FLINT_AND_STEEL) return false;
-            stack.damageItem(1, player);
-            world.setBlockState(pos, state.withProperty(CANDLE, Candle.LIT));
-            player.swingArm(hand);
-            return true;
-        }
         if (state.getValue(RITUAL_STATE) != RitualState.NONE) return false;
         if (state.getValue(CANDLE) != Candle.NONE) return false;
         if (stack.getItem() != Item.getItemFromBlock(DaemonicaBlocks.SCENTED_CANDLE)) return false;
