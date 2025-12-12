@@ -36,9 +36,11 @@ public class DaemonicaEventHandler {
 	@SubscribeEvent
 	public void attachEntityCapabilities(AttachCapabilitiesEvent<Entity> event) {
 		Entity entity = event.getObject();
-		if (!(entity instanceof EntityPlayer)) return;
-		if (entity.hasCapability(DaemonicaCapabilities.SOUL, null)) return;
-		event.addCapability(Constants.loc("soul"), new Soul.Provider());
+		if (entity instanceof EntityPlayer) {
+			if (entity.hasCapability(DaemonicaCapabilities.SOUL, null)) return;
+			event.addCapability(Constants.loc("soul"), new Soul.Provider());
+		}
+
 	}
 
 	@SubscribeEvent

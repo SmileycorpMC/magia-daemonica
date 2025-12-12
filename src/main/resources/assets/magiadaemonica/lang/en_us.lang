@@ -14,6 +14,10 @@ item.magiadaemonica.creta_aeterna.name=Creta Aeterna
 item.magiadaemonica.creta_aeterna.tooltip=A piece of chalk, it never seems to decay and glows warm when held near ash
 item.magiadaemonica.calix_perpetuus.name=Calix Perpetuus
 item.magiadaemonica.calix_perpetuus.tooltip=An old chalice, when filled with a fluid it can never be emptied
+item.magiadaemonica.mors_larva.name=Mors Larva
+item.magiadaemonica.mors_larva.tooltip=An odd wooden funeral mask, undead mobs barely seem to notice it's presence
+item.magiadaemonica.facies_excoriata.name=Facies Excoriata
+item.magiadaemonica.facies_excoriata.tooltip=A dripping face contorted in such a horrific expression onlookers are frozen in terror
 
 tile.magiadaemonica.chalk.name=Chalk
 tile.magiadaemonica.chalk_stairs.name=Chalk Stairs
