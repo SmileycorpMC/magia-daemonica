@@ -18,7 +18,7 @@ public class DaemonicaTab extends CreativeTabs {
     @Override
     @SideOnly(Side.CLIENT)
     public ItemStack getTabIconItem() {
-        return new ItemStack(DaemonicaBlocks.CHALK.getBase());
+        return new ItemStack(DaemonicaBlocks.CHALK);
     }
     
 }

@@ -9,8 +9,8 @@ import thedarkcolour.futuremc.recipe.stonecutter.StonecutterRecipes;
 public class FutureMCIntegration {
 
     public static void registerRecipes() {
-        StonecutterRecipes.INSTANCE.addRecipe(Ingredient.fromStacks(new ItemStack(DaemonicaBlocks.CHALK.getBase())), new ItemStack(DaemonicaBlocks.CHALK.getStairs()));
-        StonecutterRecipes.INSTANCE.addRecipe(Ingredient.fromStacks(new ItemStack(DaemonicaBlocks.CHALK.getBase())), new ItemStack(DaemonicaBlocks.CHALK.getSlab(), 2));
+        StonecutterRecipes.INSTANCE.addRecipe(Ingredient.fromStacks(new ItemStack(DaemonicaBlocks.CHALK)), new ItemStack(DaemonicaBlocks.CHALK_STAIRS));
+        StonecutterRecipes.INSTANCE.addRecipe(Ingredient.fromStacks(new ItemStack(DaemonicaBlocks.CHALK)), new ItemStack(DaemonicaBlocks.CHALK_SLAB, 2));
     }
 
 }

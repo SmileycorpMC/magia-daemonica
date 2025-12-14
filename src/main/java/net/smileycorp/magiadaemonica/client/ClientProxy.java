@@ -19,7 +19,9 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.smileycorp.atlas.api.block.BlockProperties;
+import net.smileycorp.atlas.api.client.CustomStateMapper;
 import net.smileycorp.atlas.api.client.MetaStateMapper;
+import net.smileycorp.atlas.api.client.SlabStateMapper;
 import net.smileycorp.atlas.api.item.IMetaItem;
 import net.smileycorp.magiadaemonica.client.entities.RenderContract;
 import net.smileycorp.magiadaemonica.client.entities.RenderDemon;
@@ -59,9 +61,11 @@ public class ClientProxy extends CommonProxy {
 	
 	@SubscribeEvent
 	public static void registerModels(ModelRegistryEvent event) {
-		DaemonicaBlocks.CHALK.registerModels();
+		ModelLoader.setCustomStateMapper(DaemonicaBlocks.CHALK_SLAB, new SlabStateMapper(DaemonicaBlocks.CHALK_SLAB));
+		ModelLoader.setCustomStateMapper(DaemonicaBlocks.CHALK_DOUBLE_SLAB, new CustomStateMapper(Constants.MODID, "chalk_slab", "double"));
 		ModelLoader.setCustomStateMapper(DaemonicaBlocks.FLOWER, new MetaStateMapper());
 		for (Item item : DaemonicaItems.ITEMS) if (item instanceof IMetaItem &! (item instanceof ItemBlock &&
+				((ItemBlock)item).getBlock() instanceof BlockProperties &&
 				((BlockProperties)((ItemBlock) item).getBlock()).usesCustomItemHandler())) {
 			if (((IMetaItem) item).getMaxMeta() > 0) for (int i = 0; i < ((IMetaItem) item).getMaxMeta(); i++) {
 				ModelResourceLocation loc = new ModelResourceLocation(Constants.locStr(((IMetaItem) item).byMeta(i)));
@@ -72,6 +76,10 @@ public class ClientProxy extends CommonProxy {
 				ModelLoader.setCustomModelResourceLocation(item, 0, loc);
 			}
 		}
+		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(DaemonicaBlocks.CHALK_SLAB), 0,
+				new ModelResourceLocation(Constants.locStr("chalk_slab"), "normal"));
+		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(DaemonicaBlocks.CHALK_STAIRS), 0,
+				new ModelResourceLocation(Constants.locStr("chalk_stairs"), "normal"));
 		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(DaemonicaBlocks.FLOWER), 0,
 				new ModelResourceLocation(Constants.locStr("lavender"), "inventory"));
 		RenderingRegistry.registerEntityRenderingHandler(EntityDemonicTrader.class, RenderDemon::new);

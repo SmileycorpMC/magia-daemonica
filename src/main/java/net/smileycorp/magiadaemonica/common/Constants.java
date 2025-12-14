@@ -8,7 +8,7 @@ public class Constants {
 	
 	public static final String NAME = "Magia Daemonica";
 	public static final String MODID = "magiadaemonica";
-	public static final String VERSION = "0.1.0";
+	public static final String VERSION = "beta 0.5.1a";
 	public static final String DEPENDENCIES = "required-after:atlaslib@[1.1.9,)";
 	public static final String PATH = "net.smileycorp.magiadaemonica.";
 	public static final String CLIENT = PATH + "client.ClientProxy";

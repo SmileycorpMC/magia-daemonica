@@ -16,7 +16,7 @@ public class DaemonicaWorldGen implements IWorldGenerator {
 
     @Override
     public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
-        genOre(DaemonicaBlocks.CHALK.getBase().getDefaultState(), WorldConfig.chalk, world, random, chunkX, chunkZ);
+        genOre(DaemonicaBlocks.CHALK.getDefaultState(), WorldConfig.chalk, world, random, chunkX, chunkZ);
         if (WorldConfig.lavenderSpawnChance > 0) genLavender(world, random, chunkX, chunkZ);
     }
 
