@@ -210,12 +210,10 @@ public class SummoningCircle implements Ritual {
         if (ticksActive == 250) {
             for (EntityPlayerMP player : world.getPlayers(EntityPlayerMP.class, player -> player.getDistanceSq(center.x, center.y, center.z) <= 256))
                 player.addPotionEffect(new PotionEffect(DaemonicaPotions.TREMOR, 460, 0, true, false));
-        }
-        if (ticksActive > 230 && ticksActive < 320 && ticksActive % 40 == 0)
             world.playSound(null, center.x, center.y, center.z, DaemonicaSoundEvents.RITUAL_CRACKLING, SoundCategory.HOSTILE, 0.75f, 1);
-        if (ticksActive >= 320 && ticksActive <= 560  && ticksActive % 40 == 0) {
-            world.playSound(null, center.x, center.y, center.z, DaemonicaSoundEvents.RITUAL_CRACKLING_BASS, SoundCategory.HOSTILE, 0.75f, 1);
         }
+        if (ticksActive == 320) world.playSound(null, center.x, center.y, center.z, DaemonicaSoundEvents.RITUAL_CRACKLING_BASS, SoundCategory.HOSTILE, 0.75f, 1);
+        if (ticksActive == 560) world.playSound(null, center.x, center.y, center.z, DaemonicaSoundEvents.RITUAL_DEMON_SUMMON, SoundCategory.HOSTILE, 0.5f, 1);
         if (ticksActive == 600) {
             demon = new EntityDemonicTrader(world);
             demon.setDemon(DemonRegistry.get().create(world.rand, power));
@@ -224,9 +222,6 @@ public class SummoningCircle implements Ritual {
             demon.setRitual(getCenterPos());
             demon.getLookHelper().setLookPositionWithEntity(getPlayer().get(), 0, 0);
             world.spawnEntity(demon);
-        }
-        if (ticksActive >= 600 && ticksActive <= 680  && ticksActive % 40 == 0) {
-            world.playSound(null, center.x, center.y, center.z, DaemonicaSoundEvents.RITUAL_DEMON_SUMMON, SoundCategory.HOSTILE, 0.75f, 1);
         }
         if (ticksActive == 680) {
             EntityPlayer player = getPlayer().get();
@@ -384,7 +379,7 @@ public class SummoningCircle implements Ritual {
         this.player = player;
         playerUUID = player.getUniqueID();
         power += (int) (1000 * player.getEntityAttribute(DaemonicaAttributes.INFERNAL_AFFINITY).getAttributeValue());
-        world.playSound(null, center.x, center.y, center.z, DaemonicaSoundEvents.RITUAL_AMBIENCE, SoundCategory.HOSTILE, 0.75f, 1);
+        //world.playSound(null, center.x, center.y, center.z, DaemonicaSoundEvents.RITUAL_AMBIENCE, SoundCategory.HOSTILE, 0.5f, 1);
     }
 
     public static SummoningCircle fromNBT(NBTTagCompound nbt) {
