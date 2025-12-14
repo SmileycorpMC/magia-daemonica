@@ -21,6 +21,7 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.smileycorp.atlas.api.util.DirectionUtils;
 import net.smileycorp.magiadaemonica.common.Constants;
 import net.smileycorp.magiadaemonica.common.DaemonicaAttributes;
+import net.smileycorp.magiadaemonica.common.DaemonicaSoundEvents;
 import net.smileycorp.magiadaemonica.common.blocks.BlockChalkLine;
 import net.smileycorp.magiadaemonica.common.blocks.DaemonicaBlocks;
 import net.smileycorp.magiadaemonica.common.demons.DemonRegistry;
@@ -193,6 +194,7 @@ public class SummoningCircle implements Ritual {
                 world.setBlockState(mutable, world.getBlockState(mutable).withProperty(BlockChalkLine.CANDLE, BlockChalkLine.Candle.UNLIT));
             }
             world.playSound(null, center.x, center.y, center.z, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.HOSTILE, 0.75f, 1);
+            world.playSound(null, center.x, center.y, center.z, DaemonicaSoundEvents.RITUAL_WHISPER, SoundCategory.HOSTILE, 0.75f, 1);
             for (EntityPlayerMP player : world.getPlayers(EntityPlayerMP.class, player -> player.getDistanceSq(center.x, center.y, center.z) <= 256))
                 player.addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 140, 4, true, false));
         }
@@ -205,12 +207,15 @@ public class SummoningCircle implements Ritual {
                 world.setBlockState(mutable, world.getBlockState(mutable).withProperty(BlockChalkLine.CANDLE, BlockChalkLine.Candle.LIT));
             }
         }
-        if (ticksActive == 250) for (EntityPlayerMP player : world.getPlayers(EntityPlayerMP.class, player -> player.getDistanceSq(center.x, center.y, center.z) <= 256))
-            player.addPotionEffect(new PotionEffect(DaemonicaPotions.TREMOR, 460, 0, true, false));
-        if (ticksActive > 200 && ticksActive < 320 && ticksActive % 40 == 0)
-            world.playSound(null, center.x, center.y, center.z, SoundEvents.ENTITY_GUARDIAN_ATTACK, SoundCategory.HOSTILE, 0.75f, 1);
-        if (ticksActive >= 320 && ticksActive <= 560  && ticksActive % 40 == 0)
-            world.playSound(null, center.x, center.y, center.z, SoundEvents.ENTITY_WITHER_BREAK_BLOCK, SoundCategory.HOSTILE, 0.75f, 1);
+        if (ticksActive == 250) {
+            for (EntityPlayerMP player : world.getPlayers(EntityPlayerMP.class, player -> player.getDistanceSq(center.x, center.y, center.z) <= 256))
+                player.addPotionEffect(new PotionEffect(DaemonicaPotions.TREMOR, 460, 0, true, false));
+        }
+        if (ticksActive > 230 && ticksActive < 320 && ticksActive % 40 == 0)
+            world.playSound(null, center.x, center.y, center.z, DaemonicaSoundEvents.RITUAL_CRACKLING, SoundCategory.HOSTILE, 0.75f, 1);
+        if (ticksActive >= 320 && ticksActive <= 560  && ticksActive % 40 == 0) {
+            world.playSound(null, center.x, center.y, center.z, DaemonicaSoundEvents.RITUAL_CRACKLING_BASS, SoundCategory.HOSTILE, 0.75f, 1);
+        }
         if (ticksActive == 600) {
             demon = new EntityDemonicTrader(world);
             demon.setDemon(DemonRegistry.get().create(world.rand, power));
@@ -219,6 +224,9 @@ public class SummoningCircle implements Ritual {
             demon.setRitual(getCenterPos());
             demon.getLookHelper().setLookPositionWithEntity(getPlayer().get(), 0, 0);
             world.spawnEntity(demon);
+        }
+        if (ticksActive >= 600 && ticksActive <= 680  && ticksActive % 40 == 0) {
+            world.playSound(null, center.x, center.y, center.z, DaemonicaSoundEvents.RITUAL_DEMON_SUMMON, SoundCategory.HOSTILE, 0.75f, 1);
         }
         if (ticksActive == 680) {
             EntityPlayer player = getPlayer().get();
@@ -232,6 +240,7 @@ public class SummoningCircle implements Ritual {
                 contract.setContract(ContractRegistry.generateContract(demon.getDemon(), player));
                 contract.setRitual(getCenterPos());
                 world.spawnEntity(contract);
+                world.playSound(null, center.x, center.y, center.z, SoundEvents.ITEM_FIRECHARGE_USE, SoundCategory.HOSTILE, 0.75f, 1);
                 angle += step;
             }
         }
@@ -375,6 +384,7 @@ public class SummoningCircle implements Ritual {
         this.player = player;
         playerUUID = player.getUniqueID();
         power += (int) (1000 * player.getEntityAttribute(DaemonicaAttributes.INFERNAL_AFFINITY).getAttributeValue());
+        world.playSound(null, center.x, center.y, center.z, DaemonicaSoundEvents.RITUAL_AMBIENCE, SoundCategory.HOSTILE, 0.75f, 1);
     }
 
     public static SummoningCircle fromNBT(NBTTagCompound nbt) {

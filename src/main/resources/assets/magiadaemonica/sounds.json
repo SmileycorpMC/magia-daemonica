@@ -1,0 +1,38 @@
+{
+    "entity.contract.sign": {
+        "sounds": [
+            "magiadaemonica:entity/contract/sign"
+        ],
+        "subtitle": "subtitles.magiadaemonica.entity.contract.sign"
+    },
+	"event.ritual.ambience": {
+        "sounds": [
+            "magiadaemonica:event/ritual/ambience"
+        ],
+        "subtitle": "subtitles.magiadaemonica.event.ritual.ambience"
+    },
+	"event.ritual.crackling": {
+        "sounds": [
+            "magiadaemonica:event/ritual/crackling"
+        ],
+        "subtitle": "subtitles.magiadaemonica.event.ritual.crackling"
+    },
+	"event.ritual.crackling_bass": {
+        "sounds": [
+            "magiadaemonica:event/ritual/crackling_bass"
+        ],
+        "subtitle": "subtitles.magiadaemonica.event.ritual.crackling_bass"
+    },
+	"event.ritual.demon_summon": {
+        "sounds": [
+            "magiadaemonica:event/ritual/demon_summon"
+        ],
+        "subtitle": "subtitles.magiadaemonica.event.ritual.demon_summon"
+    },
+	"event.ritual.whisper": {
+        "sounds": [
+            "magiadaemonica:event/ritual/whisper"
+        ],
+        "subtitle": "subtitles.magiadaemonica.event.ritual.whisper"
+    }
+}

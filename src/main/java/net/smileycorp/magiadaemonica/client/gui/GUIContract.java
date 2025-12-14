@@ -7,6 +7,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 import net.smileycorp.magiadaemonica.client.ModLocalization;
 import net.smileycorp.magiadaemonica.common.Constants;
+import net.smileycorp.magiadaemonica.common.DaemonicaSoundEvents;
 import net.smileycorp.magiadaemonica.common.demons.contracts.Contract;
 import net.smileycorp.magiadaemonica.common.entities.EntityContract;
 import net.smileycorp.magiadaemonica.common.network.SignContractMessage;
@@ -85,12 +86,12 @@ public class GUIContract extends GuiScreen {
         if (mouseX >= x + SIGN_X && mouseY >= y + SIGN_Y &&
                 mouseX <= x + SIGN_X + SIGN_WIDTH && mouseY <= y + SIGN_Y + SIGN_HEIGHT + 1) {
             SignContractMessage.send(entity.getEntityId());
-            //mc.player.playSound(SoundEvents.);
         }
     }
 
     public void validate(int id) {
         if (id == entity.getEntityId()) signTicks = 0;
+        mc.player.playSound(DaemonicaSoundEvents.CONTRACT_SIGN, 0.75f, 1);
     }
 
 }
