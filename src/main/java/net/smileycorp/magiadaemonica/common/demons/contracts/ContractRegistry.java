@@ -29,11 +29,11 @@ public class ContractRegistry {
 
     public static void registerDefaults() {
         registerCost(ExperienceCost.ID, 1, ExperienceCost::fromNBT, ExperienceCost::generate);
-        registerCost(ExperienceLevelCost.ID, 5, ExperienceLevelCost::fromNBT, ExperienceLevelCost::generate);
+        registerCost(ExperienceLevelCost.ID, 3, ExperienceLevelCost::fromNBT, ExperienceLevelCost::generate);
         registerCost(HealthCost.ID, 6, HealthCost::fromNBT, HealthCost::generate);
         registerCost(ItemCost.ID, 0, ItemCost::fromNBT, ItemCost::generate);
-        registerCost(SoulCost.ID, 8, SoulCost::fromNBT, SoulCost::generate);
-        registerCost(SoulPercentageCost.ID, 7, SoulPercentageCost::fromNBT, SoulPercentageCost::generate);
+        registerCost(SoulCost.ID, 4, SoulCost::fromNBT, SoulCost::generate);
+        registerCost(SoulPercentageCost.ID, 3, SoulPercentageCost::fromNBT, SoulPercentageCost::generate);
         //registerOffering(AttributeOffering.ID, 5, AttributeOffering::fromNBT);
         registerOffering(EffectOffering.ID, 6, EffectOffering::fromNBT, EffectOffering::generate);
         registerOffering(ItemOffering.ID, 1, ItemOffering::fromNBT, ItemOffering::generate);

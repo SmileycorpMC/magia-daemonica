@@ -8,6 +8,7 @@ import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.world.GameType;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.chunk.Chunk;
@@ -60,6 +61,14 @@ public class DaemonicaEventHandler {
 				original.getCapability(DaemonicaCapabilities.SOUL, null).getSoul());
 		if (!(player instanceof EntityPlayerMP)) return;
 		SyncSoulMessage.send((EntityPlayerMP) player);
+	}
+
+	@SubscribeEvent
+	public void respawn(PlayerEvent.PlayerRespawnEvent event) {
+		EntityPlayer player = event.player;
+		if (!player.hasCapability(DaemonicaCapabilities.SOUL, null)) return;
+		if (player.getCapability(DaemonicaCapabilities.SOUL, null).getSoul() > 0) return;
+		player.setGameType(GameType.SPECTATOR);
 	}
 
 	@SubscribeEvent
