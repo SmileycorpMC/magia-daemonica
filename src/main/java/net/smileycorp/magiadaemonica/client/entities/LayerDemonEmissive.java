@@ -36,7 +36,8 @@ public class LayerDemonEmissive extends GeoLayerRenderer<EntityAbstractDemon> {
     }
 
     public ResourceLocation getTextureLocation(EntityAbstractDemon demon) {
-        return Constants.loc("textures/entities/lafel_eyes.png");
+        ResourceLocation loc = entityRenderer.getGeoModelProvider().getTextureLocation(demon);
+        return new ResourceLocation(loc.getResourceDomain(), loc.getResourcePath().replace(".png", "_eyes.png"));
     }
 
     @Override

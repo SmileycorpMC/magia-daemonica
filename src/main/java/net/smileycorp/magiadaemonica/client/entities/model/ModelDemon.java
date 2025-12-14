@@ -3,7 +3,11 @@ package net.smileycorp.magiadaemonica.client.entities.model;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 import net.smileycorp.magiadaemonica.common.Constants;
+import net.smileycorp.magiadaemonica.common.demons.Demon;
+import net.smileycorp.magiadaemonica.common.demons.Domain;
+import net.smileycorp.magiadaemonica.common.demons.Rank;
 import net.smileycorp.magiadaemonica.common.entities.EntityAbstractDemon;
+import scala.collection.immutable.Stream;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.processor.IBone;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
@@ -15,11 +19,22 @@ public class ModelDemon extends AnimatedGeoModel<EntityAbstractDemon> {
 
     @Override
     public ResourceLocation getModelLocation(EntityAbstractDemon demon) {
+        Demon data = demon.getDemon();
+        //if (data != null && data.getRank().ordinal() > Rank.LESSER_DEMON.ordinal()) return Constants.loc("geo/ballan.geo.json");
         return Constants.loc("geo/lafel.geo.json");
     }
 
     @Override
     public ResourceLocation getTextureLocation(EntityAbstractDemon demon) {
+        Demon data = demon.getDemon();
+        if (data != null) {
+            /*if (data.getRank().ordinal() > Rank.LESSER_DEMON.ordinal()) {
+                Domain domain = data.getDomain();
+                if (domain == Domain.ENVY || domain == Domain.GREED) return Constants.loc("textures/entities/ballan_green.png");
+                if (domain == Domain.LUST || domain == Domain.GLUTTONY) return Constants.loc("textures/entities/ballan_red.png");
+                return Constants.loc("textures/entities/ballan.png");
+            }*/
+        }
         return Constants.loc("textures/entities/lafel.png");
     }
 
