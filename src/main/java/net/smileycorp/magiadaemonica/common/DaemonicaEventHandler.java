@@ -21,6 +21,7 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import net.smileycorp.magiadaemonica.common.capabilities.Contracts;
 import net.smileycorp.magiadaemonica.common.capabilities.DaemonicaCapabilities;
 import net.smileycorp.magiadaemonica.common.capabilities.Soul;
 import net.smileycorp.magiadaemonica.common.invocations.InvocationsRegistry;
@@ -37,8 +38,8 @@ public class DaemonicaEventHandler {
 	public void attachEntityCapabilities(AttachCapabilitiesEvent<Entity> event) {
 		Entity entity = event.getObject();
 		if (!(entity instanceof EntityPlayer)) return;
-		if (entity.hasCapability(DaemonicaCapabilities.SOUL, null)) return;
-		event.addCapability(Constants.loc("soul"), new Soul.Provider());
+		if (!entity.hasCapability(DaemonicaCapabilities.SOUL, null)) event.addCapability(Constants.loc("soul"), new Soul.Provider());
+		if (!entity.hasCapability(DaemonicaCapabilities.CONTRACTS, null)) event.addCapability(Constants.loc("contracts"), new Contracts.Provider());
 	}
 
 	@SubscribeEvent
@@ -55,12 +56,17 @@ public class DaemonicaEventHandler {
 	public void clone(Clone event) {
 		EntityPlayer original = event.getOriginal();
 		EntityPlayer player = event.getEntityPlayer();
-		if (!original.hasCapability(DaemonicaCapabilities.SOUL, null) |!
-				player.hasCapability(DaemonicaCapabilities.SOUL, null)) return;
-		player.getCapability(DaemonicaCapabilities.SOUL, null).setSoul(
-				original.getCapability(DaemonicaCapabilities.SOUL, null).getSoul());
-		if (!(player instanceof EntityPlayerMP)) return;
-		SyncSoulMessage.send((EntityPlayerMP) player);
+		if (original.hasCapability(DaemonicaCapabilities.SOUL, null) &&
+				player.hasCapability(DaemonicaCapabilities.SOUL, null)) {
+			player.getCapability(DaemonicaCapabilities.SOUL, null).setSoul(
+					original.getCapability(DaemonicaCapabilities.SOUL, null).getSoul());
+			if (player instanceof EntityPlayerMP) SyncSoulMessage.send((EntityPlayerMP) player);
+		}
+		if (original.hasCapability(DaemonicaCapabilities.CONTRACTS, null) &&
+				player.hasCapability(DaemonicaCapabilities.CONTRACTS, null)) {
+			player.getCapability(DaemonicaCapabilities.CONTRACTS, null).readFromNBT(
+					original.getCapability(DaemonicaCapabilities.CONTRACTS, null).writeToNBT());
+		}
 	}
 
 	@SubscribeEvent

@@ -7,5 +7,8 @@ public class DaemonicaCapabilities {
 
 	@CapabilityInject(Soul.class)
 	public final static Capability<Soul> SOUL = null;
+
+	@CapabilityInject(Contracts.class)
+	public final static Capability<Contracts> CONTRACTS = null;
 	
 }
