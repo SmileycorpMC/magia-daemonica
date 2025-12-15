@@ -35,13 +35,13 @@ public class ModLocalization implements ISelectiveResourceReloadListener {
         for (ResourceLocation loc : resources) {
             for (Locale lang : languages) {
                 try (IResource resource = resourceManager.getResource(new ResourceLocation(loc.getResourceDomain(),
-                        "localization/" + locale.toString().toLowerCase(Locale.US) + "/" + loc.getResourcePath() + ".txt"))) {
+                        "localization/" + lang.toString().toLowerCase(Locale.US) + "/" + loc.getResourcePath() + ".txt"))) {
                     Map<Locale, String> localeMap = dictionary.computeIfAbsent(loc, rl -> Maps.newHashMap());
                     byte[] data = new byte[resource.getInputStream().available()];
                     resource.getInputStream().read(data);
                     localeMap.put(lang, new String(data));
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    //e.printStackTrace();
                 }
             }
         }
@@ -51,8 +51,7 @@ public class ModLocalization implements ISelectiveResourceReloadListener {
         Minecraft mc = Minecraft.getMinecraft();
         Map<Locale, String> localeMap = dictionary.get(loc);
         Locale locale = mc.getLanguageManager().getCurrentLanguage().getJavaLocale();
-        String str = String.format(locale, localeMap.getOrDefault(locale, localeMap.get(Locale.US)), args);
-        str = str.replace("\r", "");
+        String str = String.format(locale, localeMap.getOrDefault(locale, localeMap.get(Locale.US)), args).replace("\r", "");
         List<String> text = Lists.newArrayList();
         int position = 0;
         while (position < str.length()) {
