@@ -33,6 +33,7 @@ public class ItemCalixPerpetuus extends ItemRelic {
         if (entity instanceof EntityPlayerMP) {
             CriteriaTriggers.CONSUME_ITEM.trigger((EntityPlayerMP)entity, stack);
             ((EntityPlayerMP) entity).addStat(StatList.getObjectUseStats(this));
+            ((EntityPlayerMP) entity).getCooldownTracker().setCooldown(this, 60);
         }
         for (PotionEffect effect : PotionUtils.getEffectsFromStack(stack)) {
             if (!effect.getPotion().isInstant()) entity.addPotionEffect(effect);
