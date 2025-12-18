@@ -3,7 +3,10 @@ package net.smileycorp.magiadaemonica.client;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.multiplayer.WorldClient;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
+import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
@@ -46,5 +49,25 @@ public class ClientEventHandler {
             event.setRoll((float) (event.getRoll() + a * Math.sin(5 - (t*3))));
         }
     }
+
+    /*@SubscribeEvent
+    public void renderLiving$Pre(RenderLivingEvent.Pre<EntityLivingBase> event) {
+        EntityLivingBase entity = event.getEntity();
+        if (!entity.isPotionActive(DaemonicaPotions.PETRIFIED)) return;
+        GlStateManager.pushMatrix();
+        GlStateManager.enableAlpha();
+        GlStateManager.enableBlend();
+        GlStateManager.color(1, 1, 1, 0.5f);
+        GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+    }
+
+    @SubscribeEvent
+    public void renderLiving$Post(RenderLivingEvent.Post<EntityLivingBase> event) {
+        EntityLivingBase entity = event.getEntity();
+        if (!entity.isPotionActive(DaemonicaPotions.PETRIFIED)) return;
+        GlStateManager.disableBlend();
+        GlStateManager.disableAlpha();
+        GlStateManager.popMatrix();
+    }*/
 
 }

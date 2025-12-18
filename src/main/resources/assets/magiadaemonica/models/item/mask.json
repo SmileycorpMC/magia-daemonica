@@ -1,0 +1,9 @@
+{
+    "parent": "item/generated",
+    "display": {
+		"head": {
+			"translation": [0, -2, -6.75],
+			"scale": [1.25, 1.25, 1.25]
+		}
+	}
+}

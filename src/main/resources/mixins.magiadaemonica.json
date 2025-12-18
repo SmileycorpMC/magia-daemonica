@@ -3,6 +3,8 @@
   "package": "net.smileycorp.magiadaemonica.mixin",
   "refmap": "mixins.magiadaemonica.refmap.json",
   "mixins": [
+      "MixinEntityAINearestAttackableTarget",
+      "MixinEntityLiving",
       "MixinForgeEventFactory"
   ],
   "client": [

@@ -1,16 +1,7 @@
 package net.smileycorp.magiadaemonica.mixin;
 
-import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.world.storage.WorldInfo;
-import net.smileycorp.magiadaemonica.common.capabilities.DaemonicaCapabilities;
-import net.smileycorp.magiadaemonica.common.entities.DaemonicaEntities;
 import net.smileycorp.magiadaemonica.common.items.DaemonicaItems;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
