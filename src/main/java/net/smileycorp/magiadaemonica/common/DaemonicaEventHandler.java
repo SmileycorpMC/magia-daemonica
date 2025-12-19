@@ -13,6 +13,7 @@ import net.minecraft.world.WorldServer;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.ServerChatEvent;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.Clone;
 import net.minecraftforge.event.world.ChunkWatchEvent;
@@ -43,11 +44,16 @@ public class DaemonicaEventHandler {
 	}
 
 	@SubscribeEvent
-	public void join(PlayerEvent.PlayerLoggedInEvent event) {
+	public void logIn(PlayerEvent.PlayerLoggedInEvent event) {
 		if (event.player == null) return;
 		if (!(event.player instanceof EntityPlayerMP)) return;
 		SyncSoulMessage.send((EntityPlayerMP) event.player);
-		AbstractAttributeMap map = event.player.getAttributeMap();
+	}
+
+	@SubscribeEvent
+	public void joinWorld(EntityJoinWorldEvent event) {
+		if (!(event.getEntity() instanceof EntityPlayerMP)) return;
+		AbstractAttributeMap map = ((EntityPlayerMP)event.getEntity()).getAttributeMap();
 		IAttributeInstance attributes = map.getAttributeInstance(DaemonicaAttributes.INFERNAL_AFFINITY);
 		if (attributes == null) map.registerAttribute(DaemonicaAttributes.INFERNAL_AFFINITY);
 	}
