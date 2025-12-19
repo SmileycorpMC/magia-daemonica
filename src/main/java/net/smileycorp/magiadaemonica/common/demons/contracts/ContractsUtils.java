@@ -160,7 +160,7 @@ public class ContractsUtils {
 
     public static void addAffinity(EntityPlayerMP player, Demon demon) {
         IAttributeInstance attributes = player.getEntityAttribute(DaemonicaAttributes.INFERNAL_AFFINITY);
-        AttributeModifier modifier = attributes.getModifier(BONUS);
+        AttributeModifier modifier = attributes.getModifier(SUMMON_AFFINITY);
         double value = 0.005 * (Rank.values().length - demon.getRank().ordinal() + 1);
         if (modifier != null) {
             value += modifier.getAmount();
