@@ -10,7 +10,7 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
-public class ItemMask extends ItemRelic {
+public class ItemMask extends ItemDaemonica {
 
     public ItemMask(String name) {
         super(name);

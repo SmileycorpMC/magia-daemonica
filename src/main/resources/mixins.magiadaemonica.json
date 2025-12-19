@@ -8,6 +8,7 @@
       "MixinForgeEventFactory"
   ],
   "client": [
+      "MixinEntityRenderer",
       "MixinGuiIngameForge"
   ],
   "server": []

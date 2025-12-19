@@ -10,7 +10,7 @@ import net.smileycorp.atlas.api.util.DirectionUtils;
 import net.smileycorp.magiadaemonica.common.entities.EntityAbstractDemon;
 import net.smileycorp.magiadaemonica.common.potions.DaemonicaPotions;
 
-public class ItemFaciesExcoriata extends ItemMask {
+public class ItemFaciesExcoriata extends ItemInfernalMask {
 
     public ItemFaciesExcoriata() {
         super("facies_excoriata");

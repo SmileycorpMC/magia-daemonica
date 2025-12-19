@@ -4,7 +4,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
@@ -12,6 +15,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.smileycorp.magiadaemonica.client.rituals.RitualsClient;
+import net.smileycorp.magiadaemonica.common.items.DaemonicaItems;
 import net.smileycorp.magiadaemonica.common.potions.DaemonicaPotions;
 import net.smileycorp.magiadaemonica.common.rituals.Rituals;
 
@@ -38,16 +42,27 @@ public class ClientEventHandler {
     }
 
     @SubscribeEvent
-    public void tick(EntityViewRenderEvent.CameraSetup event) {
+    public void setupCamera(EntityViewRenderEvent.CameraSetup event) {
         Minecraft mc = Minecraft.getMinecraft();
-        EntityPlayerSP player = mc.player;
-        if (player.isPotionActive(DaemonicaPotions.TREMOR)) {
-            float a = (player.getActivePotionEffect(DaemonicaPotions.TREMOR).getAmplifier() + 4) * 0.25f;
-            float t = (mc.getRenderPartialTicks() + player.ticksExisted) * a * 0.75f;
+        Entity entity = mc.getRenderViewEntity();
+        if (!(entity instanceof EntityLivingBase)) return;
+        EntityLivingBase living = (EntityLivingBase) entity;
+        if (living.isPotionActive(DaemonicaPotions.TREMOR)) {
+            float a = (living.getActivePotionEffect(DaemonicaPotions.TREMOR).getAmplifier() + 4) * 0.25f;
+            float t = (mc.getRenderPartialTicks() + living.ticksExisted) * a * 0.75f;
             event.setPitch((float) (event.getPitch() + a * Math.sin((2*t) + 3)));
             event.setYaw((float) (event.getYaw() + a * Math.cos(t)));
             event.setRoll((float) (event.getRoll() + a * Math.sin(5 - (t*3))));
         }
+    }
+
+    @SubscribeEvent
+    public void fogDensity(EntityViewRenderEvent.FogDensity event) {
+        Entity entity = Minecraft.getMinecraft().getRenderViewEntity();
+        if (!(entity instanceof EntityLivingBase)) return;
+        if (((EntityLivingBase) entity).getItemStackFromSlot(EntityEquipmentSlot.HEAD).getItem() != DaemonicaItems.OCULUS_AETHEREUS) return;
+        event.setDensity(0.1f);
+        event.setCanceled(true);
     }
 
     /*@SubscribeEvent

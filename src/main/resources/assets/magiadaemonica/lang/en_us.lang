@@ -5,6 +5,8 @@ item.magiadaemonica.suet.name=Beef Suet
 item.magiadaemonica.tallow.name=Tallow
 
 item.magiadaemonica.infernal_relic=§4§oInfernal Relic
+item.magiadaemonica.infernal_mask=§4§oInfernal Relic - Mask
+item.magiadaemonica.infernal_food=§4§oInfernal Relic - Food
 
 item.magiadaemonica.sica_infernalem.name=Sica Infernalem
 item.magiadaemonica.sica_infernalem.tooltip=A strange dagger made of some blackened stone, it gives off a red glow when standing in a ritual circle
@@ -18,6 +20,8 @@ item.magiadaemonica.mors_larva.name=Mors Larva
 item.magiadaemonica.mors_larva.tooltip=A mask shaped like a skull, undead mobs barely seem to notice it's presence
 item.magiadaemonica.facies_excoriata.name=Facies Excoriata
 item.magiadaemonica.facies_excoriata.tooltip=A dripping face contorted in such a horrific expression onlookers are frozen in terror
+item.magiadaemonica.oculus_aethereus.name=Oculus Aethereus
+item.magiadaemonica.oculus_aethereus.tooltip=A writhing fleshy eye, it's vision is never hindered
 
 tile.magiadaemonica.chalk.name=Chalk
 tile.magiadaemonica.chalk_stairs.name=Chalk Stairs
