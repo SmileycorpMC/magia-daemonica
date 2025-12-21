@@ -4,9 +4,13 @@
   "refmap": "mixins.magiadaemonica.refmap.json",
   "mixins": [
       "MixinEntityItem",
+      "MixinEntityAINearestAttackableTarget",
+      "MixinEntity",
+      "MixinEntityLiving",
       "MixinForgeEventFactory"
   ],
   "client": [
+      "MixinEntityRenderer",
       "MixinGuiIngameForge"
   ],
   "server": []

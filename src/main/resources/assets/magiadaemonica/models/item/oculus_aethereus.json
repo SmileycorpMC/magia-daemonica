@@ -1,0 +1,7 @@
+{
+  "parent": "magiadaemonica:item/mask",
+  "textures": { 
+	  "layer0": "magiadaemonica:items/oculus_aethereus",
+      "layer1": "magiadaemonica:items/oculus_aethereus_eye"
+  }
+}

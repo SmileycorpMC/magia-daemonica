@@ -1,0 +1,5 @@
+{
+  "parent": "magiadaemonica:item/mask",
+  "textures":
+  { "layer0": "magiadaemonica:items/mors_larva" }
+}

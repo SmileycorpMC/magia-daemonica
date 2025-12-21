@@ -48,6 +48,7 @@ public class ItemCalixPerpetuus extends ItemRelic {
         if (entity instanceof EntityPlayerMP) {
             CriteriaTriggers.CONSUME_ITEM.trigger((EntityPlayerMP)entity, stack);
             ((EntityPlayerMP) entity).addStat(StatList.getObjectUseStats(this));
+            ((EntityPlayerMP) entity).getCooldownTracker().setCooldown(this, 60);
         }
         if (hasMilk(stack)) {
             ItemStack milk = new ItemStack(Items.MILK_BUCKET);

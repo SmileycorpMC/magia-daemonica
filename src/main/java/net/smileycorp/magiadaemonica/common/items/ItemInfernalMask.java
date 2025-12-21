@@ -1,7 +1,14 @@
 package net.smileycorp.magiadaemonica.common.items;
 
+import net.minecraft.block.BlockDispenser;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IRarity;
@@ -9,16 +16,16 @@ import net.minecraftforge.common.IRarity;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class ItemEdibleRelic extends ItemDaemonicaEdible implements InfernalRelic {
+public class ItemInfernalMask extends ItemMask implements InfernalRelic {
 
-    public ItemEdibleRelic(String name, int hunger, float saturation) {
-        super(name, hunger, saturation);
-        setMaxStackSize(1);
+    public ItemInfernalMask(String name) {
+        super(name);
     }
+
     @Override
     public void addInformation(ItemStack stack, @Nullable World world, List<String> tooltip, ITooltipFlag flag) {
         super.addInformation(stack, world, tooltip, flag);
-        tooltip.add(new TextComponentTranslation("item.magiadaemonica.infernal_food").getFormattedText());
+        tooltip.add(new TextComponentTranslation("item.magiadaemonica.infernal_mask").getFormattedText());
         tooltip.add(new TextComponentTranslation("item.magiadaemonica." + name + ".tooltip").getFormattedText());
     }
 

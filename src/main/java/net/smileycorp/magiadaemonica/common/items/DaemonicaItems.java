@@ -31,6 +31,9 @@ public class DaemonicaItems {
     public static final ItemPeccatumPrimordiale PECCATUM_PRIMORDIALE = new ItemPeccatumPrimordiale();
     public static final ItemCretaAeterna CRETA_AETERNA = new ItemCretaAeterna();
     public static final ItemCalixPerpetuus CALIX_PERPETUUS = new ItemCalixPerpetuus();
+    public static final ItemInfernalMask MORS_LARVA = new ItemInfernalMask("mors_larva");
+    public static final ItemInfernalMask FACIES_EXCORIATA = new ItemFaciesExcoriata();
+    public static final ItemInfernalMask OCULUS_AETHEREUS = new ItemInfernalMask("oculus_aethereus");
 
     @SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> event) {

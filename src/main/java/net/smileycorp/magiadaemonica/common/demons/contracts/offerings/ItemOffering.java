@@ -18,6 +18,7 @@ import java.util.Random;
 
 public class ItemOffering implements Offering {
 
+    public static final ResourceLocation RELIC_ID = Constants.loc("relic");
     public static ResourceLocation ID = Constants.loc("item");
 
     private final ItemStack stack;
@@ -82,6 +83,10 @@ public class ItemOffering implements Offering {
                 / ((float) (rarity.ordinal() * 2) + 1)) * stack.getMaxStackSize());
         stack.setCount(MathHelper.clamp(count, 1, stack.getMaxStackSize()));
         return new ItemOffering(stack);
+    }
+
+    public static ItemOffering generateRelic(Demon demon, EntityPlayer player, int tier) {
+        return new ItemOffering(ContractsUtils.getRelic(player.getRNG()));
     }
 
 }
