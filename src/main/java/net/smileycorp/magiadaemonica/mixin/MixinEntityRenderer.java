@@ -2,6 +2,7 @@ package net.smileycorp.magiadaemonica.mixin;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.EntityRenderer;
+import net.minecraft.client.renderer.entity.RenderEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -24,7 +25,7 @@ public class MixinEntityRenderer {
         if (!(entity instanceof EntityLivingBase)) return;
         if (((EntityLivingBase) entity).getItemStackFromSlot(EntityEquipmentSlot.HEAD).getItem() != DaemonicaItems.OCULUS_AETHEREUS) return;
         gamma = mc.gameSettings.gammaSetting;
-        mc.gameSettings.gammaSetting = 1.5f;
+        mc.gameSettings.gammaSetting = 10f;
     }
 
     @Inject(at = @At(value = "TAIL"), method = "updateLightmap")

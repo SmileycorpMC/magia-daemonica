@@ -61,7 +61,7 @@ public class ClientEventHandler {
         Entity entity = Minecraft.getMinecraft().getRenderViewEntity();
         if (!(entity instanceof EntityLivingBase)) return;
         if (((EntityLivingBase) entity).getItemStackFromSlot(EntityEquipmentSlot.HEAD).getItem() != DaemonicaItems.OCULUS_AETHEREUS) return;
-        event.setDensity(0.1f);
+        event.setDensity(0);
         event.setCanceled(true);
     }
 
