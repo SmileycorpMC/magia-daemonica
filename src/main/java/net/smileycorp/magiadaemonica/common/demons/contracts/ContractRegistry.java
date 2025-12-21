@@ -37,6 +37,7 @@ public class ContractRegistry {
         //registerOffering(AttributeOffering.ID, 5, AttributeOffering::fromNBT);
         registerOffering(EffectOffering.ID, 6, EffectOffering::fromNBT, EffectOffering::generate);
         registerOffering(ItemOffering.ID, 1, ItemOffering::fromNBT, ItemOffering::generate);
+        registerOffering(ItemOffering.RELIC_ID, 6, ItemOffering::fromNBT, ItemOffering::generateRelic);
     }
 
     public static Cost readCost(NBTTagCompound cost) {
