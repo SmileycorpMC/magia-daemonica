@@ -5,11 +5,11 @@
   "mixins": [
       "MixinEntityItem",
       "MixinEntityAINearestAttackableTarget",
-      "MixinEntity",
       "MixinEntityLiving",
       "MixinForgeEventFactory"
   ],
   "client": [
+      "MixinEntity",
       "MixinEntityRenderer",
       "MixinGuiIngameForge"
   ],
