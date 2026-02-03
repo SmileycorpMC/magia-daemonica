@@ -1,6 +1,7 @@
 package net.smileycorp.magiadaemonica.common.blocks;
 
 import net.minecraft.block.BlockBush;
+import net.minecraft.block.IGrowable;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
@@ -20,7 +21,9 @@ import net.smileycorp.atlas.api.block.BlockProperties;
 import net.smileycorp.magiadaemonica.common.Constants;
 import net.smileycorp.magiadaemonica.common.MagiaDaemonica;
 
-public class BlockDaemonicaFlower extends BlockBush implements BlockProperties {
+import java.util.Random;
+
+public class BlockDaemonicaFlower extends BlockBush implements BlockProperties, IGrowable {
 
     public static final PropertyEnum<Variant> VARIANT = PropertyEnum.create("variant", Variant.class);
 
@@ -82,6 +85,28 @@ public class BlockDaemonicaFlower extends BlockBush implements BlockProperties {
     public boolean usesCustomItemHandler() {
         return true;
     }
+
+    @Override
+    public boolean canGrow(World world, BlockPos pos, IBlockState state, boolean isClient) {
+        for (EnumFacing facing : EnumFacing.HORIZONTALS) if (world.isAirBlock(pos.offset(facing))) return true;
+        return false;
+    }
+
+    @Override
+    public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, IBlockState state) {
+        return true;
+    }
+
+    @Override
+    public void grow(World world, Random rand, BlockPos pos, IBlockState state) {
+        for (EnumFacing facing : EnumFacing.HORIZONTALS) {
+            BlockPos pos1 = pos.offset(facing);
+            if (!world.isAirBlock(pos1)) continue;
+            world.setBlockState(pos1, state);
+            return;
+        }
+    }
+
 
     public enum Variant implements IStringSerializable {
 
