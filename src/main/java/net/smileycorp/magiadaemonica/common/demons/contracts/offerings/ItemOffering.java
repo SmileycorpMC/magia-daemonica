@@ -3,6 +3,7 @@ package net.smileycorp.magiadaemonica.common.demons.contracts.offerings;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -10,6 +11,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.smileycorp.magiadaemonica.common.Constants;
+import net.smileycorp.magiadaemonica.common.advancements.DaemonicaAdvancements;
 import net.smileycorp.magiadaemonica.common.demons.Demon;
 import net.smileycorp.magiadaemonica.common.demons.contracts.ContractsUtils;
 import net.smileycorp.magiadaemonica.common.items.InfernalRelic;
@@ -39,11 +41,12 @@ public class ItemOffering implements Offering {
     @Override
     public void grant(EntityPlayer player) {
         ItemStack stack = this.stack.copy();
-        if (player.addItemStackToInventory(stack)) return;;
+        if (player.addItemStackToInventory(stack)) return;
         EntityItem item = player.dropItem(stack, false);
         if (item == null) return;
         item.setNoPickupDelay();
         item.setOwner(player.getName());
+        if (relic) DaemonicaAdvancements.INFERNAL_RELIC.trigger((EntityPlayerMP) player);
     }
 
     @Override

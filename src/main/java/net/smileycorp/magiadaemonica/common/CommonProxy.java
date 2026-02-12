@@ -8,6 +8,8 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.smileycorp.magiadaemonica.common.advancements.DaemonicaAdvancements;
+import net.smileycorp.magiadaemonica.common.advancements.DaemonicaCriterionTrigger;
 import net.smileycorp.magiadaemonica.common.capabilities.Contracts;
 import net.smileycorp.magiadaemonica.common.capabilities.Soul;
 import net.smileycorp.magiadaemonica.common.command.CommandSoul;
@@ -29,6 +31,7 @@ public class CommonProxy {
 		CapabilityManager.INSTANCE.register(Soul.class, new Soul.Storage(), Soul.Impl::new);
 		CapabilityManager.INSTANCE.register(Contracts.class, new Contracts.Storage(), Contracts.Impl::new);
 		GameRegistry.registerWorldGenerator(new DaemonicaWorldGen(), 99);
+		DaemonicaAdvancements.register();
 		RitualsRegistry.registerDefaults();
 		ContractRegistry.registerDefaults();
 		InvocationsRegistry.registerDefaults();

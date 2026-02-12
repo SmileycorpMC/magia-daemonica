@@ -22,9 +22,11 @@ import net.smileycorp.atlas.api.util.DirectionUtils;
 import net.smileycorp.magiadaemonica.common.Constants;
 import net.smileycorp.magiadaemonica.common.DaemonicaAttributes;
 import net.smileycorp.magiadaemonica.common.DaemonicaSoundEvents;
+import net.smileycorp.magiadaemonica.common.advancements.DaemonicaAdvancements;
 import net.smileycorp.magiadaemonica.common.blocks.BlockChalkLine;
 import net.smileycorp.magiadaemonica.common.blocks.DaemonicaBlocks;
 import net.smileycorp.magiadaemonica.common.demons.DemonRegistry;
+import net.smileycorp.magiadaemonica.common.demons.Rank;
 import net.smileycorp.magiadaemonica.common.demons.contracts.ContractRegistry;
 import net.smileycorp.magiadaemonica.common.demons.contracts.ContractsUtils;
 import net.smileycorp.magiadaemonica.common.entities.EntityAbstractDemon;
@@ -215,13 +217,16 @@ public class SummoningCircle implements Ritual {
         if (ticksActive == 320) world.playSound(null, center.x, center.y, center.z, DaemonicaSoundEvents.RITUAL_CRACKLING_BASS, SoundCategory.HOSTILE, 0.75f, 1);
         if (ticksActive == 560) world.playSound(null, center.x, center.y, center.z, DaemonicaSoundEvents.RITUAL_DEMON_SUMMON, SoundCategory.HOSTILE, 0.5f, 1);
         if (ticksActive == 600) {
+            EntityPlayer player = getPlayer().get();
             demon = new EntityDemonicTrader(world);
             demon.setDemon(DemonRegistry.get().create(world.rand, power));
             demon.setPose(EntityDemonicTrader.Pose.SUMMONING);
             demon.setPosition(center.x, center.y, center.z);
             demon.setRitual(getCenterPos());
-            demon.getLookHelper().setLookPositionWithEntity(getPlayer().get(), 0, 0);
+            demon.getLookHelper().setLookPositionWithEntity(player, 0, 0);
             world.spawnEntity(demon);
+            DaemonicaAdvancements.SUMMON_DEMON.trigger((EntityPlayerMP) player);
+            if (demon.getDemon().getRank() == Rank.PRINCE) DaemonicaAdvancements.SUMMON_PRINCE.trigger((EntityPlayerMP) player);
         }
         if (ticksActive == 680) {
             EntityPlayer player = getPlayer().get();

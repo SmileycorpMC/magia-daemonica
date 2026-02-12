@@ -6,6 +6,7 @@ import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.world.WorldServer;
+import net.smileycorp.magiadaemonica.common.advancements.DaemonicaAdvancements;
 import net.smileycorp.magiadaemonica.common.capabilities.DaemonicaCapabilities;
 import net.smileycorp.magiadaemonica.common.demons.Demon;
 import net.smileycorp.magiadaemonica.common.demons.DemonRegistry;
@@ -70,6 +71,7 @@ public class Contract {
 
     public void accept(EntityPlayerMP player) {
         costs.forEach(cost -> cost.pay(player));
+        DaemonicaAdvancements.DEMON_TRADE.trigger(player);
         offerings.forEach(offering -> offering.grant(player));
         player.getCapability(DaemonicaCapabilities.CONTRACTS, null).addContract(this);
     }
