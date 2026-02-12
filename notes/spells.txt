@@ -1,0 +1,15 @@
+fireball
+wood burning
+freeze
+torch plating
+random status
+speed to random entities
+xp gaining
+teleportation
+falling gravel above mobs
+resistance
+totem of undying
+strength to mobs
+ender dragon breath
+inflict negatiev particles
+harm any entity
