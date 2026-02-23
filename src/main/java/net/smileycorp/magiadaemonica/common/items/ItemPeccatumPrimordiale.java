@@ -7,7 +7,7 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
-public class ItemPeccatumPrimordiale extends ItemEdibleRelic{
+public class ItemPeccatumPrimordiale extends ItemEdibleRelic {
 
     public ItemPeccatumPrimordiale() {
         super("peccatum_primordiale", 4, 9.6f);
