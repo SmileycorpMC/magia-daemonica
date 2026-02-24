@@ -1,6 +1,6 @@
 {
   "parent": "magiadaemonica:item/knife",
   "textures": {
-    "layer0": "magiadaemonica:items/sica_infernalem_glowing"
+    "layer0": "magiadaemonica:items/flint_knife"
   }
 }

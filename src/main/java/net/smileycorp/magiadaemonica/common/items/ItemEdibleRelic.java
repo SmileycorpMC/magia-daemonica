@@ -15,6 +15,7 @@ public class ItemEdibleRelic extends ItemDaemonicaEdible implements InfernalReli
         super(name, hunger, saturation);
         setMaxStackSize(1);
     }
+
     @Override
     public void addInformation(ItemStack stack, @Nullable World world, List<String> tooltip, ITooltipFlag flag) {
         super.addInformation(stack, world, tooltip, flag);

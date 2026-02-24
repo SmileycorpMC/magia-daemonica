@@ -1,0 +1,24 @@
+{
+  "group": "minecraft:knife",
+  "type": "minecraft:crafting_shaped",
+  "mirror": true,
+  "pattern": [
+    " M",
+	"S "
+  ],
+  "key": {
+     "M": {
+      "type": "forge:ore_dict",
+      "ore": "bone"
+    },
+	"S": {
+      "type": "forge:ore_dict",
+      "ore": "gemPrismarine"
+    }
+  },
+  "result": {
+    "item": "magiadaemonica:prismarine_knife",
+    "data": 0,
+    "count": 1
+  }
+}

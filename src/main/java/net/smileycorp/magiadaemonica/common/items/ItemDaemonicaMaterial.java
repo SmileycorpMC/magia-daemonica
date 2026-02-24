@@ -5,23 +5,23 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.smileycorp.magiadaemonica.common.Constants;
 
-public class ItemDaemonicaFood extends ItemDaemonicaEdible {
+public class ItemDaemonicaMaterial extends ItemDaemonica {
 
-    public ItemDaemonicaFood() {
-        super("food", 1, 0.6f);
+    public ItemDaemonicaMaterial() {
+        super("material");
         setHasSubtypes(true);
     }
-    
+
     @Override
     public String byMeta(int meta) {
         return Variant.get(meta).getName();
     }
-    
+
     @Override
     public int getMaxMeta() {
         return Variant.values().length;
     }
-    
+
     @Override
     public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
         if (!isInCreativeTab(tab)) return;
@@ -33,46 +33,23 @@ public class ItemDaemonicaFood extends ItemDaemonicaEdible {
         return "item." + Constants.name(byMeta(stack.getMetadata()));
     }
 
-    @Override
-    public int getHealAmount(ItemStack stack) {
-        return Variant.get(stack.getMetadata()).getHunger();
-    }
-
-    @Override
-    public float getSaturationModifier(ItemStack stack) {
-        return Variant.get(stack.getMetadata()).getSaturation();
-    }
-
     public enum Variant {
-        SUET("suet", 1, 0.2f),
-        TALLOW("tallow", 3, 0.4f),
-        BARK("bark", 1, 0.2f),
-        PUMPKIN_SLICE("pumpkin_slice", 2, 1.2f);
+        FRANKINCENSE("frankincense"),
+        OAK_ASH("oak_ash");
 
         private final String name;
-        private final int hunger;
-        private final float saturation;
 
-        Variant(String name, int hunger, float saturation) {
+        Variant(String name) {
             this.name = name;
-            this.hunger = hunger;
-            this.saturation = saturation;
         }
 
         public String getName() {
             return name;
         }
 
-        public int getHunger() {
-            return hunger;
-        }
-
-        public float getSaturation() {
-            return saturation;
-        }
 
         public static Variant get(int meta) {
-            return meta < values().length ? values()[meta] : SUET;
+            return meta < values().length ? values()[meta] : FRANKINCENSE;
         }
 
     }
