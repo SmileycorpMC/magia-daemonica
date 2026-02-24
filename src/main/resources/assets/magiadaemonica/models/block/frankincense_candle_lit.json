@@ -1,0 +1,7 @@
+{
+	"parent": "magiadaemonica:block/scented_candle",
+	"textures": {
+		"candle": "magiadaemonica:blocks/frankincense_candle_lit",
+		"particle": "magiadaemonica:blocks/frankincense_candle_lit"
+	}
+}

@@ -82,11 +82,6 @@ public class BlockDaemonicaFlower extends BlockBush implements BlockProperties, 
     }
 
     @Override
-    public boolean usesCustomItemHandler() {
-        return true;
-    }
-
-    @Override
     public boolean canGrow(World world, BlockPos pos, IBlockState state, boolean isClient) {
         for (EnumFacing facing : EnumFacing.HORIZONTALS) if (world.isAirBlock(pos.offset(facing))) return true;
         return false;
@@ -110,7 +105,8 @@ public class BlockDaemonicaFlower extends BlockBush implements BlockProperties, 
 
     public enum Variant implements IStringSerializable {
 
-        LAVENDER("lavender");
+        LAVENDER("lavender"),
+        PEPPERMINT("peppermint");
 
         final String name;
 

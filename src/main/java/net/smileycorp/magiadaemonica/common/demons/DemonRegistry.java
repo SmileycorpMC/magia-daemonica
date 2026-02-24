@@ -6,6 +6,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.smileycorp.magiadaemonica.common.WorldDataDaemonica;
 
+import java.util.EnumMap;
 import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
@@ -31,6 +32,10 @@ public class DemonRegistry {
 
     public Demon create(Random rand, int points) {
         return create(rand, points, Domain.get(rand));
+    }
+
+    public Demon create(Random rand, int points, EnumMap<Domain, Integer> affiliation) {
+        return create(rand, points, Domain.get(rand, affiliation));
     }
 
     public Demon create(Random rand, int points, Domain domain) {

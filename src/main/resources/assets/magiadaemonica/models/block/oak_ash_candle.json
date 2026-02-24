@@ -1,6 +1,6 @@
 {
 	"parent": "magiadaemonica:block/scented_candle",
 	"textures": {
-		"candle": "magiadaemonica:blocks/scented_candle_lit"
+		"candle": "magiadaemonica:blocks/oak_ash_candle"
 	}
 }

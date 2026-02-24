@@ -19,14 +19,6 @@
 		{   
 			"when": {"west": true},
             "apply": { "model": "magiadaemonica:chalk_west" }
-        },
-        {
-			"when": {"candle": "unlit"},
-			"apply": { "model": "magiadaemonica:scented_candle" }
-        },
-		{
-			"when": {"candle": "lit"},
-			"apply": { "model": "magiadaemonica:scented_candle_lit" }
         }
     ]
 }

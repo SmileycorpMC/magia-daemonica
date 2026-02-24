@@ -7,12 +7,14 @@ import net.minecraft.block.material.Material;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.smileycorp.atlas.api.block.BlockBase;
 import net.smileycorp.atlas.api.block.BlockSlabBase;
 import net.smileycorp.atlas.api.block.BlockStairsBase;
 import net.smileycorp.magiadaemonica.common.Constants;
 import net.smileycorp.magiadaemonica.common.MagiaDaemonica;
+import net.smileycorp.magiadaemonica.common.blocks.tiles.TileRitualBasic;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -30,6 +32,7 @@ public class DaemonicaBlocks {
     public static final BlockScentedCandle SCENTED_CANDLE = new BlockScentedCandle();
     public static final BlockChalkLine CHALK_LINE = new BlockChalkLine();
     public static final BlockChalkAshLine CHALK_ASH_LINE = new BlockChalkAshLine();
+    public static final BlockChalkCandle CHALK_CANDLE = new BlockChalkCandle();
 
     @SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> event) {
@@ -41,6 +44,7 @@ public class DaemonicaBlocks {
                 register(registry, (Block) object);
             } catch (Exception e) {}
         }
+        GameRegistry.registerTileEntity(TileRitualBasic.class, Constants.loc("ritual"));
     }
 
     private static <T extends Block> void register(IForgeRegistry<Block> registry, T block) {

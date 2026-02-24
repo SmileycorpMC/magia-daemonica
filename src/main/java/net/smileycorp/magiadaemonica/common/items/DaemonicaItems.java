@@ -9,6 +9,7 @@ import net.minecraft.item.ItemSlab;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.oredict.OreIngredient;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.smileycorp.atlas.api.block.BlockProperties;
 import net.smileycorp.atlas.api.block.BlockSlabBase;
@@ -23,8 +24,16 @@ public class DaemonicaItems {
 
     public static final List<Item> ITEMS = Lists.newArrayList();
 
+    public static final ItemDaemonicaFood FOOD = new ItemDaemonicaFood();
+    public static final ItemDaemonicaMaterial MATERIAL = new ItemDaemonicaMaterial();
+
+    //tools
     public static final ItemChalkStick CHALK_STICK = new ItemChalkStick();
-    public static final ItemDaemonicaFood MATERIAL = new ItemDaemonicaFood();
+    public static final ItemKnife FLINT_KNIFE = new ItemKnife("flint_knife", 15, 1, () -> new OreIngredient("flint"));
+    public static final ItemKnife BONE_KNIFE = new ItemKnife("bone_knife", 34, 2, () -> new OreIngredient("bone"));
+    public static final ItemKnife LAPIS_KNIFE = new ItemKnife("lapis_knife", 106, 2, () -> new OreIngredient("gemLapis"));
+    public static final ItemKnife PRISMARINE_KNIFE = new ItemKnife("prismarine_knife", 305, 3, () -> new OreIngredient("gemPrismarine"));
+    public static final ItemKnife OBSIDIAN_KNIFE = new ItemKnife("obsidian_knife", 1064, 3, () -> new OreIngredient("obsidian"));
 
     //artifacts
     public static final ItemSicaInfernalem SICA_INFERNALEM = new ItemSicaInfernalem();
@@ -39,7 +48,7 @@ public class DaemonicaItems {
     public static void registerItems(RegistryEvent.Register<Item> event) {
         IForgeRegistry<Item> registry = event.getRegistry();
         for (Block block : DaemonicaBlocks.BLOCKS) {
-            if (block instanceof BlockProperties) register(registry, new ItemDaemonicaBlock(block));
+            if (block instanceof BlockProperties) if (!((BlockProperties)block).usesCustomItemHandler()) register(registry, new ItemDaemonicaBlock(block));
             if (block instanceof BlockStairs) {
                 Item item = new ItemBlock(block);
                 item.setRegistryName(block.getRegistryName());

@@ -202,9 +202,13 @@ public class SummoningCircleRenderer implements RitualRenderer<SummoningCircle> 
             BlockPos pos = new BlockPos(ritual.getCenter().addVector(rotated[0], 0, rotated[1]));
             IBlockState state = world.getBlockState(pos);
             boolean lit = false;
-            if (state.getBlock() == DaemonicaBlocks.CHALK_LINE)
-                lit = state.getValue(BlockChalkLine.CANDLE) == BlockChalkLine.Candle.LIT;
-            IBlockState renderState = DaemonicaBlocks.SCENTED_CANDLE.getDefaultState().withProperty(BlockScentedCandle.LIT, lit);
+            BlockScentedCandle.Type type = BlockScentedCandle.Type.ROSE;
+            if (state.getBlock() == DaemonicaBlocks.SCENTED_CANDLE || state.getBlock() == DaemonicaBlocks.CHALK_CANDLE) {
+                lit = state.getValue(BlockScentedCandle.LIT);
+                type = state.getValue(BlockScentedCandle.TYPE);
+            }
+            IBlockState renderState = DaemonicaBlocks.SCENTED_CANDLE.getDefaultState().withProperty(BlockScentedCandle.LIT, lit)
+                    .withProperty(BlockScentedCandle.TYPE, type);
             buffer.setTranslation(candle[0] - pos.getX() - 0.5f, -pos.getY(), candle[1] - pos.getZ() - 0.5f);
             dispatcher.getBlockModelRenderer().renderModel(world, dispatcher.getModelForState(renderState), renderState, pos, buffer, false, MathHelper.getPositionRandom(pos));
         }

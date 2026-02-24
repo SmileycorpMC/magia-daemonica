@@ -10,6 +10,7 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTUtil;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
@@ -24,8 +25,11 @@ import net.smileycorp.magiadaemonica.common.DaemonicaAttributes;
 import net.smileycorp.magiadaemonica.common.DaemonicaSoundEvents;
 import net.smileycorp.magiadaemonica.common.advancements.DaemonicaAdvancements;
 import net.smileycorp.magiadaemonica.common.blocks.BlockChalkLine;
+import net.smileycorp.magiadaemonica.common.blocks.BlockScentedCandle;
 import net.smileycorp.magiadaemonica.common.blocks.DaemonicaBlocks;
+import net.smileycorp.magiadaemonica.common.blocks.RitualBlock;
 import net.smileycorp.magiadaemonica.common.demons.DemonRegistry;
+import net.smileycorp.magiadaemonica.common.demons.Domain;
 import net.smileycorp.magiadaemonica.common.demons.Rank;
 import net.smileycorp.magiadaemonica.common.demons.contracts.ContractRegistry;
 import net.smileycorp.magiadaemonica.common.demons.contracts.ContractsUtils;
@@ -37,6 +41,7 @@ import net.smileycorp.magiadaemonica.common.rituals.Ritual;
 import net.smileycorp.magiadaemonica.common.rituals.Rituals;
 import net.smileycorp.magiadaemonica.common.rituals.Rotation;
 
+import java.util.EnumMap;
 import java.util.Optional;
 import java.util.Random;
 import java.util.UUID;
@@ -72,14 +77,16 @@ public class SummoningCircle implements Ritual {
         maxPower = SummoningCircles.getMaxPower(name);
     }
 
-    public void setBlocks(World world, BlockChalkLine.RitualState ritualState) {
-        BlockPos.MutableBlockPos mutable;
+    @Override
+    public void setBlocks(World world, int[][][] pattern) {
+        BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos(pos);
         for (int x = 0; x < width; x++) {
             for (int z = 0; z < height; z++) {
-                mutable = new BlockPos.MutableBlockPos(pos.getX() + x, pos.getY(), pos.getZ() + z);
+                mutable.setPos(pos.getX() + x, pos.getY(), pos.getZ() + z);
+                if (pattern[0][x][z] < 0) continue;
                 IBlockState state = world.getBlockState(mutable);
-                if (state.getBlock() != DaemonicaBlocks.CHALK_LINE) continue;
-                world.setBlockState(mutable, state.withProperty(BlockChalkLine.RITUAL_STATE, ritualState));
+                if (!(state.getBlock() instanceof RitualBlock)) continue;
+                world.setTileEntity(mutable, ((RitualBlock) state.getBlock()).createNewTileEntity(mutable));
             }
         }
     }
@@ -87,16 +94,15 @@ public class SummoningCircle implements Ritual {
     @Override
     public void remove(World world) {
         if (end) {
-            BlockPos.MutableBlockPos mutable;
+            BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos(pos);
             for (int x = 0; x < width; x++) {
                 for (int z = 0; z < height; z++) {
-                    mutable = new BlockPos.MutableBlockPos(pos.getX() + x, pos.getY(), pos.getZ() + z);
+                    mutable.setPos(pos.getX() + x, pos.getY(), pos.getZ() + z);
                     if (world.getBlockState(mutable).getBlock() != DaemonicaBlocks.CHALK_LINE) continue;
                     world.setBlockState(mutable, DaemonicaBlocks.CHALK_ASH_LINE.getDefaultState());
                 }
             }
         }
-        else setBlocks(world, BlockChalkLine.RitualState.NONE);
         if (demon != null) demon.setPose(EntityDemonicTrader.Pose.DESPAWNING);
         for (EntityContract contract : world.getEntitiesWithinAABB(EntityContract.class,
                new AxisAlignedBB(getCenterPos()).grow(width, 10, height))) contract.setDead();
@@ -173,8 +179,8 @@ public class SummoningCircle implements Ritual {
                 candle = rotation.apply(candle);
                 if (mirror) for (int i = 0; i < 2; i++) candle[i] = -candle[i];
                 IBlockState state = world.getBlockState(new BlockPos(center.addVector(candle[0], 0, candle[1])));
-                if (state.getBlock() != DaemonicaBlocks.CHALK_LINE) continue;
-                if (state.getValue(BlockChalkLine.CANDLE) != BlockChalkLine.Candle.LIT) continue;
+                if (state.getBlock() != DaemonicaBlocks.SCENTED_CANDLE && state.getBlock() != DaemonicaBlocks.CHALK_CANDLE) continue;
+                if (!state.getValue(BlockScentedCandle.LIT)) continue;
                 world.spawnParticle(EnumParticleTypes.FLAME, center.x + candle[0], center.y + 0.6, center.z + candle[1], 0, 0, 0);
                 if (rand.nextInt(4) == 0)
                     world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, center.x + candle[0] + (rand.nextFloat() - 0.5) * 0.05,
@@ -193,7 +199,7 @@ public class SummoningCircle implements Ritual {
                 candle = rotation.apply(candle);
                 if (mirror) for (int i = 0; i < 2; i++) candle[i] = -candle[i];
                 mutable.setPos(center.x + candle[0], center.y, center.z + candle[1]);
-                world.setBlockState(mutable, world.getBlockState(mutable).withProperty(BlockChalkLine.CANDLE, BlockChalkLine.Candle.UNLIT));
+                world.setBlockState(mutable, world.getBlockState(mutable).withProperty(BlockScentedCandle.LIT, false));
             }
             world.playSound(null, center.x, center.y, center.z, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.HOSTILE, 0.75f, 1);
             world.playSound(null, center.x, center.y, center.z, DaemonicaSoundEvents.RITUAL_WHISPER, SoundCategory.HOSTILE, 0.75f, 1);
@@ -206,7 +212,7 @@ public class SummoningCircle implements Ritual {
                 candle = rotation.apply(candle);
                 if (mirror) for (int i = 0; i < 2; i++) candle[i] = -candle[i];
                 mutable.setPos(center.x + candle[0], center.y, center.z + candle[1]);
-                world.setBlockState(mutable, world.getBlockState(mutable).withProperty(BlockChalkLine.CANDLE, BlockChalkLine.Candle.LIT));
+                world.setBlockState(mutable, world.getBlockState(mutable).withProperty(BlockScentedCandle.LIT, true));
             }
         }
         if (ticksActive == 250) {
@@ -219,7 +225,7 @@ public class SummoningCircle implements Ritual {
         if (ticksActive == 600) {
             EntityPlayer player = getPlayer().get();
             demon = new EntityDemonicTrader(world);
-            demon.setDemon(DemonRegistry.get().create(world.rand, power));
+            demon.setDemon(DemonRegistry.get().create(world.rand, power, getAffiliationBonus(world, pos, player)));
             demon.setPose(EntityDemonicTrader.Pose.SUMMONING);
             demon.setPosition(center.x, center.y, center.z);
             demon.setRitual(getCenterPos());
@@ -250,6 +256,18 @@ public class SummoningCircle implements Ritual {
         }
         ticksActive++;
         markDirty(true);
+    }
+
+    private EnumMap<Domain, Integer> getAffiliationBonus(World world, BlockPos pos, EntityPlayer player) {
+        EnumMap<Domain, Integer> influence = new EnumMap<>(Domain.class);
+        BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos(pos);
+        for (float[] candle : candles) {
+            candle = rotation.apply(candle);
+            if (mirror) for (int i = 0; i < 2; i++) candle[i] = -candle[i];
+            mutable.setPos(center.x + candle[0], center.y, center.z + candle[1]);
+            //mutable.get
+        }
+        return influence;
     }
 
     private void spawnParticles(World world, EnumParticleTypes type) {
@@ -286,8 +304,19 @@ public class SummoningCircle implements Ritual {
     }
 
     @Override
+    public void setPower(int power) {
+        this.power = power;
+        markDirty(true);
+    }
+
+    @Override
     public int getPower() {
         return power;
+    }
+
+    @Override
+    public int getMaxPower() {
+        return maxPower;
     }
 
     public int getLastTickPower() {
@@ -374,12 +403,11 @@ public class SummoningCircle implements Ritual {
             candle = rotation.apply(candle);
             if (mirror) for (int i = 0; i < 2; i++) candle[i] = -candle[i];
             IBlockState state = world.getBlockState(new BlockPos(center.addVector(candle[0], 0, candle[1])));
-            if (state.getBlock() != DaemonicaBlocks.CHALK_LINE) return;
-            if (state.getValue(BlockChalkLine.CANDLE) != BlockChalkLine.Candle.LIT) return;
+            if (state.getBlock() != DaemonicaBlocks.SCENTED_CANDLE && state.getBlock() != DaemonicaBlocks.CHALK_CANDLE) return;
+            if (!state.getValue(BlockScentedCandle.LIT)) return;
         }
         EntityLightningBolt bolt = new EntityLightningBolt(world, center.x, center.y, center.z, false);
         world.spawnEntity(bolt);
-        setBlocks(world, BlockChalkLine.RitualState.ACTIVE);
         active = true;
         this.player = player;
         playerUUID = player.getUniqueID();

@@ -1,5 +1,5 @@
 {
-  "group": "minecraft:dye",
+  "group": "magiadaemonica:scented_candle",
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
@@ -13,14 +13,11 @@
     {
       "type": "forge:ore_dict",
       "ore": "wax"
-    },
-    {
-      "item": "minecraft:dye",
-      "data": 1
     }
   ],
   "result": {
     "item": "magiadaemonica:scented_candle",
+	"data": 1,
     "count": 1
   }
 }

@@ -1,8 +1,8 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"particle": "magiadaemonica:blocks/scented_candle",
-		"candle": "magiadaemonica:blocks/scented_candle"
+		"candle": "magiadaemonica:blocks/rose_candle",
+		"particle": "magiadaemonica:blocks/rose_candle"
 	},
 	"elements": [
 		{

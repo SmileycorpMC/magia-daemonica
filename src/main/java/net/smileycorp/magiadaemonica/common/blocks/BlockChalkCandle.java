@@ -1,51 +1,52 @@
 package net.smileycorp.magiadaemonica.common.blocks;
 
+import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.ai.EntityAIAttackMelee;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.smileycorp.atlas.api.block.BlockBase;
-import net.smileycorp.magiadaemonica.common.Constants;
-import net.smileycorp.magiadaemonica.common.MagiaDaemonica;
-import net.smileycorp.magiadaemonica.common.blocks.tiles.RitualTile;
+import net.minecraft.world.WorldServer;
 import net.smileycorp.magiadaemonica.common.demons.Domain;
+import net.smileycorp.magiadaemonica.common.items.DaemonicaItems;
+import net.smileycorp.magiadaemonica.common.rituals.RitualsServer;
+import net.smileycorp.magiadaemonica.common.rituals.summoning.SummoningCircles;
 
 import javax.annotation.Nullable;
 import java.util.EnumMap;
 import java.util.Random;
 
-public class BlockScentedCandle extends BlockBase implements Lightable, RitualBlock {
+public class BlockChalkCandle extends BlockLine implements Lightable, RitualBlock {
 
-    public static PropertyBool LIT = PropertyBool.create("lit");
-    public static PropertyEnum<Type> TYPE = PropertyEnum.create("type", Type.class);
+    public static final PropertyBool LIT = BlockScentedCandle.LIT;
+    public static final PropertyEnum<BlockScentedCandle.Type> TYPE = BlockScentedCandle.TYPE;
 
-    public static final AxisAlignedBB AABB = new AxisAlignedBB(0.4375, 0, 0.4375, 0.5625, 0.4375, 0.5625);
-
-    public BlockScentedCandle() {
-        super("scented_candle", Constants.MODID, Material.CIRCUITS, SoundType.STONE, 0, 0, 0, MagiaDaemonica.CREATIVE_TAB);
-        setDefaultState(blockState.getBaseState().withProperty(LIT, false).withProperty(TYPE, Type.ROSE));
+    public BlockChalkCandle() {
+        super("chalk_candle");
+        setDefaultState(blockState.getBaseState().withProperty(NORTH, false).withProperty(EAST, false).withProperty(SOUTH, false)
+                .withProperty(WEST, false).withProperty(LIT, false).withProperty(TYPE, BlockScentedCandle.Type.ROSE));
     }
 
     @Override
-    protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, LIT, TYPE);
+    public BlockStateContainer createBlockState() {
+        return new BlockStateContainer(this, NORTH, EAST, SOUTH, WEST, LIT, TYPE);
     }
 
     @Override
     public IBlockState getStateFromMeta(int meta) {
-        return getDefaultState().withProperty(LIT, meta % 2 == 1).withProperty(TYPE, Type.get(meta/2));
+        return getDefaultState().withProperty(LIT, meta % 2 == 1).withProperty(TYPE, BlockScentedCandle.Type.get(meta/2));
     }
 
     @Override
@@ -54,19 +55,23 @@ public class BlockScentedCandle extends BlockBase implements Lightable, RitualBl
     }
 
     @Override
-    public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
-        ItemStack stack = placer.getHeldItem(hand);
-        return getDefaultState().withProperty(TYPE, Type.get(stack.getMetadata()));
+    public ItemStack getPickBlock(IBlockState state, RayTraceResult raytrace, World world, BlockPos pos, EntityPlayer player) {
+        return new ItemStack(DaemonicaBlocks.SCENTED_CANDLE, 1, state.getValue(TYPE).ordinal());
+    }
+
+    @Override
+    public int quantityDropped(Random random) {
+        return 1;
+    }
+
+    @Override
+    public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+        return Item.getItemFromBlock(DaemonicaBlocks.SCENTED_CANDLE);
     }
 
     @Override
     public int damageDropped(IBlockState state) {
         return state.getValue(TYPE).ordinal();
-    }
-
-    @Override
-    public boolean canPlaceBlockAt(World world, BlockPos pos) {
-        return world.isSideSolid(pos.down(), EnumFacing.UP);
     }
 
     @Override
@@ -76,7 +81,7 @@ public class BlockScentedCandle extends BlockBase implements Lightable, RitualBl
 
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos) {
-        return AABB;
+        return FULL_BLOCK_AABB;
     }
 
     @Nullable
@@ -134,7 +139,7 @@ public class BlockScentedCandle extends BlockBase implements Lightable, RitualBl
 
     @Override
     public String byMeta(int meta) {
-        return Type.get(meta).getName() + "_candle";
+        return BlockScentedCandle.Type.get(meta).getName() + "_candle";
     }
 
     @Override
@@ -142,36 +147,9 @@ public class BlockScentedCandle extends BlockBase implements Lightable, RitualBl
         return 7;
     }
 
-    public enum Type implements IStringSerializable {
-        ROSE("rose", Domain.LUST),
-        LAVENDER("lavender", Domain.SLOTH),
-        LILAC("lilac", Domain.ENVY),
-        FRANKINCENSE("frankincense", Domain.PRIDE),
-        OAK_ASH("oak_ash", Domain.WRATH),
-        PUMPKIN("pumpkin", Domain.GLUTTONY),
-        PEPPERMINT("peppermint", Domain.GREED);
-
-        private final String name;
-        private final Domain domain;
-
-        Type(String name, Domain domain) {
-            this.name = name;
-            this.domain = domain;
-        }
-
-        @Override
-        public String getName() {
-            return name;
-        }
-
-        public Domain getDomain() {
-            return domain;
-        }
-
-        public static Type get(int meta) {
-            return values()[meta % values().length];
-        }
-
+    @Override
+    public boolean usesCustomItemHandler() {
+        return true;
     }
 
 }

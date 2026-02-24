@@ -1,5 +1,6 @@
 package net.smileycorp.magiadaemonica.common;
 
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityOwnable;
@@ -17,11 +18,13 @@ import net.minecraftforge.event.ServerChatEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.Clone;
+import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.event.world.ChunkWatchEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import net.smileycorp.magiadaemonica.common.blocks.RitualBlock;
 import net.smileycorp.magiadaemonica.common.capabilities.Contracts;
 import net.smileycorp.magiadaemonica.common.capabilities.DaemonicaCapabilities;
 import net.smileycorp.magiadaemonica.common.capabilities.Soul;
@@ -29,7 +32,9 @@ import net.smileycorp.magiadaemonica.common.invocations.InvocationsRegistry;
 import net.smileycorp.magiadaemonica.common.network.SyncSoulMessage;
 import net.smileycorp.magiadaemonica.common.rituals.Ritual;
 import net.smileycorp.magiadaemonica.common.rituals.Rituals;
+import net.smileycorp.magiadaemonica.common.rituals.RitualsRegistry;
 import net.smileycorp.magiadaemonica.common.rituals.RitualsServer;
+import net.smileycorp.magiadaemonica.common.rituals.summoning.SummoningCircles;
 
 import java.util.Locale;
 
@@ -117,6 +122,13 @@ public class DaemonicaEventHandler {
 	@SubscribeEvent
 	public void playerChat(ServerChatEvent event) {
 		InvocationsRegistry.processInvocation(event.getPlayer(), event.getMessage().toLowerCase(Locale.US));
+	}
+
+	@SubscribeEvent
+	public void placeBlock(BlockEvent.PlaceEvent event) {
+		IBlockState state = event.getPlacedBlock();
+		if (!(state.getBlock() instanceof RitualBlock)) return;
+		SummoningCircles.tryPlace(event.getWorld(), event.getPos());
 	}
 	
 }

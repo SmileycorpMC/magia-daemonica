@@ -3,10 +3,22 @@ itemGroup.magiadaemonica.tab=Magia Daemonica
 item.magiadaemonica.chalk_stick.name=Chalk Stick
 item.magiadaemonica.suet.name=Beef Suet
 item.magiadaemonica.tallow.name=Tallow
+item.magiadaemonica.pumpkin_slice.name=Pumpkin Slice
+item.magiadaemonica.frankincense.name=Frankincense
+item.magiadaemonica.bark.name=Oak Bark
+item.magiadaemonica.oak_ash.name=Oak Ash
+
+item.magiadaemonica.flint_knife.name=Flint Knife
+item.magiadaemonica.bone_knife.name=Bone Knife
+item.magiadaemonica.lapis_knife.name=Lapis Lazuli Knife
+item.magiadaemonica.prismarine_knife.name=Prismarine Knife
+item.magiadaemonica.obsidian_knife.name=Obsidian Knife
+
 
 item.magiadaemonica.infernal_relic=§4§oInfernal Relic
 item.magiadaemonica.infernal_mask=§4§oInfernal Relic - Mask
 item.magiadaemonica.infernal_food=§4§oInfernal Relic - Food
+item.magiadaemonica.infernal_knife=§4§oInfernal Relic - Knife
 
 item.magiadaemonica.sica_infernalem.name=Sica Infernalem
 item.magiadaemonica.sica_infernalem.tooltip=A strange dagger made of some blackened stone, it gives off a red glow when standing in a ritual circle
@@ -28,6 +40,13 @@ tile.magiadaemonica.chalk_stairs.name=Chalk Stairs
 tile.magiadaemonica.ChalkSlab.name=Chalk Slab
 tile.magiadaemonica.lavender.name=Lavender
 tile.magiadaemonica.scented_candle.name=Scented Candle
+tile.magiadaemonica.rose_candle.name=Rose Candle
+tile.magiadaemonica.lavender_candle.name=Lavender Candle
+tile.magiadaemonica.lilac_candle.name=Lilac Candle
+tile.magiadaemonica.frankincense_candle.name=Frankincense Candle
+tile.magiadaemonica.oak_ash_candle.name=Oak Ash Candle
+tile.magiadaemonica.pumpkin_candle.name=Pumpkin Candle
+tile.magiadaemonica.peppermint_candle.name=Peppermint Candle
 tile.magiadaemonica.chalk_ash_line.name=Chalk Ash
 
 fluid.milk=Milk

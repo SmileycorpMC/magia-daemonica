@@ -2,8 +2,10 @@ package net.smileycorp.magiadaemonica.common.demons;
 
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.smileycorp.atlas.api.recipe.WeightedOutputs;
 import net.smileycorp.magiadaemonica.common.Constants;
 
+import java.util.EnumMap;
 import java.util.Locale;
 import java.util.Random;
 
@@ -45,6 +47,12 @@ public enum Domain {
 
     public static Domain get(Random rand) {
         return values()[rand.nextInt(values().length)];
+    }
+
+    public static Domain get(Random rand, EnumMap<Domain, Integer> affiliation) {
+        EnumMap<Domain, Integer> weights = new EnumMap<>(Domain.class);
+        for (Domain domain : values()) weights.put(domain, 25 + affiliation.get(domain));
+        return new WeightedOutputs<>(weights).getResult(rand);
     }
 
     public ITextComponent getFormalName(String name, Rank rank) {

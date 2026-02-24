@@ -64,10 +64,8 @@ public class ClientProxy extends CommonProxy {
 		ModelLoader.setCustomStateMapper(DaemonicaBlocks.CHALK_SLAB, new SlabStateMapper(DaemonicaBlocks.CHALK_SLAB));
 		ModelLoader.setCustomStateMapper(DaemonicaBlocks.CHALK_DOUBLE_SLAB, new CustomStateMapper(Constants.MODID, "chalk_slab", "double"));
 		ModelLoader.setCustomStateMapper(DaemonicaBlocks.FLOWER, new MetaStateMapper());
-		for (Item item : DaemonicaItems.ITEMS) if (item instanceof IMetaItem &! (item instanceof ItemBlock &&
-				((ItemBlock)item).getBlock() instanceof BlockProperties &&
-				((BlockProperties)((ItemBlock) item).getBlock()).usesCustomItemHandler())) {
-			if (((IMetaItem) item).getMaxMeta() > 0) for (int i = 0; i < ((IMetaItem) item).getMaxMeta(); i++) {
+		for (Item item : DaemonicaItems.ITEMS) {
+			if (item instanceof IMetaItem && ((IMetaItem) item).getMaxMeta() > 0) for (int i = 0; i < ((IMetaItem) item).getMaxMeta(); i++) {
 				ModelResourceLocation loc = new ModelResourceLocation(Constants.locStr(((IMetaItem) item).byMeta(i)));
 				ModelLoader.setCustomModelResourceLocation(item, i, loc);
 			}
@@ -80,8 +78,6 @@ public class ClientProxy extends CommonProxy {
 				new ModelResourceLocation(Constants.locStr("chalk_slab"), "normal"));
 		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(DaemonicaBlocks.CHALK_STAIRS), 0,
 				new ModelResourceLocation(Constants.locStr("chalk_stairs"), "normal"));
-		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(DaemonicaBlocks.FLOWER), 0,
-				new ModelResourceLocation(Constants.locStr("lavender"), "inventory"));
 		RenderingRegistry.registerEntityRenderingHandler(EntityDemonicTrader.class, RenderDemon::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityContract.class, RenderContract::new);
 	}

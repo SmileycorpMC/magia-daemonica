@@ -1,0 +1,80 @@
+{
+    "multipart": [       
+		{   
+			"when": {"north": false, "east": false, "south": false, "west": false},
+            "apply": { "model": "magiadaemonica:chalk_pile" }
+        },
+        {   
+			"when": {"north": true},
+            "apply": { "model": "magiadaemonica:chalk_north" }
+        },
+		{   
+			"when": {"east": true},
+            "apply": { "model": "magiadaemonica:chalk_east" }
+        },
+		{   
+			"when": {"south": true},
+            "apply": { "model": "magiadaemonica:chalk_south" }
+        },
+		{   
+			"when": {"west": true},
+            "apply": { "model": "magiadaemonica:chalk_west" }
+        },
+        {
+			"when": {"lit": false, "type": "rose"},
+			"apply": { "model": "magiadaemonica:rose_candle" }
+        },
+		{
+			"when": {"lit": true, "type": "rose"},
+			"apply": { "model": "magiadaemonica:rose_candle_lit" }
+        },
+		{
+			"when": {"lit": false, "type": "lavender"},
+			"apply": { "model": "magiadaemonica:lavender_candle" }
+        },
+		{
+			"when": {"lit": true, "type": "lavender"},
+			"apply": { "model": "magiadaemonica:lavender_candle_lit" }
+        },
+		{
+			"when": {"lit": false, "type": "lilac"},
+			"apply": { "model": "magiadaemonica:lilac_candle" }
+        },
+		{
+			"when": {"lit": true, "type": "lilac"},
+			"apply": { "model": "magiadaemonica:lilac_candle_lit" }
+        },
+		{
+			"when": {"lit": false, "type": "frankincense"},
+			"apply": { "model": "magiadaemonica:frankincense_candle" }
+        },
+		{
+			"when": {"lit": true, "type": "frankincense"},
+			"apply": { "model": "magiadaemonica:frankincense_candle_lit" }
+        },
+		{
+			"when": {"lit": false, "type": "oak_ash"},
+			"apply": { "model": "magiadaemonica:oak_ash_candle" }
+        },
+		{
+			"when": {"lit": true, "type": "oak_ash"},
+			"apply": { "model": "magiadaemonica:oak_ash_candle_lit" }
+        },
+		{
+			"when": {"lit": false, "type": "pumpkin"},
+			"apply": { "model": "magiadaemonica:pumpkin_candle" }
+        },
+		{
+			"when": {"lit": true, "type": "pumpkin"},
+			"apply": { "model": "magiadaemonica:pumpkin_candle_lit" }
+        },
+		{
+			"when": {"lit": false, "type": "peppermint"},
+			"apply": { "model": "magiadaemonica:peppermint_candle" }
+        },
+		{
+			"when": {"lit": true, "type": "peppermint"},
+			"apply": { "model": "magiadaemonica:peppermint_candle_lit" }
+        }
+    ]
+}

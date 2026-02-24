@@ -1,13 +1,81 @@
 {
   "forge_marker": 1,
   "defaults": {
-    "model": "magiadaemonica:scented_candle"
+    "model": "magiadaemonica:rose_candle"
   },
   "variants": {
-    "normal": [{}],
-	"lit=false": [{}],
-	"lit=true": [{
-		"model": "magiadaemonica:scented_candle_lit"
-	}]
+    "normal": [
+      {}
+    ],
+    "lit=false,type=rose": [
+      {
+        "model": "magiadaemonica:rose_candle"
+      }
+    ],
+    "lit=true,type=rose": [
+      {
+        "model": "magiadaemonica:rose_candle_lit"
+      }
+    ],
+    "lit=false,type=lavender": [
+      {
+        "model": "magiadaemonica:lavender_candle"
+      }
+    ],
+    "lit=true,type=lavender": [
+      {
+        "model": "magiadaemonica:lavender_candle_lit"
+      }
+    ],
+    "lit=false,type=lilac": [
+      {
+        "model": "magiadaemonica:lilac_candle"
+      }
+    ],
+    "lit=true,type=lilac": [
+      {
+        "model": "magiadaemonica:lilac_candle_lit"
+      }
+    ],
+    "lit=false,type=frankincense": [
+      {
+        "model": "magiadaemonica:frankincense_candle"
+      }
+    ],
+    "lit=true,type=frankincense": [
+      {
+        "model": "magiadaemonica:frankincense_candle_lit"
+      }
+    ],
+    "lit=false,type=oak_ash": [
+      {
+        "model": "magiadaemonica:oak_ash_candle"
+      }
+    ],
+    "lit=true,type=oak_ash": [
+      {
+        "model": "magiadaemonica:oak_ash_candle_lit"
+      }
+    ],
+    "lit=false,type=pumpkin": [
+      {
+        "model": "magiadaemonica:pumpkin_candle"
+      }
+    ],
+    "lit=true,type=pumpkin": [
+      {
+        "model": "magiadaemonica:pumpkin_candle_lit"
+      }
+    ],
+    "lit=false,type=peppermint": [
+      {
+        "model": "magiadaemonica:peppermint_candle"
+      }
+    ],
+    "lit=true,type=peppermint": [
+      {
+        "model": "magiadaemonica:peppermint_candle_lit"
+      }
+    ]
   }
 }

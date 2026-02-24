@@ -4,6 +4,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.common.IRarity;
 
 public interface InfernalRelic {
+
     IRarity RARITY = new IRarity() {
         @Override
         public TextFormatting getColor() {
@@ -15,4 +16,5 @@ public interface InfernalRelic {
             return "Relic";
         }
     };
+
 }

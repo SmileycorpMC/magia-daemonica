@@ -1,0 +1,23 @@
+{
+  "group": "magiadaemonica:scented_candle",
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "type": "forge:ore_dict",
+      "ore": "string"
+    },
+    {
+      "item": "minecraft:double_plant",
+      "data": 1
+    },
+    {
+      "type": "forge:ore_dict",
+      "ore": "wax"
+    }
+  ],
+  "result": {
+    "item": "magiadaemonica:scented_candle",
+	"data": 2,
+    "count": 1
+  }
+}

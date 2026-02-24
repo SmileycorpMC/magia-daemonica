@@ -49,7 +49,6 @@ public class BlockLine extends BlockBase {
         return ItemStack.EMPTY;
     }
 
-
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos) {
         return AABB;
