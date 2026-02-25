@@ -6,7 +6,10 @@ import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraftforge.fml.common.IWorldGenerator;
+import net.smileycorp.atlas.api.config.BiomeGenEntry;
 import net.smileycorp.atlas.api.config.WorldGenEntry;
+import net.smileycorp.magiadaemonica.common.MagiaDaemonica;
+import net.smileycorp.magiadaemonica.common.blocks.BlockDaemonicaFlower;
 import net.smileycorp.magiadaemonica.common.blocks.DaemonicaBlocks;
 import net.smileycorp.magiadaemonica.config.WorldConfig;
 
@@ -16,11 +19,12 @@ public class DaemonicaWorldGen implements IWorldGenerator {
 
     @Override
     public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
-        genOre(DaemonicaBlocks.CHALK.getDefaultState(), WorldConfig.chalk, world, random, chunkX, chunkZ);
+        genOre(DaemonicaBlocks.CHALK.getDefaultState(), WorldConfig.chalk, WorldConfig.chalkBiomes, world, random, chunkX, chunkZ);
         if (WorldConfig.lavenderSpawnChance > 0) genLavender(world, random, chunkX, chunkZ);
+        if (WorldConfig.lavenderSpawnChance > 0) genPeppermint(world, random, chunkX, chunkZ);
     }
 
-    private void genOre(IBlockState block, WorldGenEntry entry, World world, Random rand, int chunkX, int chunkZ) {
+    private void genOre(IBlockState block, WorldGenEntry entry, BiomeGenEntry biomes, World world, Random rand, int chunkX, int chunkZ) {
         for (int dim : entry.getDimensions()) {
             if (world.provider.getDimension() != dim) continue;
             WorldGenSimpleOre generator = new WorldGenSimpleOre(entry.getSize(), block);
@@ -30,7 +34,9 @@ public class DaemonicaWorldGen implements IWorldGenerator {
                 int x = chunkX * 16 + rand.nextInt(16);
                 int y = entry.getMinHeight() + rand.nextInt(dy);
                 int z = chunkZ * 16 + rand.nextInt(16);
-                generator.generate(world, rand, new BlockPos(x, y, z));
+                BlockPos pos = new BlockPos(x, y, z);
+                if (!biomes.getGenerationBiomes(MagiaDaemonica.LOGGER).contains(world.getBiome(pos))) return;
+                generator.generate(world, rand, pos);
             }
         }
     }
@@ -42,7 +48,23 @@ public class DaemonicaWorldGen implements IWorldGenerator {
             WorldGenFlowerPatch generator = new WorldGenFlowerPatch(DaemonicaBlocks.FLOWER.getDefaultState(), WorldConfig.lavenderMinSize, WorldConfig.lavenderMaxSize);
             int x = chunkX * 16 + rand.nextInt(16);
             int z = chunkZ * 16 + rand.nextInt(16);
-            generator.generate(world, rand, new BlockPos(x, world.getHeight(x, z), z));
+            BlockPos pos =  new BlockPos(x, world.getHeight(x, z), z);
+            if (!WorldConfig.lavenderBiomes.getGenerationBiomes(MagiaDaemonica.LOGGER).contains(world.getBiome(pos))) return;
+            generator.generate(world, rand, pos);
+        }
+    }
+
+    private void genPeppermint(World world, Random rand, int chunkX, int chunkZ) {
+        for (int dim : WorldConfig.peppermintDimensions) {
+            if (world.provider.getDimension() != dim) continue;
+            if (rand.nextInt(WorldConfig.peppermintSpawnChance) > 0) continue;
+            WorldGenFlowerPatch generator = new WorldGenFlowerPatch(DaemonicaBlocks.FLOWER.getDefaultState()
+                    .withProperty(BlockDaemonicaFlower.VARIANT, BlockDaemonicaFlower.Variant.PEPPERMINT), WorldConfig.peppermintMinSize, WorldConfig.peppermintMaxSize);
+            int x = chunkX * 16 + rand.nextInt(16);
+            int z = chunkZ * 16 + rand.nextInt(16);
+            BlockPos pos =  new BlockPos(x, world.getHeight(x, z), z);
+            if (!WorldConfig.peppermintBiomes.getGenerationBiomes(MagiaDaemonica.LOGGER).contains(world.getBiome(pos))) return;
+            generator.generate(world, rand, pos);
         }
     }
 

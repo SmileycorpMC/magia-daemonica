@@ -8,11 +8,14 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import net.smileycorp.atlas.api.util.ModLogger;
 
 
 @Mod(modid = Constants.MODID, name = Constants.NAME, version = Constants.VERSION, dependencies = Constants.DEPENDENCIES)
 public class MagiaDaemonica {
-	
+
+	public static final ModLogger LOGGER = new ModLogger(Constants.MODID);
+
 	@SidedProxy(clientSide = Constants.CLIENT, serverSide = Constants.SERVER)
 	public static CommonProxy proxy;
 

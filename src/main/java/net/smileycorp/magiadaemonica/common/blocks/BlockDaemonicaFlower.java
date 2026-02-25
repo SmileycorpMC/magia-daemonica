@@ -73,7 +73,7 @@ public class BlockDaemonicaFlower extends BlockBush implements BlockProperties, 
 
     @Override
     public int getMaxMeta() {
-        return 1;
+        return 2;
     }
 
     @Override

@@ -66,7 +66,7 @@ public class ClientProxy extends CommonProxy {
 		ModelLoader.setCustomStateMapper(DaemonicaBlocks.FLOWER, new MetaStateMapper());
 		for (Item item : DaemonicaItems.ITEMS) {
 			if (item instanceof IMetaItem && ((IMetaItem) item).getMaxMeta() > 0) for (int i = 0; i < ((IMetaItem) item).getMaxMeta(); i++) {
-				ModelResourceLocation loc = new ModelResourceLocation(Constants.locStr(((IMetaItem) item).byMeta(i)));
+				ModelResourceLocation loc = new ModelResourceLocation(Constants.locStr(((IMetaItem) item).byMeta(i)), "inventory");
 				ModelLoader.setCustomModelResourceLocation(item, i, loc);
 			}
 			else {
