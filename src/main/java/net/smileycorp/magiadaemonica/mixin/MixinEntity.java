@@ -18,7 +18,7 @@ public class MixinEntity {
     public void magiadaemonica$isGlowing(CallbackInfoReturnable<Boolean> callback) {
         Minecraft mc = Minecraft.getMinecraft();
         Entity entity = mc.getRenderViewEntity();
-        if (!(entity instanceof EntityLivingBase)) return;
+        if (!(entity instanceof EntityLivingBase) || entity == ((Object)this)) return;
         if (((EntityLivingBase) entity).getItemStackFromSlot(EntityEquipmentSlot.HEAD).getItem() != DaemonicaItems.OCULUS_AETHEREUS) return;
         callback.setReturnValue(true);
     }
