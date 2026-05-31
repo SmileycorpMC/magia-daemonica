@@ -50,13 +50,7 @@ public class ItemCalixPerpetuus extends ItemRelic {
             ((EntityPlayerMP) entity).addStat(StatList.getObjectUseStats(this));
             ((EntityPlayerMP) entity).getCooldownTracker().setCooldown(this, 60);
         }
-        if (hasMilk(stack)) {
-            ItemStack milk = new ItemStack(Items.MILK_BUCKET);
-            List<Potion> remove = Lists.newArrayList();
-            for (PotionEffect potion : entity.getActivePotionEffects())
-                if (potion.isCurativeItem(milk)) remove.add(potion.getPotion());
-            for (Potion potion : remove) entity.removePotionEffect(potion);
-        }
+        if (hasMilk(stack)) entity.curePotionEffects(new ItemStack(Items.MILK_BUCKET));
         else if (hasPotion(stack)) for (PotionEffect effect : PotionUtils.getEffectsFromStack(stack)) {
             if (!effect.getPotion().isInstant()) entity.addPotionEffect(effect);
             else effect.getPotion().affectEntity(entity, entity, entity, effect.getAmplifier(), 1);
