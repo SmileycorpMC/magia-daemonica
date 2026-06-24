@@ -2,6 +2,7 @@ package net.smileycorp.magiadaemonica.common.recipes;
 
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
@@ -30,16 +31,20 @@ public class DaemonicaRecipes {
     }
 
     private static void addOredict() {
-        OreDictionary.registerOre("flint", new ItemStack(Items.FLINT));
+        OreDictionary.registerOre("flint", Items.FLINT);
         OreDictionary.registerOre("suet", new ItemStack(DaemonicaItems.FOOD, 1, 0));
         OreDictionary.registerOre("tallow", new ItemStack(DaemonicaItems.FOOD, 1, 1));
         OreDictionary.registerOre("wax", new ItemStack(DaemonicaItems.FOOD, 1, 1));
         OreDictionary.registerOre("knife", DaemonicaItems.FLINT_KNIFE);
-        OreDictionary.registerOre("knife", new ItemStack(DaemonicaItems.BONE_KNIFE, 1, OreDictionary.WILDCARD_VALUE));
-        OreDictionary.registerOre("knife", new ItemStack(DaemonicaItems.LAPIS_KNIFE, 1, OreDictionary.WILDCARD_VALUE));
-        OreDictionary.registerOre("knife", new ItemStack(DaemonicaItems.PRISMARINE_KNIFE, 1, OreDictionary.WILDCARD_VALUE));
-        OreDictionary.registerOre("knife", new ItemStack(DaemonicaItems.OBSIDIAN_KNIFE, 1, OreDictionary.WILDCARD_VALUE));
-        OreDictionary.registerOre("knife", new ItemStack(DaemonicaItems.SICA_INFERNALEM, 1, OreDictionary.WILDCARD_VALUE));
+        OreDictionary.registerOre("knife", DaemonicaItems.BONE_KNIFE);
+        OreDictionary.registerOre("knife", DaemonicaItems.LAPIS_KNIFE);
+        OreDictionary.registerOre("knife", DaemonicaItems.PRISMARINE_KNIFE);
+        OreDictionary.registerOre("knife", DaemonicaItems.OBSIDIAN_KNIFE);
+        OreDictionary.registerOre("knife", DaemonicaItems.SICA_INFERNALEM);
+    }
+
+    private static void reg(String ore, Item item) {
+        for (int i = 0; i <= item.getMaxDamage(new ItemStack(item)); i++) OreDictionary.registerOre(ore, new ItemStack(item, 1, i));
     }
 
     private static void addSmelting() {
@@ -54,6 +59,7 @@ public class DaemonicaRecipes {
 
     private static void addCustomRecipes(IForgeRegistry<IRecipe> registry) {
         registry.register(new RecipeCalixPerpetuusFilling());
+
     }
 
 }

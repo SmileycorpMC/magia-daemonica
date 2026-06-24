@@ -1,7 +1,6 @@
 package net.smileycorp.magiadaemonica.common.advancements;
 
 import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.item.Item;
 
 import java.lang.reflect.Field;
 

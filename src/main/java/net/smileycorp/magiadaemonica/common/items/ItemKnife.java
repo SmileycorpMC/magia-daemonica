@@ -50,7 +50,6 @@ public class ItemKnife extends ItemDaemonica {
     public ItemStack getContainerItem(ItemStack stack) {
         if (stack.isItemStackDamageable()) stack.attemptDamageItem(1,
                 FMLCommonHandler.instance().getMinecraftServerInstance().getEntityWorld().rand, null);
-        System.out.println(stack);
         return stack.copy();
     }
 
