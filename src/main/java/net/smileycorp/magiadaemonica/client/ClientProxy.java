@@ -5,7 +5,6 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.color.ItemColors;
 import net.minecraft.client.resources.IReloadableResourceManager;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.potion.PotionUtils;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -18,7 +17,6 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
-import net.smileycorp.atlas.api.block.BlockProperties;
 import net.smileycorp.atlas.api.client.CustomStateMapper;
 import net.smileycorp.atlas.api.client.MetaStateMapper;
 import net.smileycorp.atlas.api.client.SlabStateMapper;
@@ -51,7 +49,10 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void init(FMLInitializationEvent event) {
 		super.init(event);
-		((IReloadableResourceManager)Minecraft.getMinecraft().getResourceManager()).registerReloadListener(ModLocalization.INSTANCE);
+		Minecraft mc = Minecraft.getMinecraft();
+		IReloadableResourceManager rm = ((IReloadableResourceManager)mc.getResourceManager());
+		rm.registerReloadListener(ModLocalization.INSTANCE);
+		rm.registerReloadListener(PhoenicianFontRenderer.getInstance());
 	}
 	
 	@Override
@@ -88,5 +89,5 @@ public class ClientProxy extends CommonProxy {
 		registry.registerItemColorHandler(((stack, tintIndex) -> tintIndex > 0 && ItemCalixPerpetuus.hasPotion(stack)
 				? PotionUtils.getColor(stack) : -1), DaemonicaItems.CALIX_PERPETUUS);
 	}
-	
+
 }
