@@ -75,6 +75,7 @@ public class ClientProxy extends CommonProxy {
 				ModelLoader.setCustomModelResourceLocation(item, 0, loc);
 			}
 		}
+		ModelLoader.setCustomModelResourceLocation(DaemonicaItems.MATERIAL, 666, new ModelResourceLocation(Constants.loc("infernal_scrap"), "inventory"));
 		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(DaemonicaBlocks.CHALK_SLAB), 0,
 				new ModelResourceLocation(Constants.locStr("chalk_slab"), "normal"));
 		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(DaemonicaBlocks.CHALK_STAIRS), 0,

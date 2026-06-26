@@ -35,6 +35,9 @@ item.magiadaemonica.facies_excoriata.tooltip=A dripping face contorted in such a
 item.magiadaemonica.oculus_aethereus.name=Oculus Aethereus
 item.magiadaemonica.oculus_aethereus.tooltip=A writhing fleshy eye, it's vision is never hindered
 
+item.magiadaemonica.infernal_scrap.name=Fragmenta Infernalia
+item.magiadaemonica.infernal_scrap.tooltip=A strange dark metal, it does not bend or break, it feels slightly warm to the touch
+
 tile.magiadaemonica.chalk.name=Chalk
 tile.magiadaemonica.chalk_stairs.name=Chalk Stairs
 tile.magiadaemonica.ChalkSlab.name=Chalk Slab
