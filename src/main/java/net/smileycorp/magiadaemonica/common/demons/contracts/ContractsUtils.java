@@ -19,7 +19,7 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.smileycorp.magiadaemonica.common.DaemonicaAttributes;
 import net.smileycorp.magiadaemonica.common.demons.Demon;
 import net.smileycorp.magiadaemonica.common.demons.Rank;
-import net.smileycorp.magiadaemonica.common.items.ItemRelic;
+import net.smileycorp.magiadaemonica.common.items.relics.ItemRelic;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

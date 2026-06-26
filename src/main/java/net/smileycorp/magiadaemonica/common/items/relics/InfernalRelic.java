@@ -1,4 +1,4 @@
-package net.smileycorp.magiadaemonica.common.items;
+package net.smileycorp.magiadaemonica.common.items.relics;
 
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.common.IRarity;

@@ -1,10 +1,11 @@
-package net.smileycorp.magiadaemonica.common.items;
+package net.smileycorp.magiadaemonica.common.items.relics;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IRarity;
+import net.smileycorp.magiadaemonica.common.items.ItemDaemonicaEdible;
 
 import javax.annotation.Nullable;
 import java.util.List;

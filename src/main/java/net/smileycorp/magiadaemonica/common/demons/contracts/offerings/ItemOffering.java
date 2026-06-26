@@ -14,7 +14,7 @@ import net.smileycorp.magiadaemonica.common.Constants;
 import net.smileycorp.magiadaemonica.common.advancements.DaemonicaAdvancements;
 import net.smileycorp.magiadaemonica.common.demons.Demon;
 import net.smileycorp.magiadaemonica.common.demons.contracts.ContractsUtils;
-import net.smileycorp.magiadaemonica.common.items.InfernalRelic;
+import net.smileycorp.magiadaemonica.common.items.relics.InfernalRelic;
 
 import java.util.Random;
 

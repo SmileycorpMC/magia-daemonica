@@ -1,4 +1,4 @@
-package net.smileycorp.magiadaemonica.common.items;
+package net.smileycorp.magiadaemonica.common.items.relics;
 
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.SoundType;

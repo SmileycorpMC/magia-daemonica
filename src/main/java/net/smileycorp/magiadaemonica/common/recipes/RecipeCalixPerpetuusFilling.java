@@ -11,7 +11,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 import net.smileycorp.magiadaemonica.common.Constants;
 import net.smileycorp.magiadaemonica.common.items.DaemonicaItems;
-import net.smileycorp.magiadaemonica.common.items.ItemCalixPerpetuus;
+import net.smileycorp.magiadaemonica.common.items.relics.ItemCalixPerpetuus;
 
 public class RecipeCalixPerpetuusFilling extends IForgeRegistryEntry.Impl<IRecipe> implements IRecipe {
 

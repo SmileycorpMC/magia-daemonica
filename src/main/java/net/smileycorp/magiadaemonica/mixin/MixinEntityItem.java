@@ -3,7 +3,7 @@ package net.smileycorp.magiadaemonica.mixin;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
-import net.smileycorp.magiadaemonica.common.items.InfernalRelic;
+import net.smileycorp.magiadaemonica.common.items.relics.InfernalRelic;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;

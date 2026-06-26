@@ -1,4 +1,4 @@
-package net.smileycorp.magiadaemonica.common.items;
+package net.smileycorp.magiadaemonica.common.items.relics;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
@@ -11,6 +11,7 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IRarity;
 import net.smileycorp.magiadaemonica.common.Constants;
+import net.smileycorp.magiadaemonica.common.items.ItemKnife;
 import net.smileycorp.magiadaemonica.common.rituals.Ritual;
 import net.smileycorp.magiadaemonica.common.rituals.Rituals;
 

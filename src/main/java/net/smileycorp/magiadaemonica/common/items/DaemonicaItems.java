@@ -15,6 +15,7 @@ import net.smileycorp.atlas.api.block.BlockProperties;
 import net.smileycorp.atlas.api.block.BlockSlabBase;
 import net.smileycorp.magiadaemonica.common.Constants;
 import net.smileycorp.magiadaemonica.common.blocks.DaemonicaBlocks;
+import net.smileycorp.magiadaemonica.common.items.relics.*;
 
 import java.lang.reflect.Field;
 import java.util.List;

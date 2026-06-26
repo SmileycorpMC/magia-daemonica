@@ -16,7 +16,7 @@ import net.minecraft.potion.PotionType;
 import net.minecraft.potion.PotionUtils;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.smileycorp.magiadaemonica.common.items.DaemonicaItems;
-import net.smileycorp.magiadaemonica.common.items.ItemCalixPerpetuus;
+import net.smileycorp.magiadaemonica.common.items.relics.ItemCalixPerpetuus;
 
 import java.util.List;
 
