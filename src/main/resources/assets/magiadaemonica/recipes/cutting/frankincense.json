@@ -1,9 +1,9 @@
 {
   "group": "magiadaemonica:cutting",
-  "type": "minecraft:crafting_shapeless",
+  "type": "atlaslib:shapeless_tool",
   "ingredients": [
-    {
-      "item": "minecraft:pumpkin",
+     {
+      "item": "minecraft:log2",
       "data": 0
     },
 	{
@@ -12,8 +12,8 @@
 	}
   ],
   "result": {
-    "item": "magiadaemonica:food",
-    "data": 3,
-    "count": 3
+    "item": "magiadaemonica:material",
+    "data": 0,
+    "count": 1
   }
 }

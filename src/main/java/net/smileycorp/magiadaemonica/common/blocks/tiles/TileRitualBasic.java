@@ -1,6 +1,5 @@
 package net.smileycorp.magiadaemonica.common.blocks.tiles;
 
-import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTUtil;
@@ -14,13 +13,16 @@ public class TileRitualBasic extends TileEntity implements RitualTile {
 
     private BlockPos ritual;
 
+    public TileRitualBasic() {}
+
     public TileRitualBasic(BlockPos ritual) {
-        this.ritual = ritual;
+        setRitual(ritual);
     }
 
     @Override
     public void setRitual(BlockPos ritual) {
         this.ritual = ritual;
+        markDirty();
     }
 
     @Override
@@ -37,20 +39,29 @@ public class TileRitualBasic extends TileEntity implements RitualTile {
     @Override
     public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newState) {
         boolean refresh = oldState.getBlock() != newState.getBlock();
-        if (refresh) Rituals.get(world).removeRitual(ritual);
+        if (refresh && ritual != null &! world.isRemote) {
+            Rituals.get(world).removeRitual(ritual);
+            ritual = null;
+        }
         return refresh;
     }
 
     @Override
     public void readFromNBT(NBTTagCompound compound) {
         super.readFromNBT(compound);
-        if (ritual != null) compound.setTag("ritual", NBTUtil.createPosTag(ritual));
+        if (compound.hasKey("ritual")) ritual = NBTUtil.getPosFromTag(compound.getCompoundTag("ritual"));
     }
 
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-        if (compound.hasKey("ritual")) ritual = NBTUtil.getPosFromTag(compound.getCompoundTag("ritual"));
+        if (ritual != null) compound.setTag("ritual", NBTUtil.createPosTag(ritual));
         return super.writeToNBT(compound);
+    }
+
+    @Override
+    public void invalidate() {
+        super.invalidate();
+        if (ritual != null &! world.isRemote) Rituals.get(world).removeRitual(ritual);
     }
 
 }

@@ -10,5 +10,8 @@ public class DaemonicaCapabilities {
 
 	@CapabilityInject(Contracts.class)
 	public final static Capability<Contracts> CONTRACTS = null;
+
+	@CapabilityInject(Affiliation.class)
+	public final static Capability<Affiliation> AFFILIATION = null;
 	
 }

@@ -15,7 +15,7 @@ public interface RitualTile {
 
     static boolean isActive(World world, BlockPos pos) {
         TileEntity tile = world.getTileEntity(pos);
-        return tile instanceof TileRitualBasic && ((TileRitualBasic) tile).isActive();
+        return tile instanceof RitualTile && ((RitualTile) tile).isActive();
     }
 
 }

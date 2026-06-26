@@ -1,28 +1,21 @@
 package net.smileycorp.magiadaemonica.common.blocks;
 
-import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.block.SoundType;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.*;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
 import net.smileycorp.magiadaemonica.common.demons.Domain;
-import net.smileycorp.magiadaemonica.common.items.DaemonicaItems;
-import net.smileycorp.magiadaemonica.common.rituals.RitualsServer;
-import net.smileycorp.magiadaemonica.common.rituals.summoning.SummoningCircles;
 
 import javax.annotation.Nullable;
 import java.util.EnumMap;
@@ -80,6 +73,12 @@ public class BlockChalkCandle extends BlockLine implements Lightable, RitualBloc
     }
 
     @Override
+    public void harvestBlock(World world, EntityPlayer player, BlockPos pos, IBlockState state, @Nullable TileEntity te, ItemStack stack) {
+        super.harvestBlock(world, player, pos, state, te, stack);
+        world.setBlockState(pos, DaemonicaBlocks.CHALK_LINE.getDefaultState());
+    }
+
+    @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos) {
         return FULL_BLOCK_AABB;
     }
@@ -125,13 +124,12 @@ public class BlockChalkCandle extends BlockLine implements Lightable, RitualBloc
     }
 
     @Override
-    public int getPowerBonus(World world, BlockPos pos, EntityPlayer player) {
+    public int getPowerBonus(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
         return world.getBlockState(pos).getValue(LIT) ? 50 : 0;
     }
 
     @Override
-    public EnumMap<Domain, Integer> getAffiliationBonus(World world, BlockPos pos, EntityPlayer player) {
-        IBlockState state = world.getBlockState(pos);
+    public EnumMap<Domain, Integer> getAffiliationBonus(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
         EnumMap<Domain, Integer> map = new EnumMap<>(Domain.class);
         if (state.getValue(LIT)) map.put(state.getValue(TYPE).getDomain(), 1);
         return map;

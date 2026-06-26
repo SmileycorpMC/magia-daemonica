@@ -1,9 +1,9 @@
 {
   "group": "magiadaemonica:cutting",
-  "type": "minecraft:crafting_shapeless",
+  "type": "atlaslib:shapeless_tool",
   "ingredients": [
-     {
-      "item": "minecraft:log2",
+    {
+      "item": "minecraft:beef",
       "data": 0
     },
 	{
@@ -12,7 +12,7 @@
 	}
   ],
   "result": {
-    "item": "magiadaemonica:material",
+    "item": "magiadaemonica:food",
     "data": 0,
     "count": 1
   }

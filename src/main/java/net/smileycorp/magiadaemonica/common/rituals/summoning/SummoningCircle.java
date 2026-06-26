@@ -16,6 +16,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -24,10 +25,12 @@ import net.smileycorp.magiadaemonica.common.Constants;
 import net.smileycorp.magiadaemonica.common.DaemonicaAttributes;
 import net.smileycorp.magiadaemonica.common.DaemonicaSoundEvents;
 import net.smileycorp.magiadaemonica.common.advancements.DaemonicaAdvancements;
-import net.smileycorp.magiadaemonica.common.blocks.BlockChalkLine;
 import net.smileycorp.magiadaemonica.common.blocks.BlockScentedCandle;
 import net.smileycorp.magiadaemonica.common.blocks.DaemonicaBlocks;
 import net.smileycorp.magiadaemonica.common.blocks.RitualBlock;
+import net.smileycorp.magiadaemonica.common.blocks.tiles.RitualTile;
+import net.smileycorp.magiadaemonica.common.blocks.tiles.TileRitualBasic;
+import net.smileycorp.magiadaemonica.common.capabilities.Affiliation;
 import net.smileycorp.magiadaemonica.common.demons.DemonRegistry;
 import net.smileycorp.magiadaemonica.common.demons.Domain;
 import net.smileycorp.magiadaemonica.common.demons.Rank;
@@ -73,8 +76,8 @@ public class SummoningCircle implements Ritual {
         this.height = height;
         this.center = new Vec3d(pos.getX() + width  * 0.5f, pos.getY(), pos.getZ() + height  * 0.5f);
         this.name = name;
-        this.candles = SummoningCircles.getCandles(name);
-        maxPower = SummoningCircles.getMaxPower(name);
+        this.candles = SummoningCircles.INSTANCE.getCandles(name);
+        maxPower = SummoningCircles.INSTANCE.getMaxPower(name);
     }
 
     @Override
@@ -86,21 +89,31 @@ public class SummoningCircle implements Ritual {
                 if (pattern[0][x][z] < 0) continue;
                 IBlockState state = world.getBlockState(mutable);
                 if (!(state.getBlock() instanceof RitualBlock)) continue;
-                world.setTileEntity(mutable, ((RitualBlock) state.getBlock()).createNewTileEntity(mutable));
+                TileEntity tile = state.getBlock() instanceof RitualBlock ?
+                        ((RitualBlock) state.getBlock()).createRitualTile(world, mutable.toImmutable(), state)
+                        : new TileRitualBasic(pos);
+                world.setTileEntity(mutable, tile);
+                world.markBlockRangeForRenderUpdate(mutable, mutable);
+                tile.markDirty();
             }
         }
     }
 
     @Override
     public void remove(World world) {
-        if (end) {
-            BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos(pos);
-            for (int x = 0; x < width; x++) {
-                for (int z = 0; z < height; z++) {
-                    mutable.setPos(pos.getX() + x, pos.getY(), pos.getZ() + z);
-                    if (world.getBlockState(mutable).getBlock() != DaemonicaBlocks.CHALK_LINE) continue;
-                    world.setBlockState(mutable, DaemonicaBlocks.CHALK_ASH_LINE.getDefaultState());
+        BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos(pos);
+        for (int x = 0; x < width; x++) {
+            for (int z = 0; z < height; z++) {
+                mutable.setPos(pos.getX() + x, pos.getY(), pos.getZ() + z);
+                TileEntity tile = world.getTileEntity(mutable);
+                System.out.println(mutable + ", " + tile);
+                if (tile instanceof RitualTile) {
+                    world.removeTileEntity(mutable.toImmutable());
+                    world.markBlockRangeForRenderUpdate(mutable, mutable);
                 }
+                if (!end || world.isRemote) continue;
+                if (world.getBlockState(mutable).getBlock() != DaemonicaBlocks.CHALK_LINE) continue;
+                world.setBlockState(mutable, DaemonicaBlocks.CHALK_ASH_LINE.getDefaultState());
             }
         }
         if (demon != null) demon.setPose(EntityDemonicTrader.Pose.DESPAWNING);
@@ -131,6 +144,7 @@ public class SummoningCircle implements Ritual {
         return ID;
     }
 
+    @Override
     public ResourceLocation getName() {
         return name;
     }
@@ -172,24 +186,6 @@ public class SummoningCircle implements Ritual {
     @Override
     public void tick(World world) {
         if (end) return;
-        if (world.isRemote) {
-            lastPower = power;
-            Random rand = world.rand;
-            for (float[] candle : candles) {
-                candle = rotation.apply(candle);
-                if (mirror) for (int i = 0; i < 2; i++) candle[i] = -candle[i];
-                IBlockState state = world.getBlockState(new BlockPos(center.addVector(candle[0], 0, candle[1])));
-                if (state.getBlock() != DaemonicaBlocks.SCENTED_CANDLE && state.getBlock() != DaemonicaBlocks.CHALK_CANDLE) continue;
-                if (!state.getValue(BlockScentedCandle.LIT)) continue;
-                world.spawnParticle(EnumParticleTypes.FLAME, center.x + candle[0], center.y + 0.6, center.z + candle[1], 0, 0, 0);
-                if (rand.nextInt(4) == 0)
-                    world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, center.x + candle[0] + (rand.nextFloat() - 0.5) * 0.05,
-                            center.y + 0.6, center.z + candle[1] + (rand.nextFloat() - 0.5) * 0.05, 0, 0, 0);
-            }
-            if (ticksActive > 80 && ticksActive < 200) spawnParticles(world, EnumParticleTypes.SMOKE_NORMAL);
-            if (ticksActive > 200) spawnParticles(world, EnumParticleTypes.FLAME);
-            return;
-        }
         if (!active) return;
         if (!getPlayer().isPresent()) return;
         if (ticksActive == 80) {
@@ -225,7 +221,7 @@ public class SummoningCircle implements Ritual {
         if (ticksActive == 600) {
             EntityPlayer player = getPlayer().get();
             demon = new EntityDemonicTrader(world);
-            demon.setDemon(DemonRegistry.get().create(world.rand, power, getAffiliationBonus(world, pos, player)));
+            demon.setDemon(DemonRegistry.get().create(world.rand, getPowerBonus(world, pos, player), getAffiliationBonus(world, pos, player)));
             demon.setPose(EntityDemonicTrader.Pose.SUMMONING);
             demon.setPosition(center.x, center.y, center.z);
             demon.setRitual(getCenterPos());
@@ -258,6 +254,26 @@ public class SummoningCircle implements Ritual {
         markDirty(true);
     }
 
+    @Override
+    public void clientTick(World world) {
+        if (end) return;
+        lastPower = power;
+        Random rand = world.rand;
+        for (float[] candle : candles) {
+            candle = rotation.apply(candle);
+            if (mirror) for (int i = 0; i < 2; i++) candle[i] = -candle[i];
+            IBlockState state = world.getBlockState(new BlockPos(center.addVector(candle[0], 0, candle[1])));
+            if (state.getBlock() != DaemonicaBlocks.SCENTED_CANDLE && state.getBlock() != DaemonicaBlocks.CHALK_CANDLE) continue;
+            if (!state.getValue(BlockScentedCandle.LIT)) continue;
+            world.spawnParticle(EnumParticleTypes.FLAME, center.x + candle[0], center.y + 0.6, center.z + candle[1], 0, 0, 0);
+            if (rand.nextInt(4) == 0)
+                world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, center.x + candle[0] + (rand.nextFloat() - 0.5) * 0.05,
+                        center.y + 0.6, center.z + candle[1] + (rand.nextFloat() - 0.5) * 0.05, 0, 0, 0);
+        }
+        if (ticksActive > 80 && ticksActive < 200) spawnParticles(world, EnumParticleTypes.SMOKE_NORMAL);
+        if (ticksActive > 200) spawnParticles(world, EnumParticleTypes.FLAME);
+    }
+
     private EnumMap<Domain, Integer> getAffiliationBonus(World world, BlockPos pos, EntityPlayer player) {
         EnumMap<Domain, Integer> influence = new EnumMap<>(Domain.class);
         BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos(pos);
@@ -265,9 +281,28 @@ public class SummoningCircle implements Ritual {
             candle = rotation.apply(candle);
             if (mirror) for (int i = 0; i < 2; i++) candle[i] = -candle[i];
             mutable.setPos(center.x + candle[0], center.y, center.z + candle[1]);
-            //mutable.get
+            IBlockState state = world.getBlockState(mutable);
+            if (!(state.getBlock() instanceof RitualBlock)) continue;
+            RitualBlock block = (RitualBlock) state.getBlock();
+            block.getAffiliationBonus(world, mutable, state, player).forEach(((domain, value) ->
+                    influence.put(domain, MathHelper.clamp(value + Affiliation.get(player, domain), -100, 100))));
         }
         return influence;
+    }
+
+    private int getPowerBonus(World world, BlockPos pos, EntityPlayer player) {
+        int power = this.power;
+        BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos(pos);
+        for (float[] candle : candles) {
+            candle = rotation.apply(candle);
+            if (mirror) for (int i = 0; i < 2; i++) candle[i] = -candle[i];
+            mutable.setPos(center.x + candle[0], center.y, center.z + candle[1]);
+            IBlockState state = world.getBlockState(mutable);
+            if (!(state.getBlock() instanceof RitualBlock)) continue;
+            RitualBlock block = (RitualBlock) state.getBlock();
+            power += block.getPowerBonus(world, pos, state, player);
+        }
+        return power;
     }
 
     private void spawnParticles(World world, EnumParticleTypes type) {

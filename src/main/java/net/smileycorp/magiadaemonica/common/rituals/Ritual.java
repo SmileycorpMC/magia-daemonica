@@ -15,6 +15,8 @@ public interface Ritual {
 
     ResourceLocation getID();
 
+    ResourceLocation getName();
+
     BlockPos getPos();
 
     default BlockPos getCenterPos() {
@@ -33,9 +35,15 @@ public interface Ritual {
 
     void tick(World world);
 
+    void clientTick(World world);
+
     void addPower(int power);
 
+    void setPower(int power);
+
     int getPower();
+
+    int getMaxPower();
 
     default boolean contains(BlockPos pos) {
         BlockPos origin = getPos();
@@ -43,6 +51,8 @@ public interface Ritual {
         if (pos.getX() < origin.getX() || pos.getX() > origin.getX() + getWidth()) return false;
         return pos.getZ() >= origin.getZ() && pos.getZ() <= origin.getZ() + getHeight();
     }
+
+    void setBlocks(World world, int[][][] pattern);
 
     void remove(World world);
 

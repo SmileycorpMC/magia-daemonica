@@ -32,9 +32,7 @@ public interface Contracts {
         @Override
         public void readFromNBT(NBTTagList nbt) {
             contracts.clear();
-            for (NBTBase nbtBase : nbt) {
-                contracts.add(Contract.readFromNBT((NBTTagCompound) nbtBase));
-            }
+            for (NBTBase nbtBase : nbt) contracts.add(Contract.readFromNBT((NBTTagCompound) nbtBase));
         }
 
         @Override

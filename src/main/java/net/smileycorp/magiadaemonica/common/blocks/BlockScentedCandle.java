@@ -6,9 +6,7 @@ import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.ai.EntityAIAttackMelee;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
@@ -19,7 +17,6 @@ import net.minecraft.world.World;
 import net.smileycorp.atlas.api.block.BlockBase;
 import net.smileycorp.magiadaemonica.common.Constants;
 import net.smileycorp.magiadaemonica.common.MagiaDaemonica;
-import net.smileycorp.magiadaemonica.common.blocks.tiles.RitualTile;
 import net.smileycorp.magiadaemonica.common.demons.Domain;
 
 import javax.annotation.Nullable;
@@ -120,13 +117,12 @@ public class BlockScentedCandle extends BlockBase implements Lightable, RitualBl
     }
 
     @Override
-    public int getPowerBonus(World world, BlockPos pos, EntityPlayer player) {
+    public int getPowerBonus(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
         return world.getBlockState(pos).getValue(LIT) ? 50 : 0;
     }
 
     @Override
-    public EnumMap<Domain, Integer> getAffiliationBonus(World world, BlockPos pos, EntityPlayer player) {
-        IBlockState state = world.getBlockState(pos);
+    public EnumMap<Domain, Integer> getAffiliationBonus(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
         EnumMap<Domain, Integer> map = new EnumMap<>(Domain.class);
         if (state.getValue(LIT)) map.put(state.getValue(TYPE).getDomain(), 1);
         return map;

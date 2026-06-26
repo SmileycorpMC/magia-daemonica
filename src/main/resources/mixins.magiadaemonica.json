@@ -3,12 +3,14 @@
   "package": "net.smileycorp.magiadaemonica.mixin",
   "refmap": "mixins.magiadaemonica.refmap.json",
   "mixins": [
-      "MixinEntityItem",
-      "MixinEntityAINearestAttackableTarget",
-      "MixinEntityLiving",
-      "MixinForgeEventFactory"
+    "MixinChunk",
+    "MixinEntityAINearestAttackableTarget",
+    "MixinEntityItem",
+    "MixinEntityLiving",
+    "MixinForgeEventFactory"
   ],
   "client": [
+      "MixinBlockRenderDispatcher",
       "MixinEntity",
       "MixinEntityRenderer",
       "MixinGuiIngameForge"

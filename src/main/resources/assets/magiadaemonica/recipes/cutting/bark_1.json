@@ -1,6 +1,6 @@
 {
   "group": "magiadaemonica:cutting",
-  "type": "minecraft:crafting_shapeless",
+  "type": "atlaslib:shapeless_tool",
   "ingredients": [
     {
       "item": "minecraft:log2",

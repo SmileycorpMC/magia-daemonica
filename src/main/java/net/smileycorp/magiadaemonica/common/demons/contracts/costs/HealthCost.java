@@ -5,11 +5,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
-import net.smileycorp.atlas.api.util.MathUtils;
 import net.smileycorp.magiadaemonica.common.Constants;
 import net.smileycorp.magiadaemonica.common.demons.Demon;
 import net.smileycorp.magiadaemonica.common.demons.contracts.ContractsUtils;
-import software.bernie.geckolib3.core.util.MathUtil;
 
 public class HealthCost implements Cost {
 

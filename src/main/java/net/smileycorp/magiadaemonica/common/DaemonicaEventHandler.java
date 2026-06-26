@@ -15,7 +15,7 @@ import net.minecraft.world.WorldServer;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.ServerChatEvent;
-import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.EntityEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.Clone;
 import net.minecraftforge.event.world.BlockEvent;
@@ -25,6 +25,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.smileycorp.magiadaemonica.common.blocks.RitualBlock;
+import net.smileycorp.magiadaemonica.common.capabilities.Affiliation;
 import net.smileycorp.magiadaemonica.common.capabilities.Contracts;
 import net.smileycorp.magiadaemonica.common.capabilities.DaemonicaCapabilities;
 import net.smileycorp.magiadaemonica.common.capabilities.Soul;
@@ -34,7 +35,6 @@ import net.smileycorp.magiadaemonica.common.rituals.Ritual;
 import net.smileycorp.magiadaemonica.common.rituals.Rituals;
 import net.smileycorp.magiadaemonica.common.rituals.RitualsRegistry;
 import net.smileycorp.magiadaemonica.common.rituals.RitualsServer;
-import net.smileycorp.magiadaemonica.common.rituals.summoning.SummoningCircles;
 
 import java.util.Locale;
 
@@ -46,6 +46,7 @@ public class DaemonicaEventHandler {
 		if (!(entity instanceof EntityPlayer)) return;
 		if (!entity.hasCapability(DaemonicaCapabilities.SOUL, null)) event.addCapability(Constants.loc("soul"), new Soul.Provider());
 		if (!entity.hasCapability(DaemonicaCapabilities.CONTRACTS, null)) event.addCapability(Constants.loc("contracts"), new Contracts.Provider());
+		if (!entity.hasCapability(DaemonicaCapabilities.AFFILIATION, null)) event.addCapability(Constants.loc("affiliation"), new Affiliation.Provider());
 	}
 
 	@SubscribeEvent
@@ -56,7 +57,7 @@ public class DaemonicaEventHandler {
 	}
 
 	@SubscribeEvent
-	public void joinWorld(EntityJoinWorldEvent event) {
+	public void construct(EntityEvent.EntityConstructing event) {
 		if (!(event.getEntity() instanceof EntityPlayerMP)) return;
 		AbstractAttributeMap map = ((EntityPlayerMP)event.getEntity()).getAttributeMap();
 		IAttributeInstance attributes = map.getAttributeInstance(DaemonicaAttributes.INFERNAL_AFFINITY);
@@ -128,7 +129,7 @@ public class DaemonicaEventHandler {
 	public void placeBlock(BlockEvent.PlaceEvent event) {
 		IBlockState state = event.getPlacedBlock();
 		if (!(state.getBlock() instanceof RitualBlock)) return;
-		SummoningCircles.tryPlace(event.getWorld(), event.getPos());
+		RitualsRegistry.tryPlace(event.getWorld(), event.getPos(), state);
 	}
 	
 }
