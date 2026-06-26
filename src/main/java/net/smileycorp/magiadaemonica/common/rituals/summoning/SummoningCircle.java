@@ -1,5 +1,6 @@
 package net.smileycorp.magiadaemonica.common.rituals.summoning;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
@@ -112,7 +113,8 @@ public class SummoningCircle implements Ritual {
                     world.markBlockRangeForRenderUpdate(mutable, mutable);
                 }
                 if (!end || world.isRemote) continue;
-                if (world.getBlockState(mutable).getBlock() != DaemonicaBlocks.CHALK_LINE) continue;
+                Block block = world.getBlockState(mutable).getBlock();
+                if (block != DaemonicaBlocks.CHALK_LINE && block != DaemonicaBlocks.CHALK_CANDLE) continue;
                 world.setBlockState(mutable, DaemonicaBlocks.CHALK_ASH_LINE.getDefaultState());
             }
         }
@@ -300,7 +302,7 @@ public class SummoningCircle implements Ritual {
             IBlockState state = world.getBlockState(mutable);
             if (!(state.getBlock() instanceof RitualBlock)) continue;
             RitualBlock block = (RitualBlock) state.getBlock();
-            power += block.getPowerBonus(world, pos, state, player);
+            power += block.getPowerBonus(world, mutable, state, player);
         }
         return power;
     }
@@ -429,17 +431,18 @@ public class SummoningCircle implements Ritual {
     }
 
     @Override
-    public void processInvocation(EntityPlayer player, String invocation) {
-        if (active || power < 500) return;
+    public boolean processInvocation(EntityPlayer player, String invocation) {
+        if (active || power < 500) return false;
         World world = player.world;
-        if (world.isDaytime()) return;
-        if (!"te infernale invoco pacisci volo".equals(invocation)) return;
+        if (world.isDaytime()) return false;
+        if (!"te infernale invoco pacisci volo".equals(invocation)) return false;
         for (float[] candle : candles) {
             candle = rotation.apply(candle);
             if (mirror) for (int i = 0; i < 2; i++) candle[i] = -candle[i];
             IBlockState state = world.getBlockState(new BlockPos(center.addVector(candle[0], 0, candle[1])));
-            if (state.getBlock() != DaemonicaBlocks.SCENTED_CANDLE && state.getBlock() != DaemonicaBlocks.CHALK_CANDLE) return;
-            if (!state.getValue(BlockScentedCandle.LIT)) return;
+            if (state.getBlock() != DaemonicaBlocks.SCENTED_CANDLE && state.getBlock() != DaemonicaBlocks.CHALK_CANDLE)
+                return false;
+            if (!state.getValue(BlockScentedCandle.LIT)) return false;
         }
         EntityLightningBolt bolt = new EntityLightningBolt(world, center.x, center.y, center.z, false);
         world.spawnEntity(bolt);
@@ -448,6 +451,7 @@ public class SummoningCircle implements Ritual {
         playerUUID = player.getUniqueID();
         power += (int) (1000 * player.getEntityAttribute(DaemonicaAttributes.INFERNAL_AFFINITY).getAttributeValue());
         //world.playSound(null, center.x, center.y, center.z, DaemonicaSoundEvents.RITUAL_AMBIENCE, SoundCategory.HOSTILE, 0.5f, 1);
+        return true;
     }
 
     public static SummoningCircle fromNBT(NBTTagCompound nbt) {

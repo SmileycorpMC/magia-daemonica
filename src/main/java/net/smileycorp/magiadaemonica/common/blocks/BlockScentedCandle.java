@@ -135,7 +135,7 @@ public class BlockScentedCandle extends BlockBase implements Lightable, RitualBl
 
     @Override
     public int getPowerBonus(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
-        return world.getBlockState(pos).getValue(LIT) ? 50 : 0;
+        return state.getValue(LIT) ? 50 : 0;
     }
 
     @Override

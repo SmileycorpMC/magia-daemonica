@@ -72,7 +72,7 @@ public interface Ritual {
 
     boolean canPower();
 
-    void processInvocation(EntityPlayer player, String invocation);
+    boolean processInvocation(EntityPlayer player, String invocation);
 
     Optional<EntityPlayer> getPlayer();
 

@@ -51,7 +51,7 @@ public enum Domain {
 
     public static Domain get(Random rand, EnumMap<Domain, Integer> affiliation) {
         EnumMap<Domain, Integer> weights = new EnumMap<>(Domain.class);
-        for (Domain domain : values()) weights.put(domain, 100 + affiliation.get(domain));
+        for (Domain domain : values()) weights.put(domain, 100 + affiliation.getOrDefault(domain, 0));
         return new WeightedOutputs<>(weights).getResult(rand);
     }
 
