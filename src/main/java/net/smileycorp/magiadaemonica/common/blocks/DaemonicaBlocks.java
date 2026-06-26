@@ -15,6 +15,7 @@ import net.smileycorp.atlas.api.block.BlockStairsBase;
 import net.smileycorp.magiadaemonica.common.Constants;
 import net.smileycorp.magiadaemonica.common.MagiaDaemonica;
 import net.smileycorp.magiadaemonica.common.blocks.tiles.TileRitualBasic;
+import net.smileycorp.magiadaemonica.config.BlocksConfig;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -24,10 +25,10 @@ public class DaemonicaBlocks {
 
     public static final List<Block> BLOCKS = Lists.newArrayList();
 
-    public static final BlockBase CHALK = new BlockBase("chalk", Constants.MODID, Material.ROCK, SoundType.STONE, 0.75f, 0.75f, 0, MagiaDaemonica.CREATIVE_TAB);
+    public static final BlockBase CHALK = new BlockBase("chalk", Constants.MODID, Material.ROCK, SoundType.STONE, BlocksConfig.chalk.getHardness(), BlocksConfig.chalk.getResistance(), BlocksConfig.chalk.getHarvestLevel(), MagiaDaemonica.CREATIVE_TAB);
     public static final BlockStairsBase CHALK_STAIRS = new BlockStairsBase(CHALK);
-    public static final BlockSlabBase CHALK_SLAB = new BlockSlabBase(CHALK, 0.75f, 0.75f, "pickaxe", 0, false);
-    public static final BlockSlabBase CHALK_DOUBLE_SLAB = new BlockSlabBase(CHALK, 0.75f, 0.75f, "pickaxe", 0, true);
+    public static final BlockSlabBase CHALK_SLAB = new BlockSlabBase(CHALK, BlocksConfig.chalk.getHardness(), BlocksConfig.chalk.getResistance(), "pickaxe", BlocksConfig.chalk.getHarvestLevel(), false);
+    public static final BlockSlabBase CHALK_DOUBLE_SLAB = new BlockSlabBase(CHALK, BlocksConfig.chalk.getHardness(), BlocksConfig.chalk.getResistance(), "pickaxe", BlocksConfig.chalk.getHarvestLevel(), true);
     public static final BlockDaemonicaFlower FLOWER = new BlockDaemonicaFlower();
     public static final BlockScentedCandle SCENTED_CANDLE = new BlockScentedCandle();
     public static final BlockChalkLine CHALK_LINE = new BlockChalkLine();

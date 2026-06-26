@@ -22,6 +22,7 @@ import net.smileycorp.magiadaemonica.common.Constants;
 import net.smileycorp.magiadaemonica.common.MagiaDaemonica;
 import net.smileycorp.magiadaemonica.common.blocks.tiles.RitualTile;
 import net.smileycorp.magiadaemonica.common.demons.Domain;
+import net.smileycorp.magiadaemonica.config.BlocksConfig;
 
 import javax.annotation.Nullable;
 import java.util.EnumMap;
@@ -37,7 +38,7 @@ public class BlockScentedCandle extends BlockBase implements Lightable, RitualBl
     public BlockScentedCandle() {
         super("scented_candle", Constants.MODID, Material.CIRCUITS, SoundType.STONE, 0, 0, 0, MagiaDaemonica.CREATIVE_TAB);
         setDefaultState(blockState.getBaseState().withProperty(LIT, false).withProperty(TYPE, Type.ROSE));
-        setTickRandomly(true);
+        setTickRandomly(BlocksConfig.rainExtinguishesCandles);
     }
 
     @Override
@@ -113,7 +114,7 @@ public class BlockScentedCandle extends BlockBase implements Lightable, RitualBl
 
     @Override
     public void randomTick(World world, BlockPos pos, IBlockState state, Random random) {
-        if (!state.getValue(LIT) |! world.isRaining() |! world.canSeeSky(pos)) return;
+        if (!state.getValue(LIT) |! world.isRainingAt(pos)) return;
         TileEntity tile = world.getTileEntity(pos);
         if (tile instanceof RitualTile && ((RitualTile) tile).isActive()) return;
         world.setBlockState(pos, state.withProperty(LIT, false));

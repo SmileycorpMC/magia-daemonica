@@ -20,6 +20,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.smileycorp.magiadaemonica.common.blocks.tiles.RitualTile;
 import net.smileycorp.magiadaemonica.common.demons.Domain;
+import net.smileycorp.magiadaemonica.config.BlocksConfig;
 
 import javax.annotation.Nullable;
 import java.util.EnumMap;
@@ -34,7 +35,7 @@ public class BlockChalkCandle extends BlockLine implements Lightable, RitualBloc
         super("chalk_candle");
         setDefaultState(blockState.getBaseState().withProperty(NORTH, false).withProperty(EAST, false).withProperty(SOUTH, false)
                 .withProperty(WEST, false).withProperty(LIT, false).withProperty(TYPE, BlockScentedCandle.Type.ROSE));
-        setTickRandomly(true);
+        setTickRandomly(BlocksConfig.rainExtinguishesCandles);
     }
 
     @Override
@@ -120,7 +121,7 @@ public class BlockChalkCandle extends BlockLine implements Lightable, RitualBloc
 
     @Override
     public void randomTick(World world, BlockPos pos, IBlockState state, Random random) {
-        if (!state.getValue(LIT) |! world.isRaining() |! world.canSeeSky(pos)) return;
+        if (!state.getValue(LIT) |! world.isRainingAt(pos)) return;
         TileEntity tile = world.getTileEntity(pos);
         if (tile instanceof RitualTile && ((RitualTile) tile).isActive()) return;
         world.setBlockState(pos, state.withProperty(LIT, false));
