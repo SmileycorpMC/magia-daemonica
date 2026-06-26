@@ -5,16 +5,20 @@ import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
+import net.smileycorp.magiadaemonica.common.blocks.tiles.RitualTile;
 import net.smileycorp.magiadaemonica.common.demons.Domain;
 
 import javax.annotation.Nullable;
@@ -30,6 +34,7 @@ public class BlockChalkCandle extends BlockLine implements Lightable, RitualBloc
         super("chalk_candle");
         setDefaultState(blockState.getBaseState().withProperty(NORTH, false).withProperty(EAST, false).withProperty(SOUTH, false)
                 .withProperty(WEST, false).withProperty(LIT, false).withProperty(TYPE, BlockScentedCandle.Type.ROSE));
+        setTickRandomly(true);
     }
 
     @Override
@@ -111,6 +116,17 @@ public class BlockChalkCandle extends BlockLine implements Lightable, RitualBloc
         world.spawnParticle(EnumParticleTypes.FLAME, pos.getX() + 0.5, pos.getY() + 0.6, pos.getZ() + 0.5, 0, 0, 0);
         if (rand.nextInt(4) == 0) world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, pos.getX() + 0.5 + (rand.nextFloat() - 0.5) * 0.05,
                 pos.getY() + 0.6, pos.getZ() + 0.5 + (rand.nextFloat() - 0.5) * 0.05, 0, 0, 0);
+    }
+
+    @Override
+    public void randomTick(World world, BlockPos pos, IBlockState state, Random random) {
+        if (!state.getValue(LIT) |! world.isRaining() |! world.canSeeSky(pos)) return;
+        TileEntity tile = world.getTileEntity(pos);
+        if (tile instanceof RitualTile && ((RitualTile) tile).isActive()) return;
+        world.setBlockState(pos, state.withProperty(LIT, false));
+        world.playSound(null, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.75f, 1);
+        ((WorldServer)world).spawnParticle(EnumParticleTypes.FLAME, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f,
+                0, 0d, 1, 0d, 0.1);
     }
 
     @Override
