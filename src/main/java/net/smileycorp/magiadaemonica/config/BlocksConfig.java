@@ -2,9 +2,7 @@ package net.smileycorp.magiadaemonica.config;
 
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.smileycorp.atlas.api.config.BiomeGenEntry;
 import net.smileycorp.atlas.api.config.BlockStatEntry;
-import net.smileycorp.atlas.api.config.WorldGenEntry;
 
 import java.io.File;
 
