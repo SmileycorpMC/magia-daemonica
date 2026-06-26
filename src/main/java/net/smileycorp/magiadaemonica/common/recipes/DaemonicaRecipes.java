@@ -35,6 +35,7 @@ public class DaemonicaRecipes {
         OreDictionary.registerOre("suet", new ItemStack(DaemonicaItems.FOOD, 1, 0));
         OreDictionary.registerOre("tallow", new ItemStack(DaemonicaItems.FOOD, 1, 1));
         OreDictionary.registerOre("wax", new ItemStack(DaemonicaItems.FOOD, 1, 1));
+        OreDictionary.registerOre("ashOak", new ItemStack(DaemonicaItems.MATERIAL, 1, 1));
         OreDictionary.registerOre("knife", DaemonicaItems.FLINT_KNIFE);
         OreDictionary.registerOre("knife", DaemonicaItems.BONE_KNIFE);
         OreDictionary.registerOre("knife", DaemonicaItems.LAPIS_KNIFE);
