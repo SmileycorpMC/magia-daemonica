@@ -17,6 +17,7 @@ public class PacketHandler {
 		NETWORK_INSTANCE.registerMessage(OpenContractMessage::process, OpenContractMessage.class, id++, Side.CLIENT);
 		NETWORK_INSTANCE.registerMessage(SignContractMessage::process, SignContractMessage.class, id++, Side.SERVER);
 		NETWORK_INSTANCE.registerMessage(ValidateContractMessage::process, ValidateContractMessage.class, id++, Side.CLIENT);
+		NETWORK_INSTANCE.registerMessage(InvocationMessage::process, InvocationMessage.class, id++, Side.CLIENT);
 	}
 
 }

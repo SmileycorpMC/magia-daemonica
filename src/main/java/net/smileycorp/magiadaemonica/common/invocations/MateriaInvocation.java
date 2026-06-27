@@ -14,17 +14,21 @@ public abstract class MateriaInvocation implements Invocation {
     }
 
     @Override
-    public void apply(String invocation, EntityPlayer player) {
+    public InvocationResult apply(String invocation, EntityPlayer player) {
         for (EnumHand hand : EnumHand.values()) {
             ItemStack stack = player.getHeldItem(hand);
             if (!materia.apply(stack)) continue;
-            if (!tryCast(player)) return;
-            if (stack.isItemStackDamageable()) stack.setItemDamage(stack.getItemDamage() + 1);
-            else stack.shrink(1);
-            return;
+            InvocationResult result = tryCast(player, hand);
+            if (result == null) return null;
+            if (!player.isCreative()) {
+                if (stack.isItemStackDamageable()) stack.setItemDamage(stack.getItemDamage() + 1);
+                else stack.shrink(1);
+            }
+            return result;
         }
+        return null;
     }
 
-    protected abstract boolean tryCast(EntityPlayer player);
+    protected abstract InvocationResult tryCast(EntityPlayer player, EnumHand hand);
 
 }

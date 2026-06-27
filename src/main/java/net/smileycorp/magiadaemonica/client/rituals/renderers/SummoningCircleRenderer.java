@@ -10,6 +10,7 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.smileycorp.magiadaemonica.client.ClientUtils;
 import net.smileycorp.magiadaemonica.common.Constants;
 import net.smileycorp.magiadaemonica.common.blocks.BlockScentedCandle;
 import net.smileycorp.magiadaemonica.common.blocks.DaemonicaBlocks;
@@ -69,7 +70,7 @@ public class SummoningCircleRenderer implements RitualRenderer<SummoningCircle> 
         }
         GlStateManager.color(1f, 1f, 1f, 1f);
         textureManager.bindTexture(new ResourceLocation(name.getResourceDomain(), "textures/summoning_circles/" + name.getResourcePath() + ".png"));
-        renderPlane(-w, 0.005, -h, w, 0.005, h, r, g, b, 1, false);
+        ClientUtils.renderPlane(-w, 0.005, -h, w, 0.005, h, r, g, b, 1, false);
         //runes
         if (!hasLighting) {
             GlStateManager.enableBlend();
@@ -78,11 +79,11 @@ public class SummoningCircleRenderer implements RitualRenderer<SummoningCircle> 
             float t = Minecraft.getSystemTime() * 0.03f;
             GlStateManager.pushMatrix();
             GlStateManager.rotate(MathHelper.wrapDegrees(t * 18), 0, 1, 0);
-            renderPlane(-w - 0.25, 0.5, -h -0.25, w + 0.25, 4, h + 0.25,  0.678f, 0, 0, 0.5f, true);
+            ClientUtils.renderPlane(-w - 0.25, 0.5, -h -0.25, w + 0.25, 4, h + 0.25,  0.678f, 0, 0, 0.5f, true);
             GlStateManager.popMatrix();
             GlStateManager.pushMatrix();
             GlStateManager.rotate(MathHelper.wrapDegrees(-t * 20), 0, 1, 0);
-            renderPlane(-w - 1, 0.5, -h -1, w + 1, 4, h + 1,  0.678f, 0, 0, 0.5f, true);
+            ClientUtils.renderPlane(-w - 1, 0.5, -h -1, w + 1, 4, h + 1,  0.678f, 0, 0, 0.5f, true);
             GlStateManager.popMatrix();
             GlStateManager.disableBlend();
         }
@@ -99,7 +100,7 @@ public class SummoningCircleRenderer implements RitualRenderer<SummoningCircle> 
             GlStateManager.enableBlend();
             textureManager.bindTexture(crack);
             GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
-            renderPlane(-w, 0.015, -h, w, 0.015, h, 1f, 1f, 1f, 0.85f, false);
+            ClientUtils.renderPlane(-w, 0.015, -h, w, 0.015, h, 1f, 1f, 1f, 0.85f, false);
             GlStateManager.disableBlend();
         }
         if (ritual.getTicksActive() >= 520) {

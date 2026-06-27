@@ -1,29 +1,36 @@
 package net.smileycorp.magiadaemonica.common.invocations.spell;
 
 import com.google.common.collect.Lists;
+import io.netty.buffer.ByteBuf;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreIngredient;
 import net.smileycorp.atlas.api.util.DirectionUtils;
+import net.smileycorp.magiadaemonica.client.ClientUtils;
 import net.smileycorp.magiadaemonica.common.blocks.Lightable;
+import net.smileycorp.magiadaemonica.common.invocations.Invocation;
 import net.smileycorp.magiadaemonica.common.invocations.MateriaInvocation;
 
 import java.util.List;
 
-public class IgniteSpell extends MateriaInvocation {
+public class IgniteSpell extends MateriaInvocation implements Invocation.ClientInvocation {
 
     public IgniteSpell() {
         super(new OreIngredient("ashOak"));
     }
 
     @Override
-    protected boolean tryCast(EntityPlayer player) {
+    protected InvocationResult tryCast(EntityPlayer player, EnumHand hand) {
         BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos(player.getPosition());
         World world = player.world;
         IBlockState state;
@@ -45,13 +52,52 @@ public class IgniteSpell extends MateriaInvocation {
         if (lit) {
             world.playSound(null, player.posX, player.posY + 0.5f, player.posZ, SoundEvents.ITEM_FIRECHARGE_USE,
                     player.getSoundCategory(), 0.75f, player.getRNG().nextFloat() * 0.5f - 0.25f);
-            for (BlockPos pos1 : litBlocks) {
-                Vec3d dir = DirectionUtils.getDirectionVecXZ(new Vec3d(player.posX, player.posY, player.posZ), new Vec3d(pos1));
-                ((WorldServer)world).spawnParticle(EnumParticleTypes.FLAME, player.posX, player.posY + 0.5f, player.posZ,
-                        0, dir.x, dir.y, dir.z, Math.sqrt(player.getDistanceSqToCenter(pos1)) * 0.25);
-            }
+            List<Object> args = Lists.newArrayListWithExpectedSize(litBlocks.size() + 1);
+            args.add(hand == EnumHand.MAIN_HAND);
+            args.addAll(litBlocks);
+            return InvocationResult.withArgs(args.toArray(args.toArray(new Object[args.size()])));
         }
-        return lit;
+        return null;
+    }
+
+    @Override
+    public void writeToBuf(ByteBuf buf, Object... args) {
+        buf.writeBoolean((boolean) args[0]);
+        for (int i = 1; i < args.length; i++) {
+            BlockPos pos = (BlockPos) args[i];
+            buf.writeInt(pos.getX());
+            buf.writeInt(pos.getY());
+            buf.writeInt(pos.getZ());
+        }
+    }
+
+    @Override
+    public Object[] readFromBuf(ByteBuf buf) {
+        List<Object> args = Lists.newArrayList();
+        args.add(buf.readBoolean());
+        while (buf.isReadable()) args.add(new BlockPos(buf.readInt(), buf.readInt(), buf.readInt()));
+        return args.toArray(new Object[args.size()]);
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void packetReceived(EntityPlayer player, Object... args) {
+        Minecraft mc = Minecraft.getMinecraft();
+        EntityPlayerSP localPlayer = mc.player;
+        World world = localPlayer.world;
+        EnumHand hand = (boolean) args[0] ? EnumHand.MAIN_HAND : EnumHand.OFF_HAND;
+        Vec3d origin = player == localPlayer && mc.gameSettings.thirdPersonView == 0 ? ClientUtils.getHandPosition(hand)
+                : player.getPositionEyes(1);
+        for (int i = 1; i < args.length; i++) {
+            BlockPos pos = (BlockPos) args[i];
+            Vec3d dir = DirectionUtils.getDirectionVec(origin, DirectionUtils.centerOf(pos));
+            double dx = pos.getX() + 0.5 - origin.x;
+            double dy = pos.getY() + 0.5 - origin.y;
+            double dz = pos.getZ() + 0.5 - origin.z;
+            double speed = Math.sqrt(dx * dx + dy * dy + dz * dz) * 0.5;
+            System.out.println(origin + ", " + pos + dir.scale(speed));
+            world.spawnParticle(EnumParticleTypes.FLAME, origin.x, origin.y, origin.z, dir.x * speed, dir.y * speed, dir.z * speed);
+        }
     }
 
 }

@@ -14,14 +14,14 @@ public class RitualInvocation implements Invocation {
     }
 
     @Override
-    public void apply(String invocation, EntityPlayer player) {
+    public InvocationResult apply(String invocation, EntityPlayer player) {
         for (Ritual ritual : Rituals.get(player.world).getRituals()) {
             if (!ritual.getID().equals(ritualType)) continue;
             int disSqr = ((ritual.getWidth() / 2) + 2) * ((ritual.getHeight() / 2) + 2);
             if (ritual.getCenterPos().distanceSqToCenter(player.posX, player.posY, player.posZ) > disSqr) continue;
-            ritual.processInvocation(player, invocation);
-            return;
+            return InvocationResult.optionalSuccess(ritual.processInvocation(player, invocation));
         }
+        return null;
     }
 
 }
