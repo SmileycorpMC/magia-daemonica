@@ -9,6 +9,9 @@ import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.DamageSource;
 import net.minecraft.world.GameType;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
@@ -17,6 +20,7 @@ import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.ServerChatEvent;
 import net.minecraftforge.event.entity.EntityEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.Clone;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.event.world.ChunkWatchEvent;
@@ -29,12 +33,16 @@ import net.smileycorp.magiadaemonica.common.capabilities.Affiliation;
 import net.smileycorp.magiadaemonica.common.capabilities.Contracts;
 import net.smileycorp.magiadaemonica.common.capabilities.DaemonicaCapabilities;
 import net.smileycorp.magiadaemonica.common.capabilities.Soul;
+import net.smileycorp.magiadaemonica.common.damage.DaemonicaDamageSources;
 import net.smileycorp.magiadaemonica.common.invocations.InvocationsRegistry;
+import net.smileycorp.magiadaemonica.common.items.DaemonicaItems;
 import net.smileycorp.magiadaemonica.common.network.SyncSoulMessage;
+import net.smileycorp.magiadaemonica.common.potions.DaemonicaPotions;
 import net.smileycorp.magiadaemonica.common.rituals.Ritual;
 import net.smileycorp.magiadaemonica.common.rituals.Rituals;
 import net.smileycorp.magiadaemonica.common.rituals.RitualsRegistry;
 import net.smileycorp.magiadaemonica.common.rituals.RitualsServer;
+import net.smileycorp.magiadaemonica.config.ItemsConfig;
 
 import java.util.Locale;
 
@@ -130,6 +138,20 @@ public class DaemonicaEventHandler {
 		IBlockState state = event.getPlacedBlock();
 		if (!(state.getBlock() instanceof RitualBlock)) return;
 		RitualsRegistry.tryPlace(event.getWorld(), event.getPos(), state);
+	}
+
+	@SubscribeEvent(priority = EventPriority.LOW)
+	public void onDamage(LivingHurtEvent event) {
+		DamageSource source = event.getSource();
+		EntityLivingBase entity = event.getEntityLiving();
+		if (source.isDamageAbsolute()) return;
+		if (entity.getItemStackFromSlot(EntityEquipmentSlot.CHEST).getItem() != DaemonicaItems.LORICA_ACULEATA) return;
+		float reflected = (float) Math.ceil(event.getAmount() * ItemsConfig.loricaAculetaDamageReflection);
+		event.setAmount(event.getAmount() - reflected);
+		entity.addPotionEffect(new PotionEffect(DaemonicaPotions.BLEED, ItemsConfig.loricaAculetaBleedTime, 0, false, false));
+		Entity attacker = source.getImmediateSource();
+		if (attacker == null) return;
+		attacker.attackEntityFrom(DaemonicaDamageSources.BLEED, reflected);
 	}
 	
 }

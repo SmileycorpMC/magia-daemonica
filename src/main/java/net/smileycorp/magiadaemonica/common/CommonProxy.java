@@ -19,6 +19,7 @@ import net.smileycorp.magiadaemonica.common.network.PacketHandler;
 import net.smileycorp.magiadaemonica.common.rituals.RitualsRegistry;
 import net.smileycorp.magiadaemonica.common.world.DaemonicaWorldGen;
 import net.smileycorp.magiadaemonica.config.BlocksConfig;
+import net.smileycorp.magiadaemonica.config.ItemsConfig;
 import net.smileycorp.magiadaemonica.config.WorldConfig;
 import software.bernie.geckolib3.GeckoLib;
 
@@ -27,6 +28,7 @@ public class CommonProxy {
 	
 	public void preInit(FMLPreInitializationEvent event) {
 		BlocksConfig.syncConfig(event);
+		ItemsConfig.syncConfig(event);
 		WorldConfig.syncConfig(event);
 		MinecraftForge.EVENT_BUS.register(new DaemonicaEventHandler());
 		PacketHandler.initPackets();

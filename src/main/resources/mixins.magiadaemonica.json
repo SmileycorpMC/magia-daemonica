@@ -4,16 +4,18 @@
   "refmap": "mixins.magiadaemonica.refmap.json",
   "mixins": [
     "MixinChunk",
+    "MixinEnchantmentHelper",
     "MixinEntityAINearestAttackableTarget",
     "MixinEntityItem",
     "MixinEntityLiving",
     "MixinForgeEventFactory"
   ],
   "client": [
-      "MixinBlockRenderDispatcher",
-      "MixinEntity",
-      "MixinEntityRenderer",
-      "MixinGuiIngameForge"
+    "MixinBlockRenderDispatcher",
+    "MixinEntity",
+    "MixinEntityRenderer",
+    "MixinGuiIngameForge",
+    "MixinPotionEffect"
   ],
   "server": []
 }

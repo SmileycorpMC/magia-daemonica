@@ -14,6 +14,7 @@ public class DaemonicaPotions {
 
     public static final Potion TREMOR = new DaemonicaPotion(true, 0xD55E3C, "tremor");
     public static final Potion PETRIFIED = new DaemonicaPotion(true, 0x898180, "petrified");
+    public static final Potion BLEED = new PotionBleed();
 
     @SubscribeEvent
     public static void registerPotions(RegistryEvent.Register<Potion> event) {

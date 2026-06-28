@@ -3,11 +3,13 @@ package net.smileycorp.magiadaemonica.client;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.color.ItemColors;
+import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.resources.IReloadableResourceManager;
 import net.minecraft.item.Item;
 import net.minecraft.potion.PotionUtils;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
@@ -23,6 +25,7 @@ import net.smileycorp.atlas.api.client.SlabStateMapper;
 import net.smileycorp.atlas.api.item.IMetaItem;
 import net.smileycorp.magiadaemonica.client.entities.RenderContract;
 import net.smileycorp.magiadaemonica.client.entities.RenderDemon;
+import net.smileycorp.magiadaemonica.client.particle.ParticlePixel;
 import net.smileycorp.magiadaemonica.client.rituals.RitualsClient;
 import net.smileycorp.magiadaemonica.client.rituals.renderers.SummoningCircleRenderer;
 import net.smileycorp.magiadaemonica.common.CommonProxy;
@@ -89,6 +92,12 @@ public class ClientProxy extends CommonProxy {
 		ItemColors registry = event.getItemColors();
 		registry.registerItemColorHandler(((stack, tintIndex) -> tintIndex > 0 && ItemCalixPerpetuus.hasPotion(stack)
 				? PotionUtils.getColor(stack) : -1), DaemonicaItems.CALIX_PERPETUUS);
+	}
+
+	@SubscribeEvent
+	public static void mapTextures(TextureStitchEvent event) {
+		TextureMap map = event.getMap();
+		ParticlePixel.SPRITE = map.registerSprite(Constants.loc("particle/pixel"));
 	}
 
 }
