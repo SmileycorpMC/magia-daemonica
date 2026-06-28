@@ -12,6 +12,7 @@ import net.minecraftforge.registries.IForgeRegistryEntry;
 import net.smileycorp.magiadaemonica.common.Constants;
 import net.smileycorp.magiadaemonica.common.items.DaemonicaItems;
 import net.smileycorp.magiadaemonica.common.items.relics.ItemCalixPerpetuus;
+import net.smileycorp.magiadaemonica.config.ItemsConfig;
 
 public class RecipeCalixPerpetuusFilling extends IForgeRegistryEntry.Impl<IRecipe> implements IRecipe {
 
@@ -32,7 +33,7 @@ public class RecipeCalixPerpetuusFilling extends IForgeRegistryEntry.Impl<IRecip
                 if (potion) return true;
                 continue;
             }
-            if (stack.getItem() == Items.MILK_BUCKET) {
+            if (ItemsConfig.calixPerpetuusMilk && stack.getItem() == Items.MILK_BUCKET) {
                 if (potion) return false;
                 potion = true;
                 if (chalice) return true;
@@ -63,7 +64,7 @@ public class RecipeCalixPerpetuusFilling extends IForgeRegistryEntry.Impl<IRecip
                 if (potion != null) return ItemCalixPerpetuus.copyEffects(chalice, potion);
                 continue;
             }
-            if (stack.getItem() == Items.MILK_BUCKET) {
+            if (ItemsConfig.calixPerpetuusMilk && stack.getItem() == Items.MILK_BUCKET) {
                 if (chalice != null) return ItemCalixPerpetuus.setMilk(chalice, true);
                 milk = true;
                 continue;

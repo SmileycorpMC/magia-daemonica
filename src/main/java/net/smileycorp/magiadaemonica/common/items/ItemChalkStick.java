@@ -14,13 +14,14 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.smileycorp.magiadaemonica.common.blocks.BlockScentedCandle;
 import net.smileycorp.magiadaemonica.common.blocks.DaemonicaBlocks;
+import net.smileycorp.magiadaemonica.config.ItemsConfig;
 
 public class ItemChalkStick extends ItemDaemonicaEdible {
 
     public ItemChalkStick() {
-        super("chalk_stick", 1, 0.8f);
+        super("chalk_stick", ItemsConfig.chalkHunger, ItemsConfig.chalkSaturation);
         setMaxStackSize(1);
-        setMaxDamage(75);
+        setMaxDamage(ItemsConfig.chalkDurability);
         setAlwaysEdible();
     }
 
@@ -45,6 +46,11 @@ public class ItemChalkStick extends ItemDaemonicaEdible {
         if (player instanceof EntityPlayerMP) CriteriaTriggers.PLACED_BLOCK.trigger((EntityPlayerMP)player, pos, stack);
         if (stack.isItemStackDamageable()) stack.damageItem(1, player);
         return EnumActionResult.SUCCESS;
+    }
+
+    @Override
+    public boolean canEat(ItemStack stack) {
+        return ItemsConfig.chalkEdible;
     }
 
 }

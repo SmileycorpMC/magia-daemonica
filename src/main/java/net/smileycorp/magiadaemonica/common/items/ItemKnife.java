@@ -18,7 +18,7 @@ public class ItemKnife extends ItemDaemonica {
 
     private final float attackDamage;
     private final Supplier<Ingredient> reparMaterialSupplier;
-    private Ingredient reparMaterial;
+    private Ingredient repairMaterial;
 
     public ItemKnife(String name, int durability, float attackDamage, Supplier<Ingredient> repairMaterial) {
         super(name);
@@ -42,8 +42,8 @@ public class ItemKnife extends ItemDaemonica {
     @Override
     public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
         if (reparMaterialSupplier == null) return super.getIsRepairable(toRepair, repair);
-        if (reparMaterial == null) reparMaterial = reparMaterialSupplier.get();
-        return reparMaterial.apply(repair);
+        if (repairMaterial == null) repairMaterial = reparMaterialSupplier.get();
+        return repairMaterial.apply(repair);
     }
 
     @Override

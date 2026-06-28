@@ -9,6 +9,7 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
+import net.smileycorp.magiadaemonica.config.ItemsConfig;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -22,6 +23,7 @@ public class ItemLoricaAculeata extends ItemInfernalArmour {
     @Override
     public void addInformation(ItemStack stack, @Nullable World world, List<String> tooltip, ITooltipFlag flag) {
         super.addInformation(stack, world, tooltip, flag);
+        if (!ItemsConfig.loricaAculetaRemovable) return;
         tooltip.add(new TextComponentTranslation("item.magiadaemonica.unequipable").getFormattedText());
     }
 

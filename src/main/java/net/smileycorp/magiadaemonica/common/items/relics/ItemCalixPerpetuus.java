@@ -22,6 +22,7 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.smileycorp.magiadaemonica.common.Constants;
+import net.smileycorp.magiadaemonica.config.ItemsConfig;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -37,7 +38,7 @@ public class ItemCalixPerpetuus extends ItemRelic {
     public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
         if (!isInCreativeTab(tab)) return;
         items.add(new ItemStack(this));
-        items.add(setMilk(new ItemStack(this), true));
+        if (ItemsConfig.calixPerpetuusMilk) items.add(setMilk(new ItemStack(this), true));
     }
 
     @Override

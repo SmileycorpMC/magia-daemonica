@@ -9,6 +9,7 @@ import net.minecraft.world.World;
 import net.smileycorp.atlas.api.util.DirectionUtils;
 import net.smileycorp.magiadaemonica.common.entities.EntityAbstractDemon;
 import net.smileycorp.magiadaemonica.common.potions.DaemonicaPotions;
+import net.smileycorp.magiadaemonica.config.ItemsConfig;
 
 public class ItemFaciesExcoriata extends ItemInfernalMask {
 
@@ -20,12 +21,14 @@ public class ItemFaciesExcoriata extends ItemInfernalMask {
     public void onArmorTick(World world, EntityPlayer player, ItemStack itemStack) {
         super.onArmorTick(world, player, itemStack);
         if (world.isRemote) return;
-        if (player.ticksExisted % 10 != 0) return;
-        RayTraceResult result = DirectionUtils.rayTrace(world, player, 32);
+        if (player.ticksExisted % ItemsConfig.faciesExcoriataTickRate != 0) return;
+        RayTraceResult result = DirectionUtils.rayTrace(world, player, ItemsConfig.faciesExcoriataRange);
         if (result.typeOfHit != RayTraceResult.Type.ENTITY) return;
         if (!(result.entityHit instanceof EntityLiving)) return;
-        if (result.entityHit instanceof EntityAbstractDemon) return;
-        ((EntityLiving) result.entityHit).addPotionEffect(new PotionEffect(DaemonicaPotions.PETRIFIED, 40, 0));
+        EntityLiving entity = (EntityLiving) result.entityHit;
+        if (entity instanceof EntityAbstractDemon) return;
+        if (ItemsConfig.isImmuneToFaciesExcoriata(entity)) return;
+        entity.addPotionEffect(new PotionEffect(DaemonicaPotions.PETRIFIED, ItemsConfig.faciesExcoriataDuration));
     }
 
 }

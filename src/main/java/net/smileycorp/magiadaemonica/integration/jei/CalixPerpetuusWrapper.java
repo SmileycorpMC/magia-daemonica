@@ -17,6 +17,7 @@ import net.minecraft.potion.PotionUtils;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.smileycorp.magiadaemonica.common.items.DaemonicaItems;
 import net.smileycorp.magiadaemonica.common.items.relics.ItemCalixPerpetuus;
+import net.smileycorp.magiadaemonica.config.ItemsConfig;
 
 import java.util.List;
 
@@ -85,7 +86,7 @@ public class CalixPerpetuusWrapper implements ICustomCraftingRecipeWrapper {
 
     public static List<CalixPerpetuusWrapper> getRecipes(ICraftingGridHelper craftingHelper) {
         List<CalixPerpetuusWrapper> recipes = Lists.newArrayList();
-        recipes.add(new CalixPerpetuusWrapper(craftingHelper, Items.MILK_BUCKET));
+        if (ItemsConfig.calixPerpetuusMilk)  recipes.add(new CalixPerpetuusWrapper(craftingHelper, Items.MILK_BUCKET));
         for (Item item : ForgeRegistries.ITEMS) if (item instanceof ItemPotion)
             recipes.add(new CalixPerpetuusWrapper(craftingHelper, item));
         return recipes;

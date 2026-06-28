@@ -1,25 +1,133 @@
 package net.smileycorp.magiadaemonica.config;
 
+import com.google.common.collect.Lists;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.registries.GameData;
 
 import java.io.File;
+import java.util.List;
 
 public class ItemsConfig {
 
+    //beef suet
+    public static int suetHunger;
+    public static float suetSaturation;
+    //calix perpetuus
+    public static int calixPerpetuusCooldown;
+    public static boolean calixPerpetuusMilk;
+    //chalk stick
+    public static int chalkDurability;
+    public static int chalkHunger;
+    public static float chalkSaturation;
+    public static boolean chalkEdible;
+    //facies excoriata
+    private static String[] faciesExcoriataEntityBlacklistStr;
+    private static List<Class<? extends EntityLiving>> faciesExcoriataEntityBlacklist;
+    public static float faciesExcoriataRange;
+    public static int faciesExcoriataDuration;
+    public static int faciesExcoriataTickRate;
+    //lorica aculeta
     public static float loricaAculetaDamageReflection;
     public static int loricaAculetaBleedTime;
+    public static boolean loricaAculetaRemovable;
+    //oak bark
+    public static int oakBarkHunger;
+    public static float oakBarkSaturation;
+    public static boolean oakBarkEdible;
+    //pumpkin slice
+    public static int pumpkinSliceHunger;
+    public static float pumpkinSliceSaturation;
+    //peccatum primordiale
+    public static int peccatumPrimordialeHunger;
+    public static float peccatumPrimordialeeSaturation;
+    private static String[] peccatumPrimordialeeEffectBlacklistStr;
+    public static int peccatumPrimordialeDuration;
+    //tallow
+    public static int tallowHunger;
+    public static float tallowSaturation;
+
 
     public static void syncConfig(FMLPreInitializationEvent event) {
-        Configuration config = new Configuration(new File(event.getModConfigurationDirectory().getPath() + "/magiadaemonica/blocks.cfg"));
+        Configuration config = new Configuration(new File(event.getModConfigurationDirectory().getPath() + "/magiadaemonica/items.cfg"));
         try{
             config.load();
-            loricaAculetaDamageReflection = config.getFloat("damageReflection", "Aculeta", 0.3f, 0, 1, "Percentage of damage the Lorica Aculeta reduces damage by (before armour and resistance) and reflects back to the attacker");
-            loricaAculetaBleedTime = config.getInt("bleedTime", "Aculeta", 60, 0, Integer.MAX_VALUE, "How long does the Lorica Aculeta inflict bleed for after reflecting damage");
+            //beef suet
+            suetHunger = config.getInt("hunger", "beef suet", 1, 0, Integer.MAX_VALUE, "How much hunger does eating beef suet provide?");
+            suetSaturation = config.getFloat("saturation", "beef suet", 0.2f, 0, Integer.MAX_VALUE, "How much saturation does eating beef suet provide?");
+            //calix perpetuus
+            calixPerpetuusCooldown = config.getInt("cooldown", "calix perpetuus", 60, 0, Integer.MAX_VALUE, "How long does the calix perpetuus go on cooldown after use?");
+            calixPerpetuusMilk = config.getBoolean("canContainMilk", "calix perpetuus", true, "Can the calix perpetuus contain milk?");
+            //chalk stick
+            chalkDurability = config.getInt("durability", "chalk stick", 75, 0, Integer.MAX_VALUE, "How much durability do chalk sticks have?");
+            chalkHunger = config.getInt("hunger", "chalk stick", 1, 0, Integer.MAX_VALUE, "How much hunger does eating a chalk stick provide?");
+            chalkSaturation = config.getFloat("saturation", "chalk stick", 0.8f, 0, Integer.MAX_VALUE, "How much saturation does eating a chalk stick provide?");
+            chalkEdible = config.getBoolean("edible", "chalk stick", true, "Can chalk sticks be eaten?");
+            //facies excoriata
+            faciesExcoriataEntityBlacklistStr = config.getStringList("entityBlacklist", "facies excoriata", new String[]{"minecraft:ender_dragon", "minecraft:wither"}, "Entities immune to the facies excoriata's petrify effect");
+            faciesExcoriataRange = config.getFloat("range", "facies excoriata", 32, 0, Float.MAX_VALUE, "How far away can the facies excoriata petrify mobs?");
+            faciesExcoriataDuration = config.getInt("duration", "facies excoriata", 40, 0, Integer.MAX_VALUE, "How long does the facies excoriata's petrify effect work on mobs after you stop looking ar them?");
+            faciesExcoriataTickRate = config.getInt("tickRate", "facies excoriata", 10, 1, Integer.MAX_VALUE, "How often in ticks does the facies excoriata refresh it's petrify effect?");
+            //lorica aculeta
+            loricaAculetaDamageReflection = config.getFloat("damageReflection", "lorica aculeta", 0.3f, 0, 1, "Percentage of damage the lorica aculeta reduces damage by (before armour and resistance) and reflects back to the attacker");
+            loricaAculetaBleedTime = config.getInt("bleedTime", "lorica aculeta", 60, 0, Integer.MAX_VALUE, "How long does the lorica aculeta inflict bleed for after reflecting damage");
+            loricaAculetaRemovable = config.getBoolean("removable", "lorica aculeta", false, "Can the lorica aculeta be unequipped?");
+            //oak bark
+            oakBarkHunger = config.getInt("hunger", "oak bark", 1, 0, Integer.MAX_VALUE, "How much hunger does eating oak bark provide?");
+            oakBarkSaturation = config.getFloat("saturation", "oak bark", 0.2f, 0, Integer.MAX_VALUE, "How much saturation does eating oak bark provide?");
+            oakBarkEdible = config.getBoolean("edible", "oak bark", true, "Can oak bark be eaten?");
+            //pumpkin slice
+            pumpkinSliceHunger = config.getInt("hunger", "pumpkin slice", 2, 0, Integer.MAX_VALUE, "How much hunger does eating a pumpkin slice provide?");
+            pumpkinSliceSaturation = config.getFloat("saturation", "pumpkin slice", 1.2f, 0, Integer.MAX_VALUE, "How much saturation does eating a pumpkin slice provide?");
+            //peccatum primordiale
+            peccatumPrimordialeHunger = config.getInt("hunger", "peccatum primordiale", 4, 0, Integer.MAX_VALUE, "How much hunger does eating the peccatum primordiale provide?");
+            peccatumPrimordialeeSaturation = config.getFloat("saturation", "peccatum primordiale", 2.4f, 0, Integer.MAX_VALUE, "How much saturation does eating the peccatum primordiale provide?");
+            peccatumPrimordialeeEffectBlacklistStr = config.getStringList("effectBlacklist", "peccatum primordiale", new String[]{"magiadaemonica:petrified", "magiadaemonica:tremor"}, "Potion effects the peccatum primordiale will not apply when eaten");
+            peccatumPrimordialeDuration = config.getInt("duration", "peccatum primordiale", 200, 0, Integer.MAX_VALUE, "How many ticks do the peccatum primordiale's effects apply for?");
+            //tallow
+            tallowHunger = config.getInt("hunger", "tallow", 3, 0, Integer.MAX_VALUE, "How much hunger does eating tallow provide?");
+            tallowSaturation = config.getFloat("saturation", "tallow", 0.4f, 0, Integer.MAX_VALUE, "How much saturation does eating tallow provide?");
         } catch(Exception e) {
         } finally {
             if (config.hasChanged()) config.save();
         }
+    }
+
+    public static boolean canPeccatumPrimordialeeApply(Potion potion) {
+        for (String str : peccatumPrimordialeeEffectBlacklistStr) if (str.equals(potion.getRegistryName().toString())) return false;
+        return true;
+    }
+
+    public static boolean isImmuneToFaciesExcoriata(EntityLiving entity) {
+        if (faciesExcoriataEntityBlacklist == null) {
+                faciesExcoriataEntityBlacklist = Lists.newArrayList();
+                for (String str : faciesExcoriataEntityBlacklistStr) {
+                    try {
+                        Class<?> clazz = null;
+                        //check if it matches the syntax for a registry name
+                        if (str.contains(":")) {
+                            ResourceLocation loc = new ResourceLocation(str);
+                            if (GameData.getEntityRegistry().containsKey(loc)) {
+                                clazz = GameData.getEntityRegistry().getValue(loc).getEntityClass();
+                            } else continue;
+                        }
+                        if (clazz == null) throw new Exception("Entry " + str + " is not in the correct format");
+                        if (EntityLiving.class.isAssignableFrom(clazz)) {
+                            faciesExcoriataEntityBlacklist.add((Class<? extends EntityLiving>) clazz);
+                        } else {
+                            throw new Exception("Entity " + str + " is not an instance of EntityLiving");
+                        }
+                    } catch (Exception e) {
+                    }
+                }
+        }
+        return faciesExcoriataEntityBlacklist.contains(entity.getClass());
     }
 
 }

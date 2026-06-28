@@ -4,6 +4,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.smileycorp.magiadaemonica.common.Constants;
+import net.smileycorp.magiadaemonica.config.ItemsConfig;
 
 public class ItemDaemonicaFood extends ItemDaemonicaEdible {
 
@@ -43,11 +44,17 @@ public class ItemDaemonicaFood extends ItemDaemonicaEdible {
         return Variant.get(stack.getMetadata()).getSaturation();
     }
 
+    @Override
+    public boolean canEat(ItemStack stack) {
+        if (stack.getMetadata() == Variant.BARK.ordinal()) return ItemsConfig.oakBarkEdible;
+        return super.canEat(stack);
+    }
+
     public enum Variant {
-        SUET("suet", 1, 0.2f),
-        TALLOW("tallow", 3, 0.4f),
-        BARK("bark", 1, 0.2f),
-        PUMPKIN_SLICE("pumpkin_slice", 2, 1.2f);
+        SUET("suet", ItemsConfig.suetHunger, ItemsConfig.suetSaturation),
+        TALLOW("tallow", ItemsConfig.tallowHunger, ItemsConfig.tallowSaturation),
+        BARK("bark", ItemsConfig.oakBarkHunger, ItemsConfig.oakBarkSaturation),
+        PUMPKIN_SLICE("pumpkin_slice", ItemsConfig.pumpkinSliceHunger, ItemsConfig.pumpkinSliceSaturation);
 
         private final String name;
         private final int hunger;
