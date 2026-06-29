@@ -11,15 +11,15 @@ import net.smileycorp.magiadaemonica.config.ItemsConfig;
 public class ItemPeccatumPrimordiale extends ItemEdibleRelic {
 
     public ItemPeccatumPrimordiale() {
-        super("peccatum_primordiale", ItemsConfig.peccatumPrimordialeHunger, ItemsConfig.peccatumPrimordialeeSaturation);
+        super("peccatum_primordiale", ItemsConfig.peccatumPrimordialeHunger, ItemsConfig.peccatumPrimordialeSaturation);
         setMaxStackSize(1);
         setAlwaysEdible();
     }
 
     @Override
     protected void onFoodEaten(ItemStack stack, World world, EntityPlayer player) {
-        for (Potion potion : ForgeRegistries.POTIONS) if (ItemsConfig.canPeccatumPrimordialeeApply(potion))
-            player.addPotionEffect(new PotionEffect(potion, ItemsConfig.peccatumPrimordialeHunger));
+        for (Potion potion : ForgeRegistries.POTIONS) if (ItemsConfig.canPeccatumPrimordialeApply(potion))
+            player.addPotionEffect(new PotionEffect(potion, ItemsConfig.peccatumPrimordialeDuration));
     }
 
 }

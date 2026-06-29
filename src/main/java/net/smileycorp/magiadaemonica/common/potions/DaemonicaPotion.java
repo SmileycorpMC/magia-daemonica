@@ -46,5 +46,9 @@ public class DaemonicaPotion extends Potion {
     protected ResourceLocation getTexture(PotionEffect effect) {
         return texture;
     }
+
+    public boolean hasCustomParticles() {
+        return false;
+    }
     
 }

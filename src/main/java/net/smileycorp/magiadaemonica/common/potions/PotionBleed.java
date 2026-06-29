@@ -24,7 +24,12 @@ public class PotionBleed extends DaemonicaPotion {
         if (entity.isInvisible()) return;
         for (int i = 0; i <  3 * amplifier + rand.nextInt(4); i++) EnumParticle.PIXEL.send(entity.dimension, entity.posX + (rand.nextFloat() - 0.5) * (double)entity.width * 2,
                 entity.posY + (1 + rand.nextFloat()) * 0.5 * (double)entity.height, entity.posZ + (rand.nextDouble() - 0.5) * (double)entity.width * 2,
-                (double) 0x89101C, 50d, (rand.nextFloat() - 0.5) * 0.1, -0.2, (rand.nextFloat() - 0.5) * 0.1, 1d);
+                (double) 0x89101C, 50d, (rand.nextFloat() - 0.5) * 0.1, -0.2, (rand.nextFloat() - 0.5) * 0.1, 0.5d);
+    }
+
+    @Override
+    public boolean hasCustomParticles() {
+        return true;
     }
 
 }

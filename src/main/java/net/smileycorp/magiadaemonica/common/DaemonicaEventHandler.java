@@ -21,6 +21,7 @@ import net.minecraftforge.event.ServerChatEvent;
 import net.minecraftforge.event.entity.EntityEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.living.PotionEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.Clone;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.event.world.ChunkWatchEvent;
@@ -152,6 +153,11 @@ public class DaemonicaEventHandler {
 		Entity attacker = source.getImmediateSource();
 		if (attacker == null) return;
 		attacker.attackEntityFrom(DaemonicaDamageSources.BLEED, reflected);
+	}
+
+	@SubscribeEvent
+	public void potionRemoved(PotionEvent.PotionRemoveEvent event) {
+		if (event.getEntityLiving().isPotionActive(DaemonicaPotions.SIN)) event.setCanceled(true);
 	}
 	
 }

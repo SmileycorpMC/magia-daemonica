@@ -1,11 +1,8 @@
 package net.smileycorp.magiadaemonica.config;
 
 import com.google.common.collect.Lists;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -46,8 +43,8 @@ public class ItemsConfig {
     public static float pumpkinSliceSaturation;
     //peccatum primordiale
     public static int peccatumPrimordialeHunger;
-    public static float peccatumPrimordialeeSaturation;
-    private static String[] peccatumPrimordialeeEffectBlacklistStr;
+    public static float peccatumPrimordialeSaturation;
+    private static String[] peccatumPrimordialeEffectBlacklistStr;
     public static int peccatumPrimordialeDuration;
     //tallow
     public static int tallowHunger;
@@ -87,8 +84,8 @@ public class ItemsConfig {
             pumpkinSliceSaturation = config.getFloat("saturation", "pumpkin slice", 1.2f, 0, Integer.MAX_VALUE, "How much saturation does eating a pumpkin slice provide?");
             //peccatum primordiale
             peccatumPrimordialeHunger = config.getInt("hunger", "peccatum primordiale", 4, 0, Integer.MAX_VALUE, "How much hunger does eating the peccatum primordiale provide?");
-            peccatumPrimordialeeSaturation = config.getFloat("saturation", "peccatum primordiale", 2.4f, 0, Integer.MAX_VALUE, "How much saturation does eating the peccatum primordiale provide?");
-            peccatumPrimordialeeEffectBlacklistStr = config.getStringList("effectBlacklist", "peccatum primordiale", new String[]{"magiadaemonica:petrified", "magiadaemonica:tremor"}, "Potion effects the peccatum primordiale will not apply when eaten");
+            peccatumPrimordialeSaturation = config.getFloat("saturation", "peccatum primordiale", 2.4f, 0, Integer.MAX_VALUE, "How much saturation does eating the peccatum primordiale provide?");
+            peccatumPrimordialeEffectBlacklistStr = config.getStringList("effectBlacklist", "peccatum primordiale", new String[]{"magiadaemonica:petrified", "magiadaemonica:tremor"}, "Potion effects the peccatum primordiale will not apply when eaten");
             peccatumPrimordialeDuration = config.getInt("duration", "peccatum primordiale", 200, 0, Integer.MAX_VALUE, "How many ticks do the peccatum primordiale's effects apply for?");
             //tallow
             tallowHunger = config.getInt("hunger", "tallow", 3, 0, Integer.MAX_VALUE, "How much hunger does eating tallow provide?");
@@ -99,8 +96,8 @@ public class ItemsConfig {
         }
     }
 
-    public static boolean canPeccatumPrimordialeeApply(Potion potion) {
-        for (String str : peccatumPrimordialeeEffectBlacklistStr) if (str.equals(potion.getRegistryName().toString())) return false;
+    public static boolean canPeccatumPrimordialeApply(Potion potion) {
+        for (String str : peccatumPrimordialeEffectBlacklistStr) if (str.equals(potion.getRegistryName().toString())) return false;
         return true;
     }
 

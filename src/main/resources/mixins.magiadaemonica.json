@@ -15,6 +15,7 @@
     "MixinEntity",
     "MixinEntityRenderer",
     "MixinGuiIngameForge",
+    "MixinInventoryEffectRenderer",
     "MixinPotionEffect"
   ],
   "server": []

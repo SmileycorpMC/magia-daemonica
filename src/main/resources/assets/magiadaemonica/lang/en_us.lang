@@ -66,6 +66,7 @@ fluid.milk=Milk
 effect.magiadaemonica.tremor=Tremor
 effect.magiadaemonica.petrified=Petrified
 effect.magiadaemonica.bleed=Bleed
+effect.magiadaemonica.sin=Sin
 
 entity.magiadaemonica.demonic_trader.name=Demonic Trader
 

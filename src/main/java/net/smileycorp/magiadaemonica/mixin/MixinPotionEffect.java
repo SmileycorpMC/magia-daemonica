@@ -2,6 +2,7 @@ package net.smileycorp.magiadaemonica.mixin;
 
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.smileycorp.magiadaemonica.common.potions.DaemonicaPotion;
 import net.smileycorp.magiadaemonica.common.potions.DaemonicaPotions;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -17,7 +18,8 @@ public abstract class MixinPotionEffect {
     
     @Inject(at = @At("HEAD"), method = "doesShowParticles", cancellable = true)
     public void raids$doesShowParticles(CallbackInfoReturnable<Boolean> callback) {
-        if (potion == DaemonicaPotions.BLEED) callback.setReturnValue(false);
+        if (!(potion instanceof DaemonicaPotion)) return;
+        if (((DaemonicaPotion) potion).hasCustomParticles()) callback.setReturnValue(false);
     }
     
 }
