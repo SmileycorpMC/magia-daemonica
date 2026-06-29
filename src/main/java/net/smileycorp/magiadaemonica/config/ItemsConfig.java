@@ -21,31 +21,31 @@ public class ItemsConfig {
     public static boolean calixPerpetuusMilk;
     //chalk stick
     public static int chalkDurability;
+    public static boolean chalkEdible;
     public static int chalkHunger;
     public static float chalkSaturation;
-    public static boolean chalkEdible;
     //facies excoriata
+    public static int faciesExcoriataDuration;
     private static String[] faciesExcoriataEntityBlacklistStr;
     private static List<Class<? extends EntityLiving>> faciesExcoriataEntityBlacklist;
     public static float faciesExcoriataRange;
-    public static int faciesExcoriataDuration;
     public static int faciesExcoriataTickRate;
     //lorica aculeta
-    public static float loricaAculetaDamageReflection;
     public static int loricaAculetaBleedTime;
+    public static float loricaAculetaDamageReflection;
     public static boolean loricaAculetaRemovable;
     //oak bark
+    public static boolean oakBarkEdible;
     public static int oakBarkHunger;
     public static float oakBarkSaturation;
-    public static boolean oakBarkEdible;
     //pumpkin slice
     public static int pumpkinSliceHunger;
     public static float pumpkinSliceSaturation;
     //peccatum primordiale
+    public static int peccatumPrimordialeDuration;
+    private static String[] peccatumPrimordialeEffectBlacklistStr;
     public static int peccatumPrimordialeHunger;
     public static float peccatumPrimordialeSaturation;
-    private static String[] peccatumPrimordialeEffectBlacklistStr;
-    public static int peccatumPrimordialeDuration;
     //tallow
     public static int tallowHunger;
     public static float tallowSaturation;
