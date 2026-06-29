@@ -42,6 +42,7 @@ public class ItemsConfig {
     public static int pumpkinSliceHunger;
     public static float pumpkinSliceSaturation;
     //peccatum primordiale
+    public static float peccatumPrimordialeAffinityBoost;
     public static int peccatumPrimordialeDuration;
     private static String[] peccatumPrimordialeEffectBlacklistStr;
     public static int peccatumPrimordialeHunger;
@@ -83,6 +84,7 @@ public class ItemsConfig {
             pumpkinSliceHunger = config.getInt("hunger", "pumpkin slice", 2, 0, Integer.MAX_VALUE, "How much hunger does eating a pumpkin slice provide?");
             pumpkinSliceSaturation = config.getFloat("saturation", "pumpkin slice", 1.2f, 0, Integer.MAX_VALUE, "How much saturation does eating a pumpkin slice provide?");
             //peccatum primordiale
+            peccatumPrimordialeAffinityBoost = config.getInt("affinityBoost", "peccatum primordiale", 1, 0, Integer.MAX_VALUE, "How much infernal affinity does eating the peccatum primordiale give? (infernal affinity increases the power of rituals by 1 for every 0.001 affinity)");
             peccatumPrimordialeDuration = config.getInt("duration", "peccatum primordiale", 200, 0, Integer.MAX_VALUE, "How many ticks do the peccatum primordiale's effects apply for?");
             peccatumPrimordialeEffectBlacklistStr = config.getStringList("effectBlacklist", "peccatum primordiale", new String[]{"magiadaemonica:petrified", "magiadaemonica:tremor"}, "Potion effects the peccatum primordiale will not apply when eaten");
             peccatumPrimordialeHunger = config.getInt("hunger", "peccatum primordiale", 4, 0, Integer.MAX_VALUE, "How much hunger does eating the peccatum primordiale provide?");
