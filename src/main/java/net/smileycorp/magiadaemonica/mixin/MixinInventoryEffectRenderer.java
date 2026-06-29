@@ -1,6 +1,5 @@
 package net.smileycorp.magiadaemonica.mixin;
 
-import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -20,7 +19,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class MixinInventoryEffectRenderer {
 
     @Unique
-    private static final ResourceLocation texture = Constants.loc("textures/gui/sin_lock.png");;
+    private static final ResourceLocation texture = Constants.loc("textures/gui/sin_lock.png");
 
     @Inject(at = @At(value = "INVOKE", shift = At.Shift.AFTER, target = "Lnet/minecraft/potion/Potion;renderInventoryEffect(Lnet/minecraft/potion/PotionEffect;Lnet/minecraft/client/gui/Gui;IIF)V", remap = false), method = "drawActivePotionEffects")
     public void magiadaemonica$drawActivePotionEffects$renderInventoryEffect(CallbackInfo callback, @Local(ordinal = 0) int i, @Local(ordinal = 1) int j, @Local Potion potion) {
