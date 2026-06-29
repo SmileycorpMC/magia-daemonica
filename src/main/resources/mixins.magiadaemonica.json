@@ -4,6 +4,7 @@
   "refmap": "mixins.magiadaemonica.refmap.json",
   "mixins": [
     "MixinChunk",
+    "MixinCommandEffect",
     "MixinEnchantmentHelper",
     "MixinEntityAINearestAttackableTarget",
     "MixinEntityItem",
@@ -14,6 +15,7 @@
     "MixinBlockRenderDispatcher",
     "MixinEntity",
     "MixinEntityRenderer",
+    "MixinGuiIngame",
     "MixinGuiIngameForge",
     "MixinInventoryEffectRenderer",
     "MixinPotionEffect"

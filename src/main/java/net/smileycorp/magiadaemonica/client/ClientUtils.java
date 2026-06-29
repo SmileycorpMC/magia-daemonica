@@ -1,7 +1,9 @@
 package net.smileycorp.magiadaemonica.client;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.player.EntityPlayer;
@@ -9,6 +11,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumHandSide;
 import net.minecraft.util.math.Vec3d;
 import net.smileycorp.atlas.api.util.DirectionUtils;
+import net.smileycorp.magiadaemonica.common.potions.PotionSin;
 
 public class ClientUtils {
 
@@ -44,6 +47,16 @@ public class ClientUtils {
         Vec3d origin = player.getPositionEyes(1);
         return origin.add(look.scale(0.05)).addVector(0, -0.75, 0).add(DirectionUtils.getDirectionVecXZ(player.rotationYaw
                 + (hand == EnumHand.MAIN_HAND && player.getPrimaryHand() == EnumHandSide.RIGHT ? -90 : 90)).scale(0.01f));
+    }
+
+    public static void renderSinLock(int x, int y) {
+        Minecraft mc = Minecraft.getMinecraft();
+        GlStateManager.pushMatrix();
+        float a = ((float) Math.sin((mc.player.ticksExisted + mc.getRenderPartialTicks()) * 0.1f) + 1) * 0.5f;
+        GlStateManager.color(1, 1, 1, a);
+        mc.renderEngine.bindTexture(PotionSin.LOCK_TEXTURE);
+        Gui.drawScaledCustomSizeModalRect(x, y, 0, 0 , 22, 22, 22, 22, 22, 22);
+        GlStateManager.popMatrix();
     }
 
 }

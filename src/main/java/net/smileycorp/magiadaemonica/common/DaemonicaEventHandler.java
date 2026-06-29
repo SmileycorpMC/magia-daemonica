@@ -39,6 +39,7 @@ import net.smileycorp.magiadaemonica.common.invocations.InvocationsRegistry;
 import net.smileycorp.magiadaemonica.common.items.DaemonicaItems;
 import net.smileycorp.magiadaemonica.common.network.SyncSoulMessage;
 import net.smileycorp.magiadaemonica.common.potions.DaemonicaPotions;
+import net.smileycorp.magiadaemonica.common.potions.PotionSin;
 import net.smileycorp.magiadaemonica.common.rituals.Ritual;
 import net.smileycorp.magiadaemonica.common.rituals.Rituals;
 import net.smileycorp.magiadaemonica.common.rituals.RitualsRegistry;
@@ -157,6 +158,7 @@ public class DaemonicaEventHandler {
 
 	@SubscribeEvent
 	public void potionRemoved(PotionEvent.PotionRemoveEvent event) {
+		if (event.getPotion() == DaemonicaPotions.SIN && PotionSin.REMOVABLE) return;
 		if (event.getEntityLiving().isPotionActive(DaemonicaPotions.SIN)) event.setCanceled(true);
 	}
 	

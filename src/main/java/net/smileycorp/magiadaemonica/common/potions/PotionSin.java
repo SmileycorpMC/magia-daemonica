@@ -5,13 +5,19 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.smileycorp.magiadaemonica.common.Constants;
 import net.smileycorp.magiadaemonica.common.EnumParticle;
 
 import java.util.Random;
 
 public class PotionSin extends DaemonicaPotion {
+
+    public static final ResourceLocation LOCK_TEXTURE = Constants.loc("textures/gui/sin_lock.png");
+
+    public static boolean REMOVABLE = false;
 
     protected PotionSin() {
         super(true, 0, "sin");
@@ -46,6 +52,12 @@ public class PotionSin extends DaemonicaPotion {
         Minecraft.getMinecraft().renderEngine.bindTexture(getTexture(effect));
         Gui.drawScaledCustomSizeModalRect(x, y, 0, 0 , 18, 18, 18, 18, 18, 18);
         GlStateManager.popMatrix();
+    }
+
+    public static void remove(EntityLivingBase entitylivingbase) {
+        REMOVABLE = true;
+        entitylivingbase.removePotionEffect(DaemonicaPotions.SIN);
+        REMOVABLE = false;
     }
 
 }
