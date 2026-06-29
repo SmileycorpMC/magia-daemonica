@@ -29,6 +29,7 @@ public class ItemPeccatumPrimordiale extends ItemEdibleRelic {
         for (Potion potion : ForgeRegistries.POTIONS) if (ItemsConfig.canPeccatumPrimordialeApply(potion))
             player.addPotionEffect(new PotionEffect(potion, ItemsConfig.peccatumPrimordialeDuration));
         IAttributeInstance attributes = player.getEntityAttribute(DaemonicaAttributes.INFERNAL_AFFINITY);
+        if (attributes.getModifier(AFFINITY) != null) return;
         attributes.applyModifier(new AttributeModifier(AFFINITY, "peccatum_primordiale", ItemsConfig.peccatumPrimordialeAffinityBoost, 0));
     }
 
