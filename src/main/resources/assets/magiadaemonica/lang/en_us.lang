@@ -93,6 +93,7 @@ curse.magiadaemonica.corrosion=Corrosion
 curse.magiadaemonica.corrosion.description=tools and armor degrade more quickly
 
 entity.magiadaemonica.demonic_trader.name=Demonic Trader
+entity.magiadaemonica.contract.name=Infernal Contract
 
 demon.magiadaemonica.name=%2$s of %3$s, %1$s
 
@@ -116,6 +117,8 @@ demon.magiadaemonica.domain.envy=Envy
 demon.magiadaemonica.domain.gluttony=Gluttony
 demon.magiadaemonica.domain.wrath=Wrath
 demon.magiadaemonica.domain.sloth=Sloth
+
+contract.magiadaemonica.title=Pactum Infernale
 
 contract.magiadaemonica.cost.experience=%1$s experience
 contract.magiadaemonica.cost.experience_level=%1$s experience levels
