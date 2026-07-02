@@ -8,6 +8,7 @@ import net.minecraft.util.ResourceLocation;
 import net.smileycorp.magiadaemonica.client.ModLocalization;
 import net.smileycorp.magiadaemonica.common.Constants;
 import net.smileycorp.magiadaemonica.common.DaemonicaSoundEvents;
+import net.smileycorp.magiadaemonica.common.demons.Domain;
 import net.smileycorp.magiadaemonica.common.demons.contracts.Contract;
 import net.smileycorp.magiadaemonica.common.entities.EntityContract;
 import net.smileycorp.magiadaemonica.common.network.SignContractMessage;
@@ -35,7 +36,7 @@ public class GUIContract extends GuiScreen {
         Minecraft mc = Minecraft.getMinecraft();
         this.entity = entity;
         text = ModLocalization.INSTANCE.getText(TEXT, (WIDTH - 20) * 2, mc.player.getDisplayName().getFormattedText(),
-                contract.getCostText(), entity.getDemon().getFormalName().getFormattedText(), contract.getOfferingText());
+                contract.getCostText(), entity.getDemon().getFormalName().getFormattedText(), contract.getOfferingText(), Domain.values().length);
         fineprint = ModLocalization.INSTANCE.getText(FINEPRINT, (WIDTH - 20) * 4);
     }
 
