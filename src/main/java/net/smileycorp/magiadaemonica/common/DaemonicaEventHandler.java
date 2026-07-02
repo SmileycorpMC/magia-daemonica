@@ -6,12 +6,14 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityOwnable;
 import net.minecraft.entity.ai.attributes.AbstractAttributeMap;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
+import net.minecraft.entity.monster.EntityEndermite;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.FoodStats;
 import net.minecraft.world.GameType;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
@@ -19,6 +21,8 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.ServerChatEvent;
 import net.minecraftforge.event.entity.EntityEvent;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.PotionEvent;
@@ -30,13 +34,12 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.smileycorp.magiadaemonica.common.blocks.RitualBlock;
-import net.smileycorp.magiadaemonica.common.capabilities.Affiliation;
-import net.smileycorp.magiadaemonica.common.capabilities.Contracts;
-import net.smileycorp.magiadaemonica.common.capabilities.DaemonicaCapabilities;
-import net.smileycorp.magiadaemonica.common.capabilities.Soul;
+import net.smileycorp.magiadaemonica.common.capabilities.*;
 import net.smileycorp.magiadaemonica.common.damage.DaemonicaDamageSources;
+import net.smileycorp.magiadaemonica.common.demons.contracts.CursesRegistry;
 import net.smileycorp.magiadaemonica.common.invocations.InvocationsRegistry;
 import net.smileycorp.magiadaemonica.common.items.DaemonicaItems;
+import net.smileycorp.magiadaemonica.common.network.SyncCursesMessage;
 import net.smileycorp.magiadaemonica.common.network.SyncSoulMessage;
 import net.smileycorp.magiadaemonica.common.potions.DaemonicaPotions;
 import net.smileycorp.magiadaemonica.common.potions.PotionSin;
@@ -44,6 +47,7 @@ import net.smileycorp.magiadaemonica.common.rituals.Ritual;
 import net.smileycorp.magiadaemonica.common.rituals.Rituals;
 import net.smileycorp.magiadaemonica.common.rituals.RitualsRegistry;
 import net.smileycorp.magiadaemonica.common.rituals.RitualsServer;
+import net.smileycorp.magiadaemonica.common.util.FoodStatsPlayer;
 import net.smileycorp.magiadaemonica.config.ItemsConfig;
 
 import java.util.Locale;
@@ -57,13 +61,16 @@ public class DaemonicaEventHandler {
 		if (!entity.hasCapability(DaemonicaCapabilities.SOUL, null)) event.addCapability(Constants.loc("soul"), new Soul.Provider());
 		if (!entity.hasCapability(DaemonicaCapabilities.CONTRACTS, null)) event.addCapability(Constants.loc("contracts"), new Contracts.Provider());
 		if (!entity.hasCapability(DaemonicaCapabilities.AFFILIATION, null)) event.addCapability(Constants.loc("affiliation"), new Affiliation.Provider());
+		if (!entity.hasCapability(DaemonicaCapabilities.CURSES, null)) event.addCapability(Constants.loc("curses"), new Curses.Provider());
 	}
 
 	@SubscribeEvent
 	public void logIn(PlayerEvent.PlayerLoggedInEvent event) {
 		if (event.player == null) return;
 		if (!(event.player instanceof EntityPlayerMP)) return;
-		SyncSoulMessage.send((EntityPlayerMP) event.player);
+		EntityPlayerMP player = (EntityPlayerMP) event.player;
+		SyncSoulMessage.send(player);
+		SyncCursesMessage.send(player);
 	}
 
 	@SubscribeEvent
@@ -88,6 +95,12 @@ public class DaemonicaEventHandler {
 				player.hasCapability(DaemonicaCapabilities.CONTRACTS, null)) {
 			player.getCapability(DaemonicaCapabilities.CONTRACTS, null).readFromNBT(
 					original.getCapability(DaemonicaCapabilities.CONTRACTS, null).writeToNBT());
+		}
+		if (original.hasCapability(DaemonicaCapabilities.CURSES, null) &&
+				player.hasCapability(DaemonicaCapabilities.CURSES, null)) {
+			player.getCapability(DaemonicaCapabilities.CURSES, null).readFromNBT(
+					original.getCapability(DaemonicaCapabilities.CURSES, null).writeToNBT());
+			if (player instanceof EntityPlayerMP) SyncCursesMessage.send((EntityPlayerMP) player);
 		}
 	}
 
@@ -147,6 +160,10 @@ public class DaemonicaEventHandler {
 		DamageSource source = event.getSource();
 		EntityLivingBase entity = event.getEntityLiving();
 		if (source.isDamageAbsolute()) return;
+		if (entity instanceof EntityPlayer) {
+			int hemophiliac = Curses.getLevel((EntityPlayer) entity, CursesRegistry.HEMOPHILIA);
+			if (hemophiliac > 0) entity.addPotionEffect(new PotionEffect(DaemonicaPotions.BLEED, 30, hemophiliac));
+		}
 		if (entity.getItemStackFromSlot(EntityEquipmentSlot.CHEST).getItem() != DaemonicaItems.LORICA_ACULEATA) return;
 		float reflected = (float) Math.ceil(event.getAmount() * ItemsConfig.loricaAculetaDamageReflection);
 		event.setAmount(event.getAmount() - reflected);
@@ -161,5 +178,45 @@ public class DaemonicaEventHandler {
 		if (event.getPotion() == DaemonicaPotions.SIN && PotionSin.REMOVABLE) return;
 		if (event.getEntityLiving().isPotionActive(DaemonicaPotions.SIN)) event.setCanceled(true);
 	}
-	
+
+	@SubscribeEvent(priority = EventPriority.LOWEST)
+	public void enderTeleport(EnderTeleportEvent event) {
+		EntityLivingBase entity = event.getEntityLiving();
+		if (!(entity instanceof EntityPlayer)) return;
+		if (!Curses.has((EntityPlayer) entity, CursesRegistry.WARPWORMS)) return;
+		World world = entity.world;
+		EntityEndermite endermite = new EntityEndermite(world);
+		endermite.setSpawnedByPlayer(true);
+		endermite.setLocationAndAngles(entity.posX, entity.posY, entity.posZ, entity.rotationYaw, entity.rotationPitch);
+		world.spawnEntity(endermite);
+	}
+
+	@SubscribeEvent
+	public void tick(TickEvent.PlayerTickEvent event) {
+		EntityPlayer player = event.player;
+		if (player.ticksExisted % 20 != 0) return;
+		if (player.moveForward == 0 || player.isAirBorne) return;
+		//fix
+		int knifestep = Curses.getLevel(player, CursesRegistry.KNIFESTEP);
+		if (knifestep == 0) return;
+		player.attackEntityFrom(DaemonicaDamageSources.KNIFESTEP, knifestep);
+	}
+
+	@SubscribeEvent
+	public void entityJoinWorld(EntityJoinWorldEvent event) {
+		Entity entity = event.getEntity();
+		if (!(entity instanceof EntityPlayer)) return;
+		EntityPlayer player = (EntityPlayer) entity;
+		FoodStats foodStats = player.getFoodStats();
+		((FoodStatsPlayer)foodStats).setPlayer(player);
+	}
+
+	@SubscribeEvent
+	public void playerVisibility(net.minecraftforge.event.entity.player.PlayerEvent.Visibility event) {
+		EntityPlayer player = event.getEntityPlayer();
+		int conspicuous = Curses.getLevel(player, CursesRegistry.CONSPICUOUS);
+		if (conspicuous == 0) return;
+		event.modifyVisibility(Math.pow(1.1, conspicuous));
+	}
+
 }

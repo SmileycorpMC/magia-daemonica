@@ -95,7 +95,6 @@ public class IgniteSpell extends MateriaInvocation implements Invocation.ClientI
             double dy = pos.getY() + 0.5 - origin.y;
             double dz = pos.getZ() + 0.5 - origin.z;
             double speed = Math.sqrt(dx * dx + dy * dy + dz * dz) * 0.5;
-            System.out.println(origin + ", " + pos + dir.scale(speed));
             world.spawnParticle(EnumParticleTypes.FLAME, origin.x, origin.y, origin.z, dir.x * speed, dir.y * speed, dir.z * speed);
         }
     }

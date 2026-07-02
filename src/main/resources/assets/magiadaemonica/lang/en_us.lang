@@ -68,6 +68,30 @@ effect.magiadaemonica.petrified=Petrified
 effect.magiadaemonica.bleed=Bleed
 effect.magiadaemonica.sin=Sin
 
+attribute.name.magiadaemonica.infernal_affinity=Infernal Affinity
+
+death.attack.bleed=%1$s lost too much blood.
+death.attack.knifestep=%1$s walked on blades.
+
+curse.magiadaemonica.warpworms=Warpworms
+curse.magiadaemonica.warpworms.description=a guaranteed chance to spawn Endermites when teleporting
+curse.magiadaemonica.knifestep=Knifestep
+curse.magiadaemonica.knifestep.description=walking continuously deals damage
+curse.magiadaemonica.torpidity=Torpidity
+curse.magiadaemonica.torpidity.description=health no longer regenerates naturally
+curse.magiadaemonica.voracity=Voracity
+curse.magiadaemonica.voracity.description=eating food heals less hunger
+curse.magiadaemonica.lightningrod=Lightningrod
+curse.magiadaemonica.lightningrod.description=lightning is more likely to strike you
+curse.magiadaemonica.hemophilia=Hemophilia
+curse.magiadaemonica.hemophilia.description=taking damage causes a bleed effect
+curse.magiadaemonica.icesoles=Icesoles
+curse.magiadaemonica.icesoles.description=taking damage causes a bleed effect
+curse.magiadaemonica.conspicuous=Conspicuous
+curse.magiadaemonica.conspicuous.description=monsters can see you from further away
+curse.magiadaemonica.corrosion=Corrosion
+curse.magiadaemonica.corrosion.description=tools and armor degrade more quickly
+
 entity.magiadaemonica.demonic_trader.name=Demonic Trader
 
 demon.magiadaemonica.name=%2$s of %3$s, %1$s
@@ -99,8 +123,7 @@ contract.magiadaemonica.cost.health=%1$s max health
 contract.magiadaemonica.cost.item=%1$s
 contract.magiadaemonica.cost.soul=%1$s share in your soul
 contract.magiadaemonica.cost.soul_percentage=%1$s share of your remaining soul
-
-attribute.name.magiadaemonica.infernal_affinity=Infernal Affinity
+contract.magiadaemonica.cost.curse=Curse of %1$s (%2$s)
 
 contract.magiadaemonica.offering.item=%1$s
 contract.magiadaemonica.offering.item.enchanted=Enchanted
@@ -112,3 +135,13 @@ contract.magiadaemonica.sign=Sign
 command.magiadaemonica.soul.get.success=%1$s has %2$s soul remaining.
 command.magiadaemonica.soul.change.success=Changed soul for %1$s from %2$s to %3$s.
 command.magiadaemonica.soul.failure=%1$s is not a recognized subcommand.
+
+command.magiadaemonica.curses.add.success=Increased curse %2$s to level %3$s for %1$s.
+command.magiadaemonica.curses.add.failure=Unable to increase curse level %2$s for %1$s.
+command.magiadaemonica.curses.clear.success=Cleared all curses from %1$s.
+command.magiadaemonica.curses.get.success=%1$s has curses %2$s.
+command.magiadaemonica.curses.get.failure=%1$s is not cursed.
+command.magiadaemonica.curses.remove.success=Removed curse %2$s from %1$s.
+command.magiadaemonica.curses.remove.failure=Unable to remove curse %2$s from %1$s.
+command.magiadaemonica.curses.failure.subcommand=%1$s is not a recognized subcommand.
+command.magiadaemonica.curses.failure.args=Command %1$s requires a specified curse;

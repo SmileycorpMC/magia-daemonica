@@ -1,1 +1,6 @@
-teleporting always spawns an endermite
+teleporting always spawns an endermite - Warpworms
+walking deals damage - Knifestep
+no natural regeneration 
+food heals half as much hunger - Voracious
+lightning will strike you more often - Lightningrod
+taking damage causes a bleed effect - Hemophiliac

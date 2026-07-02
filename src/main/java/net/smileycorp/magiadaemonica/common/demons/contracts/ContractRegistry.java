@@ -34,6 +34,7 @@ public class ContractRegistry {
         registerCost(ItemCost.ID, 0, ItemCost::fromNBT, ItemCost::generate);
         registerCost(SoulCost.ID, 4, SoulCost::fromNBT, SoulCost::generate);
         registerCost(SoulPercentageCost.ID, 3, SoulPercentageCost::fromNBT, SoulPercentageCost::generate);
+        registerCost(CurseCost.ID, 5, CurseCost::fromNBT, CurseCost::generate);
         //registerOffering(AttributeOffering.ID, 5, AttributeOffering::fromNBT);
         registerOffering(EffectOffering.ID, 6, EffectOffering::fromNBT, EffectOffering::generate);
         registerOffering(ItemOffering.ID, 1, ItemOffering::fromNBT, ItemOffering::generate);
@@ -54,25 +55,34 @@ public class ContractRegistry {
         Contract contract = new Contract(demon.getUUID());
         Random rand = player.getRNG();
         int tier = Rank.values().length - demon.getRank().ordinal();
-        tier += tier * rand.nextGaussian() * 0.1;
+        tier += (int) ((double)tier * rand.nextGaussian() * 0.1);
         int searchTier = tier;
         while (true) {
             if (rand.nextFloat() > 0.1) break;
             searchTier++;
         }
+        int costsCount = 1;
+        for (int i = 0; i < tier; i++) if (rand.nextInt(5) == 0) costsCount++;
         Offering.Entry<?>[] offerings = OFFERINGS.values().toArray(new Offering.Entry[OFFERINGS.size()]);
         Cost.Entry<?>[] costs = COSTS.values().toArray(new Cost.Entry[COSTS.size()]);
-        Cost.Entry<?> cost = null;
+        Cost.Entry<?>[] contractCosts = new Cost.Entry[costsCount];
         Offering.Entry<?> offering = null;
         int tries = 0;
-        while (tries++ <= 10) {
-            cost = costs[rand.nextInt(costs.length)];
+        while (tries ++ <= 10) {
             offering = offerings[rand.nextInt(offerings.length)];
-            if (!(demon.getDomain().isGreedy() && cost.getName().equals(ItemCost.ID))
-                    && (cost.getTier() > searchTier || cost.getTier() > searchTier + 2)) continue;
             if (offering.getTier() <= searchTier) break;
         }
-        contract.addCosts(cost.getGenerator().apply(demon, player, tier));
+        for (int i = 0; i < contractCosts.length; i++) {
+            tries = 0;
+            while (tries++ <= 10) {
+                Cost.Entry<?> cost = costs[rand.nextInt(costs.length)];
+                contractCosts[i] = cost;
+                if (!(demon.getDomain().isGreedy() && cost.getName().equals(ItemCost.ID))
+                        && (cost.getTier() > searchTier || cost.getTier() > searchTier + 2)) continue;
+            }
+        }
+        for (Cost.Entry<?>cost : contractCosts) contract.addCosts(cost.getGenerator().apply(demon, player,
+                (int) ((float)tier * 0.75f * (costsCount - 1))));
         contract.addOfferings(offering.getGenerator().apply(demon, player, tier));
         return contract;
     }

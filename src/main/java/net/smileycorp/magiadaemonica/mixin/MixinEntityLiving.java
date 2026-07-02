@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(value = EntityLiving.class)
+@Mixin(EntityLiving.class)
 public abstract class MixinEntityLiving extends EntityLivingBase {
 
     public MixinEntityLiving(World world) {

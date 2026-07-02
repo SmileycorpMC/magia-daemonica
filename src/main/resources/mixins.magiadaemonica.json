@@ -6,14 +6,20 @@
     "MixinChunk",
     "MixinCommandEffect",
     "MixinEnchantmentHelper",
+    "MixinEntity",
     "MixinEntityAINearestAttackableTarget",
     "MixinEntityItem",
     "MixinEntityLiving",
-    "MixinForgeEventFactory"
+    "MixinEntityLivingBase",
+    "MixinEntityPlayer",
+    "MixinFoodStats",
+    "MixinForgeEventFactory",
+    "MixinItemStack",
+    "MixinWorldServer"
   ],
   "client": [
     "MixinBlockRenderDispatcher",
-    "MixinEntity",
+    "MixinEntityClient",
     "MixinEntityRenderer",
     "MixinGuiIngame",
     "MixinGuiIngameForge",

@@ -11,14 +11,18 @@ public class PacketHandler {
 
 	public static void initPackets() {
 		int id = 0;
-		NETWORK_INSTANCE.registerMessage(SyncSoulMessage::process, SyncSoulMessage.class, id++, Side.CLIENT);
-		NETWORK_INSTANCE.registerMessage(SyncRitualMessage::process, SyncRitualMessage.class, id++, Side.CLIENT);
-		NETWORK_INSTANCE.registerMessage(RemoveRitualMessage::process, RemoveRitualMessage.class, id++, Side.CLIENT);
+		NETWORK_INSTANCE.registerMessage(DaemonicaParticleMessage::process, DaemonicaParticleMessage.class, id++, Side.CLIENT);
+		NETWORK_INSTANCE.registerMessage(InvocationMessage::process, InvocationMessage.class, id++, Side.CLIENT);
 		NETWORK_INSTANCE.registerMessage(OpenContractMessage::process, OpenContractMessage.class, id++, Side.CLIENT);
 		NETWORK_INSTANCE.registerMessage(SignContractMessage::process, SignContractMessage.class, id++, Side.SERVER);
 		NETWORK_INSTANCE.registerMessage(ValidateContractMessage::process, ValidateContractMessage.class, id++, Side.CLIENT);
-		NETWORK_INSTANCE.registerMessage(InvocationMessage::process, InvocationMessage.class, id++, Side.CLIENT);
-		NETWORK_INSTANCE.registerMessage(DaemonicaParticleMessage::process, DaemonicaParticleMessage.class, id++, Side.CLIENT);
+		NETWORK_INSTANCE.registerMessage(RemoveRitualMessage::process, RemoveRitualMessage.class, id++, Side.CLIENT);
+
+
+		//sync messages
+		NETWORK_INSTANCE.registerMessage(SyncCursesMessage::process, SyncCursesMessage.class, id++, Side.CLIENT);
+		NETWORK_INSTANCE.registerMessage(SyncSoulMessage::process, SyncSoulMessage.class, id++, Side.CLIENT);
+		NETWORK_INSTANCE.registerMessage(SyncRitualMessage::process, SyncRitualMessage.class, id++, Side.CLIENT);
 	}
 
 }

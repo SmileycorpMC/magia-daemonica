@@ -107,7 +107,6 @@ public class SummoningCircle implements Ritual {
             for (int z = 0; z < height; z++) {
                 mutable.setPos(pos.getX() + x, pos.getY(), pos.getZ() + z);
                 TileEntity tile = world.getTileEntity(mutable);
-                System.out.println(mutable + ", " + tile);
                 if (tile instanceof RitualTile) {
                     world.removeTileEntity(mutable.toImmutable());
                     world.markBlockRangeForRenderUpdate(mutable, mutable);

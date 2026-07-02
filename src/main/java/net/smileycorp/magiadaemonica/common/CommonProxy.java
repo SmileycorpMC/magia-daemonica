@@ -11,7 +11,9 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.smileycorp.magiadaemonica.common.advancements.DaemonicaAdvancements;
 import net.smileycorp.magiadaemonica.common.capabilities.Affiliation;
 import net.smileycorp.magiadaemonica.common.capabilities.Contracts;
+import net.smileycorp.magiadaemonica.common.capabilities.Curses;
 import net.smileycorp.magiadaemonica.common.capabilities.Soul;
+import net.smileycorp.magiadaemonica.common.command.CommandCurses;
 import net.smileycorp.magiadaemonica.common.command.CommandSoul;
 import net.smileycorp.magiadaemonica.common.demons.contracts.ContractRegistry;
 import net.smileycorp.magiadaemonica.common.invocations.InvocationsRegistry;
@@ -35,6 +37,7 @@ public class CommonProxy {
 		CapabilityManager.INSTANCE.register(Soul.class, new Soul.Storage(), Soul.Impl::new);
 		CapabilityManager.INSTANCE.register(Contracts.class, new Contracts.Storage(), Contracts.Impl::new);
 		CapabilityManager.INSTANCE.register(Affiliation.class, new Affiliation.Storage(), Affiliation.Impl::new);
+		CapabilityManager.INSTANCE.register(Curses.class, new Curses.Storage(), Curses.Impl::new);
 		GameRegistry.registerWorldGenerator(new DaemonicaWorldGen(), 99);
 		DaemonicaAdvancements.register();
 		RitualsRegistry.registerDefaults();
@@ -53,6 +56,7 @@ public class CommonProxy {
 
 	public void serverStart(FMLServerStartingEvent event) {
 		event.registerServerCommand(new CommandSoul());
+		event.registerServerCommand(new CommandCurses());
 	}
 
 }
