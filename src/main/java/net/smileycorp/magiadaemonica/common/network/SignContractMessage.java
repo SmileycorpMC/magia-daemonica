@@ -32,7 +32,7 @@ public class SignContractMessage implements IMessage {
         if (ctx.side == Side.SERVER) FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(() -> {
             EntityPlayerMP player = ctx.getServerHandler().player;
             EntityContract entity = (EntityContract) player.world.getEntityByID(this.entity);
-            entity.accept(player);
+            ValidateContractMessage.send(player, entity.accept(player) ? entity : null);
         });
         return null;
     }

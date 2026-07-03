@@ -37,7 +37,7 @@ public class ValidateContractMessage implements IMessage {
     }
 
     public static void send(EntityPlayer player, EntityContract contract) {
-        PacketHandler.NETWORK_INSTANCE.sendTo(new ValidateContractMessage(contract.getEntityId()), (EntityPlayerMP) player);
+        PacketHandler.NETWORK_INSTANCE.sendTo(new ValidateContractMessage(contract == null ? - 1 : contract.getEntityId()), (EntityPlayerMP) player);
     }
 
 }

@@ -16,7 +16,6 @@ import net.smileycorp.magiadaemonica.common.demons.Demon;
 import net.smileycorp.magiadaemonica.common.demons.contracts.Contract;
 import net.smileycorp.magiadaemonica.common.demons.contracts.ContractsUtils;
 import net.smileycorp.magiadaemonica.common.network.OpenContractMessage;
-import net.smileycorp.magiadaemonica.common.network.ValidateContractMessage;
 import net.smileycorp.magiadaemonica.common.rituals.Ritual;
 import net.smileycorp.magiadaemonica.common.rituals.Rituals;
 import net.smileycorp.magiadaemonica.common.rituals.summoning.SummoningCircle;
@@ -62,15 +61,15 @@ public class EntityContract extends Entity {
         return true;
     }
 
-    public void accept(EntityPlayerMP player) {
-        if (!contract.canPay(player)) return;
-        if (player.getHealth() <= 0.5) return;
+    public boolean accept(EntityPlayerMP player) {
+        if (!contract.canPay(player)) return false;
+        if (player.getHealth() <= 0.5) return false;
         player.attackEntityFrom(DamageSource.causeIndirectMagicDamage(player, null), 0.5f);
         accepted = true;
-        ValidateContractMessage.send(player, this);
         ContractsUtils.addAffinity(player, getDemon());
         contract.accept(player);
         getRitual().dispel(world);
+        return true;
     }
 
     public void setRitual(BlockPos ritual) {
