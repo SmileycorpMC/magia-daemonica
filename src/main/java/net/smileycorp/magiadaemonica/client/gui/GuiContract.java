@@ -18,7 +18,7 @@ import net.smileycorp.magiadaemonica.common.network.SignContractMessage;
 import java.io.IOException;
 import java.util.List;
 
-public class GUIContract extends GuiScreen {
+public class GuiContract extends GuiScreen {
 
     private static final int WIDTH = 120, HEIGHT = 180;
     private static final int COLOUR = 0x7A0000, SHADOW = 0xB59B8D;
@@ -37,7 +37,7 @@ public class GUIContract extends GuiScreen {
     private int signTicks = -1;
     private boolean failed = false;
 
-    public GUIContract(EntityContract entity, Contract contract) {
+    public GuiContract(EntityContract entity, Contract contract) {
         Minecraft mc = Minecraft.getMinecraft();
         this.entity = entity;
         text = ModLocalization.INSTANCE.getText(TEXT, (WIDTH - 20) * 2, mc.player.getDisplayName().getFormattedText(),
@@ -124,7 +124,8 @@ public class GUIContract extends GuiScreen {
     }
 
     public void validate(int id) {
-        if (id == entity.getEntityId()) signTicks = 0;
+        if (id == -1) failed = false;
+        else if (id == entity.getEntityId()) signTicks = 0;
         mc.player.playSound(DaemonicaSoundEvents.CONTRACT_SIGN, 0.75f, 1);
     }
 

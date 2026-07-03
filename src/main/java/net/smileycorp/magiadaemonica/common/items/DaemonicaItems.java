@@ -35,6 +35,8 @@ public class DaemonicaItems {
     public static final ItemKnife LAPIS_KNIFE = new ItemKnife("lapis_knife", 106, 2, () -> new OreIngredient("gemLapis"));
     public static final ItemKnife PRISMARINE_KNIFE = new ItemKnife("prismarine_knife", 305, 3, () -> new OreIngredient("gemPrismarine"));
     public static final ItemKnife OBSIDIAN_KNIFE = new ItemKnife("obsidian_knife", 1064, 3, () -> new OreIngredient("obsidian"));
+    public static final ItemBlankScroll BLANK_SCROLL = new ItemBlankScroll();
+    public static final ItemInscribedScroll INSCRIBED_SCROLL = new ItemInscribedScroll();
 
     //artifacts
     public static final ItemSicaInfernalem SICA_INFERNALEM = new ItemSicaInfernalem();

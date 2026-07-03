@@ -1,0 +1,27 @@
+{
+  "group": "magiadaemonica:blank_scroll",
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "type": "forge:ore_dict",
+      "ore": "paper"
+    },
+	{
+      "type": "forge:ore_dict",
+      "ore": "paper"
+    },
+    {
+      "item": "minecraft:dye",
+      "data": 0
+    },
+    {
+      "type": "forge:ore_dict",
+      "ore": "feather"
+    }
+  ],
+  "result": {
+    "item": "magiadaemonica:blank_scroll",
+	"data": 0,
+    "count": 1
+  }
+}

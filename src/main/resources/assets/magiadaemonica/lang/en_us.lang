@@ -14,6 +14,14 @@ item.magiadaemonica.lapis_knife.name=Lapis Lazuli Knife
 item.magiadaemonica.prismarine_knife.name=Prismarine Knife
 item.magiadaemonica.obsidian_knife.name=Obsidian Knife
 
+item.magiadaemonica.blank_scroll.name=Blank Scroll
+item.magiadaemonica.blank_scroll.tooltip=Use to inscribe with text that can later be filled into the chat bar
+item.magiadaemonica.inscribed_scroll.name=Inscribed Scroll
+item.magiadaemonica.inscribed_scroll.tooltip=Inscribed text: %1$s
+item.magiadaemonica.inscribed_scroll.tooltip1=Use to fill inscribed text into the chat bar
+
+item.magiadaemonica.infernal_scrap.name=Fragmenta Infernalia
+item.magiadaemonica.infernal_scrap.tooltip=A strange dark metal, it does not bend or break, it feels slightly warm to the touch
 
 item.magiadaemonica.infernal_relic=§4§oInfernal Relic
 item.magiadaemonica.infernal_mask=§4§oInfernal Relic - Mask
@@ -42,9 +50,6 @@ item.magiadaemonica.lorica_aculeata.name=Lorica Aculeata
 item.magiadaemonica.lorica_aculeata.tooltip=A spiked, it reflects damage dealt to the wearer at the cost of making them bleed
 
 item.magiadaemonica.unequipable=§4Cannot be removed if worn
-
-item.magiadaemonica.infernal_scrap.name=Fragmenta Infernalia
-item.magiadaemonica.infernal_scrap.tooltip=A strange dark metal, it does not bend or break, it feels slightly warm to the touch
 
 tile.magiadaemonica.chalk.name=Chalk
 tile.magiadaemonica.chalk_stairs.name=Chalk Stairs

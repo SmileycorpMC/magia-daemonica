@@ -2,10 +2,12 @@ package net.smileycorp.magiadaemonica.client;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.gui.GuiChat;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 import net.smileycorp.atlas.api.data.Pair;
-import net.smileycorp.magiadaemonica.client.gui.GUIContract;
+import net.smileycorp.magiadaemonica.client.gui.GuiBlankScroll;
+import net.smileycorp.magiadaemonica.client.gui.GuiContract;
 import net.smileycorp.magiadaemonica.client.particle.ParticleFullbrightPixel;
 import net.smileycorp.magiadaemonica.client.particle.ParticlePixel;
 import net.smileycorp.magiadaemonica.common.EnumParticle;
@@ -30,13 +32,13 @@ public class NetworkClientHandler {
     public static void openContractGUI(int id, Contract contract) {
         Entity entity = mc.world.getEntityByID(id);
         if (!(entity instanceof EntityContract)) return;
-        mc.displayGuiScreen(new GUIContract((EntityContract)entity, contract));
+        mc.displayGuiScreen(new GuiContract((EntityContract)entity, contract));
     }
 
     public static void validateContract(int id) {
         Entity entity = mc.world.getEntityByID(id);
         if (!(entity instanceof EntityContract)) return;
-        if (mc.currentScreen instanceof GUIContract) ((GUIContract) mc.currentScreen).validate(id);
+        if (mc.currentScreen instanceof GuiContract) ((GuiContract) mc.currentScreen).validate(id);
     }
 
     public static void spawnParticle(EnumParticle type, double x, double y, double z, Double... data) {
@@ -56,5 +58,14 @@ public class NetworkClientHandler {
         Curses cap = player.getCapability(DaemonicaCapabilities.CURSES, null);
         for (Pair<ResourceLocation, Integer> pair : curses) cap.setLevel(pair.getFirst(), pair.getSecond());
     }
-    
+
+    public static void fillChat(String text) {
+        GuiChat gui = new GuiChat();
+        mc.displayGuiScreen(gui);
+        gui.setText(text, true);
+    }
+
+    public static void openBlankScrollGUI(boolean mainhand) {
+        mc.displayGuiScreen(new GuiBlankScroll(mainhand));
+    }
 }

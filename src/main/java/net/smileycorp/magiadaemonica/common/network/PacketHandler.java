@@ -17,7 +17,9 @@ public class PacketHandler {
 		NETWORK_INSTANCE.registerMessage(SignContractMessage::process, SignContractMessage.class, id++, Side.SERVER);
 		NETWORK_INSTANCE.registerMessage(ValidateContractMessage::process, ValidateContractMessage.class, id++, Side.CLIENT);
 		NETWORK_INSTANCE.registerMessage(RemoveRitualMessage::process, RemoveRitualMessage.class, id++, Side.CLIENT);
-
+		NETWORK_INSTANCE.registerMessage(BlankScrollMessage::process, BlankScrollMessage.class, id++, Side.CLIENT);
+		NETWORK_INSTANCE.registerMessage(InscribeScrollMessage::process, InscribeScrollMessage.class, id++, Side.SERVER);
+		NETWORK_INSTANCE.registerMessage(FillChatMessage::process, FillChatMessage.class, id++, Side.CLIENT);
 
 		//sync messages
 		NETWORK_INSTANCE.registerMessage(SyncCursesMessage::process, SyncCursesMessage.class, id++, Side.CLIENT);
