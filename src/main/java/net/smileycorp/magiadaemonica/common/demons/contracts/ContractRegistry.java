@@ -82,7 +82,7 @@ public class ContractRegistry {
             }
         }
         for (Cost.Entry<?>cost : contractCosts) contract.addCosts(cost.getGenerator().apply(demon, player,
-                (int) ((float)tier * 0.75f * (costsCount - 1))));
+                (int) (Math.max((float)tier * 0.75f * (costsCount - 1), 1))));
         contract.addOfferings(offering.getGenerator().apply(demon, player, tier));
         return contract;
     }
