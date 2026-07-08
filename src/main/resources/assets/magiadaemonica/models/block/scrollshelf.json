@@ -1,8 +1,9 @@
 {
     "parent": "block/orientable",
     "textures": {
-        "top": "blocks/planks_oak",
+        "top": "magiadaemonica:blocks/scrollshelf_side",
         "front": "magiadaemonica:blocks/scrollshelf",
-        "side": "blocks/planks_oak"
+        "side": "magiadaemonica:blocks/scrollshelf_side",
+		"particle": "magiadaemonica:blocks/scrollshelf_side"
     }
 }
