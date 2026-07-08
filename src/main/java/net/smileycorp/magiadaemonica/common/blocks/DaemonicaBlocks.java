@@ -15,6 +15,7 @@ import net.smileycorp.atlas.api.block.BlockStairsBase;
 import net.smileycorp.magiadaemonica.common.Constants;
 import net.smileycorp.magiadaemonica.common.MagiaDaemonica;
 import net.smileycorp.magiadaemonica.common.blocks.tiles.TileRitualBasic;
+import net.smileycorp.magiadaemonica.common.blocks.tiles.TileScrollshelf;
 import net.smileycorp.magiadaemonica.config.BlocksConfig;
 
 import java.lang.reflect.Field;
@@ -30,10 +31,15 @@ public class DaemonicaBlocks {
     public static final BlockSlabBase CHALK_SLAB = new BlockSlabBase(CHALK, BlocksConfig.chalk.getHardness(), BlocksConfig.chalk.getResistance(), "pickaxe", BlocksConfig.chalk.getHarvestLevel(), false);
     public static final BlockSlabBase CHALK_DOUBLE_SLAB = new BlockSlabBase(CHALK, BlocksConfig.chalk.getHardness(), BlocksConfig.chalk.getResistance(), "pickaxe", BlocksConfig.chalk.getHarvestLevel(), true);
     public static final BlockDaemonicaFlower FLOWER = new BlockDaemonicaFlower();
+
+    //ritual
     public static final BlockScentedCandle SCENTED_CANDLE = new BlockScentedCandle();
     public static final BlockChalkLine CHALK_LINE = new BlockChalkLine();
     public static final BlockChalkAshLine CHALK_ASH_LINE = new BlockChalkAshLine();
     public static final BlockChalkCandle CHALK_CANDLE = new BlockChalkCandle();
+
+    //decorations
+    public static final BlockScrollshelf SCROLLSHELF = new BlockScrollshelf();
 
     @SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> event) {
@@ -46,6 +52,7 @@ public class DaemonicaBlocks {
             } catch (Exception e) {}
         }
         GameRegistry.registerTileEntity(TileRitualBasic.class, Constants.loc("ritual"));
+        GameRegistry.registerTileEntity(TileScrollshelf.class, Constants.loc("scrollshelf"));
     }
 
     private static <T extends Block> void register(IForgeRegistry<Block> registry, T block) {

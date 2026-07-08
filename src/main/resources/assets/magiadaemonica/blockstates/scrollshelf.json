@@ -1,0 +1,378 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "magiadaemonica:scrollshelf",
+        "y": 180,
+        "uvlock": true
+      },
+      "when": {
+        "facing": "south"
+      }
+    },
+    {
+      "apply": {
+        "model": "magiadaemonica:scrollshelf_scroll_0",
+        "y": 180,
+        "uvlock": true
+      },
+      "when": {
+        "facing": "south",
+        "scroll_0": true
+      }
+    },
+    {
+      "apply": {
+        "model": "magiadaemonica:scrollshelf_scroll_1",
+        "y": 180,
+        "uvlock": true
+      },
+      "when": {
+        "facing": "south",
+        "scroll_1": true
+      }
+    },
+    {
+      "apply": {
+        "model": "magiadaemonica:scrollshelf_scroll_2",
+        "y": 180,
+        "uvlock": true
+      },
+      "when": {
+        "facing": "south",
+        "scroll_2": true
+      }
+    },
+    {
+      "apply": {
+        "model": "magiadaemonica:scrollshelf_scroll_3",
+        "y": 180,
+        "uvlock": true
+      },
+      "when": {
+        "facing": "south",
+        "scroll_3": true
+      }
+    },
+    {
+      "apply": {
+        "model": "magiadaemonica:scrollshelf_scroll_4",
+        "y": 180,
+        "uvlock": true
+      },
+      "when": {
+        "facing": "south",
+        "scroll_4": true
+      }
+    },
+    {
+      "apply": {
+        "model": "magiadaemonica:scrollshelf_scroll_5",
+        "y": 180,
+        "uvlock": true
+      },
+      "when": {
+        "facing": "south",
+        "scroll_5": true
+      }
+    },
+    {
+      "apply": {
+        "model": "magiadaemonica:scrollshelf_scroll_6",
+        "y": 180,
+        "uvlock": true
+      },
+      "when": {
+        "facing": "south",
+        "scroll_6": true
+      }
+    },
+    {
+      "apply": {
+        "model": "magiadaemonica:scrollshelf_scroll_7",
+        "y": 180,
+        "uvlock": true
+      },
+      "when": {
+        "facing": "south",
+        "scroll_7": true
+      }
+    },
+    {
+      "apply": {
+        "model": "magiadaemonica:scrollshelf",
+        "y": 270,
+        "uvlock": true
+      },
+      "when": {
+        "facing": "west"
+      }
+    },
+    {
+      "apply": {
+        "model": "magiadaemonica:scrollshelf_scroll_0",
+        "y": 270,
+        "uvlock": true
+      },
+      "when": {
+        "facing": "west",
+        "scroll_0": true
+      }
+    },
+    {
+      "apply": {
+        "model": "magiadaemonica:scrollshelf_scroll_1",
+        "y": 270,
+        "uvlock": true
+      },
+      "when": {
+        "facing": "west",
+        "scroll_1": true
+      }
+    },
+    {
+      "apply": {
+        "model": "magiadaemonica:scrollshelf_scroll_2",
+        "y": 270,
+        "uvlock": true
+      },
+      "when": {
+        "facing": "west",
+        "scroll_2": true
+      }
+    },
+    {
+      "apply": {
+        "model": "magiadaemonica:scrollshelf_scroll_3",
+        "y": 270,
+        "uvlock": true
+      },
+      "when": {
+        "facing": "west",
+        "scroll_3": true
+      }
+    },
+    {
+      "apply": {
+        "model": "magiadaemonica:scrollshelf_scroll_4",
+        "y": 270,
+        "uvlock": true
+      },
+      "when": {
+        "facing": "west",
+        "scroll_4": true
+      }
+    },
+    {
+      "apply": {
+        "model": "magiadaemonica:scrollshelf_scroll_5",
+        "y": 270,
+        "uvlock": true
+      },
+      "when": {
+        "facing": "west",
+        "scroll_5": true
+      }
+    },
+    {
+      "apply": {
+        "model": "magiadaemonica:scrollshelf_scroll_6",
+        "y": 270,
+        "uvlock": true
+      },
+      "when": {
+        "facing": "west",
+        "scroll_6": true
+      }
+    },
+    {
+      "apply": {
+        "model": "magiadaemonica:scrollshelf_scroll_7",
+        "y": 270,
+        "uvlock": true
+      },
+      "when": {
+        "facing": "west",
+        "scroll_7": true
+      }
+    },
+    {
+      "apply": {
+        "model": "magiadaemonica:scrollshelf"
+      },
+      "when": {
+        "facing": "north"
+      }
+    },
+    {
+      "apply": {
+        "model": "magiadaemonica:scrollshelf_scroll_0"
+      },
+      "when": {
+        "facing": "north",
+        "scroll_0": true
+      }
+    },
+    {
+      "apply": {
+        "model": "magiadaemonica:scrollshelf_scroll_1"
+      },
+      "when": {
+        "facing": "north",
+        "scroll_1": true
+      }
+    },
+    {
+      "apply": {
+        "model": "magiadaemonica:scrollshelf_scroll_2"
+      },
+      "when": {
+        "facing": "north",
+        "scroll_2": true
+      }
+    },
+    {
+      "apply": {
+        "model": "magiadaemonica:scrollshelf_scroll_3"
+      },
+      "when": {
+        "facing": "north",
+        "scroll_3": true
+      }
+    },
+    {
+      "apply": {
+        "model": "magiadaemonica:scrollshelf_scroll_4"
+      },
+      "when": {
+        "facing": "north",
+        "scroll_4": true
+      }
+    },
+    {
+      "apply": {
+        "model": "magiadaemonica:scrollshelf_scroll_5"
+      },
+      "when": {
+        "facing": "north",
+        "scroll_5": true
+      }
+    },
+    {
+      "apply": {
+        "model": "magiadaemonica:scrollshelf_scroll_6"
+      },
+      "when": {
+        "facing": "north",
+        "scroll_6": true
+      }
+    },
+    {
+      "apply": {
+        "model": "magiadaemonica:scrollshelf_scroll_7"
+      },
+      "when": {
+        "facing": "north",
+        "scroll_7": true
+      }
+    },
+    {
+      "apply": {
+        "model": "magiadaemonica:scrollshelf",
+        "y": 90,
+        "uvlock": true
+      },
+      "when": {
+        "facing": "east"
+      }
+    },
+    {
+      "apply": {
+        "model": "magiadaemonica:scrollshelf_scroll_0",
+        "y": 90,
+        "uvlock": true
+      },
+      "when": {
+        "facing": "east",
+        "scroll_0": true
+      }
+    },
+    {
+      "apply": {
+        "model": "magiadaemonica:scrollshelf_scroll_1",
+        "y": 90,
+        "uvlock": true
+      },
+      "when": {
+        "facing": "east",
+        "scroll_1": true
+      }
+    },
+    {
+      "apply": {
+        "model": "magiadaemonica:scrollshelf_scroll_2",
+        "y": 90,
+        "uvlock": true
+      },
+      "when": {
+        "facing": "east",
+        "scroll_2": true
+      }
+    },
+    {
+      "apply": {
+        "model": "magiadaemonica:scrollshelf_scroll_3",
+        "y": 90,
+        "uvlock": true
+      },
+      "when": {
+        "facing": "east",
+        "scroll_3": true
+      }
+    },
+    {
+      "apply": {
+        "model": "magiadaemonica:scrollshelf_scroll_4",
+        "y": 90,
+        "uvlock": true
+      },
+      "when": {
+        "facing": "east",
+        "scroll_4": true
+      }
+    },
+    {
+      "apply": {
+        "model": "magiadaemonica:scrollshelf_scroll_5",
+        "y": 90,
+        "uvlock": true
+      },
+      "when": {
+        "facing": "east",
+        "scroll_5": true
+      }
+    },
+    {
+      "apply": {
+        "model": "magiadaemonica:scrollshelf_scroll_6",
+        "y": 90,
+        "uvlock": true
+      },
+      "when": {
+        "facing": "east",
+        "scroll_6": true
+      }
+    },
+    {
+      "apply": {
+        "model": "magiadaemonica:scrollshelf_scroll_7",
+        "y": 90,
+        "uvlock": true
+      },
+      "when": {
+        "facing": "east",
+        "scroll_7": true
+      }
+    }
+  ]
+}

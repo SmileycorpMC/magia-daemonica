@@ -1,0 +1,7 @@
+{
+  "parent": "magiadaemonica:block/cover",
+  "textures": {
+    "texture": "magiadaemonica:blocks/scrollshelf_scroll_4",
+    "particle": "magiadaemonica:blocks/scrollshelf"
+  }
+}
