@@ -59,4 +59,8 @@ public class SoulCost implements Cost {
         return new SoulCost(MathHelper.clamp(tier * 0.075f + (float) player.getRNG().nextGaussian() * 0.05f, 0.01f, 1));
     }
 
+    public static boolean canApplyTogether(ResourceLocation loc) {
+        return loc != ID && loc != SoulPercentageCost.ID;
+    }
+
 }

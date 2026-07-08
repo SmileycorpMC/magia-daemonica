@@ -8,6 +8,8 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.smileycorp.magiadaemonica.common.demons.Demon;
 import net.smileycorp.magiadaemonica.common.demons.contracts.offerings.Offering;
 
+import java.util.function.Function;
+
 public interface Cost {
 
     ResourceLocation getRegistryName();
@@ -56,12 +58,14 @@ public interface Cost {
         private final int tier;
         private final Reader<T> reader;
         private final Generator<T> generator;
+        private final Function<ResourceLocation, Boolean> canApplyTogether;
 
-        public Entry(ResourceLocation name, int tier, Reader<T> reader, Generator<T> generator) {
+        public Entry(ResourceLocation name, int tier, Reader<T> reader, Generator<T> generator, Function<ResourceLocation, Boolean> canApplyTogether) {
             this.name = name;
             this.tier = tier;
             this.reader = reader;
             this.generator = generator;
+            this.canApplyTogether = canApplyTogether;
         }
 
         public ResourceLocation getName() {
@@ -78,6 +82,10 @@ public interface Cost {
 
         public Generator<T> getGenerator() {
             return generator;
+        }
+
+        public boolean canApplyTogether(ResourceLocation loc) {
+            return canApplyTogether.apply(loc);
         }
 
     }

@@ -52,4 +52,8 @@ public class ExperienceCost implements Cost {
         return new ExperienceCost((int) ((1000 + player.getRNG().nextGaussian() * 500) * tier));
     }
 
+    public static boolean canApplyTogether(ResourceLocation loc) {
+        return loc != ID && loc != ExperienceLevelCost.ID;
+    }
+
 }

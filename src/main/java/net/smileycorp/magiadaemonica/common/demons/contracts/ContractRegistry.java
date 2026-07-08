@@ -1,9 +1,11 @@
 package net.smileycorp.magiadaemonica.common.demons.contracts;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
+import net.smileycorp.atlas.api.util.Func;
 import net.smileycorp.magiadaemonica.common.demons.Demon;
 import net.smileycorp.magiadaemonica.common.demons.Rank;
 import net.smileycorp.magiadaemonica.common.demons.contracts.costs.*;
@@ -11,16 +13,19 @@ import net.smileycorp.magiadaemonica.common.demons.contracts.offerings.EffectOff
 import net.smileycorp.magiadaemonica.common.demons.contracts.offerings.ItemOffering;
 import net.smileycorp.magiadaemonica.common.demons.contracts.offerings.Offering;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class ContractRegistry {
 
     private static final Map<ResourceLocation, Cost.Entry<?>> COSTS = Maps.newHashMap();
     private static final Map<ResourceLocation, Offering.Entry<?>> OFFERINGS = Maps.newHashMap();
 
-    public static <T extends Cost> void registerCost(ResourceLocation name, int tier, Cost.Reader<T> reader, Cost.Generator<T> generator) {
-        COSTS.put(name, new Cost.Entry<>(name, tier, reader, generator));
+    public static <T extends Cost> void registerCost(ResourceLocation name, int tier, Cost.Reader<T> reader, Cost.Generator<T> generator, Function<ResourceLocation, Boolean> canApplyTogether) {
+        COSTS.put(name, new Cost.Entry<>(name, tier, reader, generator, canApplyTogether));
     }
 
     public static <T extends Offering> void registerOffering(ResourceLocation name, int tier, Offering.Reader<T> reader, Offering.Generator<T> generator) {
@@ -28,13 +33,13 @@ public class ContractRegistry {
     }
 
     public static void registerDefaults() {
-        registerCost(ExperienceCost.ID, 1, ExperienceCost::fromNBT, ExperienceCost::generate);
-        registerCost(ExperienceLevelCost.ID, 3, ExperienceLevelCost::fromNBT, ExperienceLevelCost::generate);
-        registerCost(HealthCost.ID, 6, HealthCost::fromNBT, HealthCost::generate);
-        registerCost(ItemCost.ID, 0, ItemCost::fromNBT, ItemCost::generate);
-        registerCost(SoulCost.ID, 4, SoulCost::fromNBT, SoulCost::generate);
-        registerCost(SoulPercentageCost.ID, 3, SoulPercentageCost::fromNBT, SoulPercentageCost::generate);
-        registerCost(CurseCost.ID, 5, CurseCost::fromNBT, CurseCost::generate);
+        registerCost(ExperienceCost.ID, 1, ExperienceCost::fromNBT, ExperienceCost::generate, ExperienceCost::canApplyTogether);
+        registerCost(ExperienceLevelCost.ID, 3, ExperienceLevelCost::fromNBT, ExperienceLevelCost::generate, ExperienceCost::canApplyTogether);
+        registerCost(HealthCost.ID, 6, HealthCost::fromNBT, HealthCost::generate, func -> func != HealthCost.ID);
+        registerCost(ItemCost.ID, 0, ItemCost::fromNBT, ItemCost::generate, Func::True);
+        registerCost(SoulCost.ID, 4, SoulCost::fromNBT, SoulCost::generate, SoulCost::canApplyTogether);
+        registerCost(SoulPercentageCost.ID, 3, SoulPercentageCost::fromNBT, SoulPercentageCost::generate, SoulCost::canApplyTogether);
+        registerCost(CurseCost.ID, 5, CurseCost::fromNBT, CurseCost::generate, Func::True);
         //registerOffering(AttributeOffering.ID, 5, AttributeOffering::fromNBT);
         registerOffering(EffectOffering.ID, 6, EffectOffering::fromNBT, EffectOffering::generate);
         registerOffering(ItemOffering.ID, 1, ItemOffering::fromNBT, ItemOffering::generate);
@@ -62,27 +67,29 @@ public class ContractRegistry {
             searchTier++;
         }
         int costsCount = 1;
-        for (int i = 0; i < tier; i++) if (rand.nextInt(5) == 0) costsCount++;
+        for (int i = 0; i < tier; i++) if (rand.nextInt(10) == 0) costsCount++;
         Offering.Entry<?>[] offerings = OFFERINGS.values().toArray(new Offering.Entry[OFFERINGS.size()]);
-        Cost.Entry<?>[] costs = COSTS.values().toArray(new Cost.Entry[COSTS.size()]);
+        List<Cost.Entry<?>> costs = Lists.newArrayList(COSTS.values());
         Cost.Entry<?>[] contractCosts = new Cost.Entry[costsCount];
         Offering.Entry<?> offering = null;
         int tries = 0;
+        for (int i = 0; i < contractCosts.length; i++) {
+            tries = 0;
+            while (tries++ <= 10) {
+                Cost.Entry<?> cost = costs.get(rand.nextInt(costs.size()));
+                contractCosts[i] = cost;
+                if (!(demon.getDomain().isGreedy() && cost.getName().equals(ItemCost.ID))
+                        && (cost.getTier() > searchTier || cost.getTier() > searchTier + 2)) continue;
+                costs = costs.stream().filter(entry -> cost.canApplyTogether(entry.getName())).collect(Collectors.toList());
+            }
+        }
+        tries = 0;
         while (tries ++ <= 10) {
             offering = offerings[rand.nextInt(offerings.length)];
             if (offering.getTier() <= searchTier) break;
         }
-        for (int i = 0; i < contractCosts.length; i++) {
-            tries = 0;
-            while (tries++ <= 10) {
-                Cost.Entry<?> cost = costs[rand.nextInt(costs.length)];
-                contractCosts[i] = cost;
-                if (!(demon.getDomain().isGreedy() && cost.getName().equals(ItemCost.ID))
-                        && (cost.getTier() > searchTier || cost.getTier() > searchTier + 2)) continue;
-            }
-        }
         for (Cost.Entry<?>cost : contractCosts) contract.addCosts(cost.getGenerator().apply(demon, player,
-                (int) (Math.max((float)tier * 0.75f * (costsCount - 1), 1))));
+                (int) (Math.max((float) tier / (costsCount), 1))));
         contract.addOfferings(offering.getGenerator().apply(demon, player, tier));
         return contract;
     }
