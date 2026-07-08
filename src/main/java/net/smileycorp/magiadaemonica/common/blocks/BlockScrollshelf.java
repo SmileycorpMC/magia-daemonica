@@ -15,23 +15,17 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.common.property.IExtendedBlockState;
 import net.smileycorp.atlas.api.block.BlockProperties;
-import net.smileycorp.atlas.api.util.DirectionUtils;
 import net.smileycorp.magiadaemonica.common.Constants;
+import net.smileycorp.magiadaemonica.common.DaemonicaSoundEvents;
 import net.smileycorp.magiadaemonica.common.MagiaDaemonica;
 import net.smileycorp.magiadaemonica.common.blocks.tiles.TileScrollshelf;
 import net.smileycorp.magiadaemonica.config.BlocksConfig;
-import org.apache.commons.lang3.ArrayUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.function.BiFunction;
 
 public class BlockScrollshelf extends Block implements BlockProperties, ITileEntityProvider {
 
@@ -130,12 +124,14 @@ public class BlockScrollshelf extends Block implements BlockProperties, ITileEnt
             ItemStack newStack = scrollshelf.getStackInSlot(slot);
             scrollshelf.setInventorySlotContents(slot, ItemStack.EMPTY);
             player.setHeldItem(hand, newStack);
+            world.playSound(null, pos, DaemonicaSoundEvents.PAGE_TURN, SoundCategory.HOSTILE, 0.75f, 1);
             return true;
         }
         if (!hasScroll && ((TileScrollshelf) te).isItemValidForSlot(slot, stack)) {
             if (world.isRemote) return true;
             scrollshelf.setInventorySlotContents(slot, stack);
             if (!player.isCreative()) stack.shrink(1);
+            world.playSound(null, pos, DaemonicaSoundEvents.PAGE_TURN, SoundCategory.HOSTILE, 0.75f, 0.75f);
             return true;
         }
         return false;

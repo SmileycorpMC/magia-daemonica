@@ -20,6 +20,7 @@ public class DaemonicaSoundEvents {
     public static final SoundEvent RITUAL_CRACKLING_BASS = register("event.ritual.crackling_bass");
     public static final SoundEvent RITUAL_DEMON_SUMMON = register("event.ritual.demon_summon");
     public static final SoundEvent RITUAL_WHISPER = register("event.ritual.whisper");
+    public static final SoundEvent PAGE_TURN = register("item.book.page_turn");
 
     public static SoundEvent register(String name) {
         SoundEvent sound = new SoundEvent(Constants.loc(name));

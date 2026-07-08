@@ -34,5 +34,19 @@
             "magiadaemonica:event/ritual/whisper"
         ],
         "subtitle": "subtitles.magiadaemonica.event.ritual.whisper"
-    }
+    },
+	"item.book.page_turn": {
+		"sounds": [
+		  {
+			"name": "magiadaemonica:item/book/open_flip1"
+		  },
+		  {
+			"name": "magiadaemonica:item/book/open_flip2"
+		  },
+		  {
+			"name": "magiadaemonica:item/book/open_flip3"
+		  }
+		],
+		"subtitle": "subtitles.magiadaemonica.item.book.page_turn"
+	}
 }
