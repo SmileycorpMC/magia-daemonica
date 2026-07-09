@@ -15,8 +15,10 @@ import net.smileycorp.magiadaemonica.common.network.PacketHandler;
 import net.smileycorp.magiadaemonica.common.network.SyncCursesMessage;
 
 import javax.annotation.Nullable;
+import java.util.AbstractMap;
 import java.util.Collection;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Container class and capability for the curses system
@@ -196,8 +198,10 @@ public interface Curses {
     static void clear(EntityPlayer player) {
         if (!player.hasCapability(DaemonicaCapabilities.CURSES, null)) return;
         Curses curses = player.getCapability(DaemonicaCapabilities.CURSES, null);
+        Collection<Map.Entry<ResourceLocation, Integer>> curseList = curses.getCurses().stream()
+                .map(entry -> new AbstractMap.SimpleEntry<>(entry.getKey(), 0)).collect(Collectors.toList());
         curses.clear();
-        if (player instanceof EntityPlayerMP) PacketHandler.NETWORK_INSTANCE.sendTo(new SyncCursesMessage(curses.getCurses()), (EntityPlayerMP) player);
+        if (player instanceof EntityPlayerMP) PacketHandler.NETWORK_INSTANCE.sendTo(new SyncCursesMessage(curseList), (EntityPlayerMP) player);
     }
 
     static boolean remove(EntityPlayer player, ResourceLocation curse) {
