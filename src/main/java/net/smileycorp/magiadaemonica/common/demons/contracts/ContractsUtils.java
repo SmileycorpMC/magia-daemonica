@@ -17,6 +17,7 @@ import net.minecraft.util.NonNullList;
 import net.minecraftforge.common.IRarity;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.smileycorp.magiadaemonica.common.DaemonicaAttributes;
+import net.smileycorp.magiadaemonica.common.capabilities.Boons;
 import net.smileycorp.magiadaemonica.common.demons.Demon;
 import net.smileycorp.magiadaemonica.common.demons.Rank;
 import net.smileycorp.magiadaemonica.common.items.relics.ItemRelic;
@@ -84,10 +85,15 @@ public class ContractsUtils {
     public static int getContractCount(Demon demon, EntityPlayer player) {
         int contracts = demon == null ? 1 : demon.getRank().getBaseContractCount();
         while (true) {
-            if (player.getRNG().nextFloat() > 0.1) break;
-            contracts += 1;
+            float r = player.getRNG().nextFloat();
+            if (contracts > 1 && r > 0.95) {
+                contracts--;
+                continue;
+            }
+            if (r > 0.1) break;
+            contracts++;
         }
-        return contracts;
+        return contracts + Boons.getLevel(player, BoonRegistry.DEALMAKER);
     }
 
     private static void buildItemLists() {

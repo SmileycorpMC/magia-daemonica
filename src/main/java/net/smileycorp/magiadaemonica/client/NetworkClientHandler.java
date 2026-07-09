@@ -11,6 +11,7 @@ import net.smileycorp.magiadaemonica.client.gui.GuiContract;
 import net.smileycorp.magiadaemonica.client.particle.ParticleFullbrightPixel;
 import net.smileycorp.magiadaemonica.client.particle.ParticlePixel;
 import net.smileycorp.magiadaemonica.common.EnumParticle;
+import net.smileycorp.magiadaemonica.common.capabilities.Boons;
 import net.smileycorp.magiadaemonica.common.capabilities.Curses;
 import net.smileycorp.magiadaemonica.common.capabilities.DaemonicaCapabilities;
 import net.smileycorp.magiadaemonica.common.demons.contracts.Contract;
@@ -52,11 +53,18 @@ public class NetworkClientHandler {
         }
     }
 
-    public static void addCurses(List<Pair<ResourceLocation, Integer>> curses) {
+    public static void setCurses(List<Pair<ResourceLocation, Integer>> curses) {
         EntityPlayerSP player = mc.player;
         if (!player.hasCapability(DaemonicaCapabilities.CURSES, null)) return;
         Curses cap = player.getCapability(DaemonicaCapabilities.CURSES, null);
         for (Pair<ResourceLocation, Integer> pair : curses) cap.setLevel(pair.getFirst(), pair.getSecond());
+    }
+
+    public static void setBoons(List<Pair<ResourceLocation, Integer>> boons) {
+        EntityPlayerSP player = mc.player;
+        if (!player.hasCapability(DaemonicaCapabilities.BOONS, null)) return;
+        Boons cap = player.getCapability(DaemonicaCapabilities.BOONS, null);
+        for (Pair<ResourceLocation, Integer> pair : boons) cap.setLevel(pair.getFirst(), pair.getSecond());
     }
 
     public static void fillChat(String text) {

@@ -17,41 +17,41 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-public class SyncCursesMessage implements IMessage {
+public class SyncBoonsMessage implements IMessage {
 
-    private final List<Pair<ResourceLocation, Integer>> curses = Lists.newArrayList();
+    private final List<Pair<ResourceLocation, Integer>> boons = Lists.newArrayList();
 
-    public SyncCursesMessage() {}
+    public SyncBoonsMessage() {}
 
-    public SyncCursesMessage(Collection<Map.Entry<ResourceLocation, Integer>> curses) {
-        curses.stream().map(Pair::of).forEach(this.curses::add);
+    public SyncBoonsMessage(Collection<Map.Entry<ResourceLocation, Integer>> boons) {
+        boons.stream().map(Pair::of).forEach(this.boons::add);
     }
 
-    public SyncCursesMessage(ResourceLocation curse, int level) {
-        curses.add(Pair.of(curse, level));
+    public SyncBoonsMessage(ResourceLocation curse, int level) {
+        boons.add(Pair.of(curse, level));
     }
 
     @Override
     public void fromBytes(ByteBuf buf) {
-        while (buf.isReadable()) curses.add(Pair.of(new ResourceLocation(ByteBufUtils.readUTF8String(buf)), buf.readInt()));
+        while (buf.isReadable()) boons.add(Pair.of(new ResourceLocation(ByteBufUtils.readUTF8String(buf)), buf.readInt()));
     }
 
     @Override
     public void toBytes(ByteBuf buf) {
-        for (Pair<ResourceLocation, Integer> pair : curses) {
+        for (Pair<ResourceLocation, Integer> pair : boons) {
             ByteBufUtils.writeUTF8String(buf, pair.getFirst().toString());
             buf.writeInt(pair.getSecond());
         }
     }
 
     public IMessage process(MessageContext ctx) {
-        if (ctx.side == Side.CLIENT) Minecraft.getMinecraft().addScheduledTask(() -> NetworkClientHandler.setCurses(curses));
+        if (ctx.side == Side.CLIENT) Minecraft.getMinecraft().addScheduledTask(() -> NetworkClientHandler.setBoons(boons));
         return null;
     }
 
     public static void send(EntityPlayerMP player) {
         if (!player.hasCapability(DaemonicaCapabilities.CURSES ,null)) return;
-        PacketHandler.NETWORK_INSTANCE.sendTo(new SyncCursesMessage(player.getCapability(DaemonicaCapabilities.CURSES, null).getCurses()), player);
+        PacketHandler.NETWORK_INSTANCE.sendTo(new SyncBoonsMessage(player.getCapability(DaemonicaCapabilities.BOONS, null).getBoons()), player);
     }
 
 }

@@ -9,10 +9,8 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.smileycorp.magiadaemonica.common.advancements.DaemonicaAdvancements;
-import net.smileycorp.magiadaemonica.common.capabilities.Affiliation;
-import net.smileycorp.magiadaemonica.common.capabilities.Contracts;
-import net.smileycorp.magiadaemonica.common.capabilities.Curses;
-import net.smileycorp.magiadaemonica.common.capabilities.Soul;
+import net.smileycorp.magiadaemonica.common.capabilities.*;
+import net.smileycorp.magiadaemonica.common.command.CommandBoons;
 import net.smileycorp.magiadaemonica.common.command.CommandCurses;
 import net.smileycorp.magiadaemonica.common.command.CommandSoul;
 import net.smileycorp.magiadaemonica.common.demons.contracts.ContractRegistry;
@@ -29,20 +27,29 @@ import software.bernie.geckolib3.GeckoLib;
 public class CommonProxy {
 	
 	public void preInit(FMLPreInitializationEvent event) {
+		//configs
 		BlocksConfig.syncConfig(event);
 		ItemsConfig.syncConfig(event);
 		WorldConfig.syncConfig(event);
-		MinecraftForge.EVENT_BUS.register(new DaemonicaEventHandler());
+
+		//event handlers, worldgen and packets
 		PacketHandler.initPackets();
+		MinecraftForge.EVENT_BUS.register(new DaemonicaEventHandler());
+		GameRegistry.registerWorldGenerator(new DaemonicaWorldGen(), 99);
+
+		//capabilities
 		CapabilityManager.INSTANCE.register(Soul.class, new Soul.Storage(), Soul.Impl::new);
 		CapabilityManager.INSTANCE.register(Contracts.class, new Contracts.Storage(), Contracts.Impl::new);
 		CapabilityManager.INSTANCE.register(Affiliation.class, new Affiliation.Storage(), Affiliation.Impl::new);
 		CapabilityManager.INSTANCE.register(Curses.class, new Curses.Storage(), Curses.Impl::new);
-		GameRegistry.registerWorldGenerator(new DaemonicaWorldGen(), 99);
+		CapabilityManager.INSTANCE.register(Boons.class, new Boons.Storage(), Boons.Impl::new);
+
+		//registries
 		DaemonicaAdvancements.register();
 		RitualsRegistry.registerDefaults();
 		ContractRegistry.registerDefaults();
 		InvocationsRegistry.registerDefaults();
+
 		GeckoLib.initialize();
 	}
 
@@ -57,6 +64,7 @@ public class CommonProxy {
 	public void serverStart(FMLServerStartingEvent event) {
 		event.registerServerCommand(new CommandSoul());
 		event.registerServerCommand(new CommandCurses());
+		event.registerServerCommand(new CommandBoons());
 	}
 
 }

@@ -12,6 +12,7 @@
     "MixinEntityLiving",
     "MixinEntityLivingBase",
     "MixinEntityPlayer",
+    "MixinEntityPlayerMP",
     "MixinFoodStats",
     "MixinForgeEventFactory",
     "MixinItemStack",

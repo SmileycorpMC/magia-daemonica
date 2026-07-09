@@ -98,6 +98,15 @@ curse.magiadaemonica.conspicuous.description=monsters can see you from further a
 curse.magiadaemonica.corrosion=Corrosion
 curse.magiadaemonica.corrosion.description=tools and armor degrade more quickly
 
+boon.magiadaemonica.dealmaker=Dealmaker
+boon.magiadaemonica.dealmaker.description=demons offer additional contracts
+boon.magiadaemonica.shatterfist=Shatterfist
+boon.magiadaemonica.shatterfist.description=bare fist punches explode
+boon.magiadaemonica.hemorrhage=Hemorrhage
+boon.magiadaemonica.hemorrhage.description=critical hits inflict a bleed effect
+boon.magiadaemonica.juggernaut=Juggernaut
+boon.magiadaemonica.juggernaut.description=immune to the slowing effects of blocks
+
 entity.magiadaemonica.demonic_trader.name=Demonic Trader
 entity.magiadaemonica.contract.name=Infernal Contract
 
@@ -153,4 +162,14 @@ command.magiadaemonica.curses.get.failure=%1$s is not cursed.
 command.magiadaemonica.curses.remove.success=Removed curse %2$s from %1$s.
 command.magiadaemonica.curses.remove.failure=Unable to remove curse %2$s from %1$s.
 command.magiadaemonica.curses.failure.subcommand=%1$s is not a recognized subcommand.
-command.magiadaemonica.curses.failure.args=Command %1$s requires a specified curse;
+command.magiadaemonica.curses.failure.args=Command %1$s requires a specified curse.
+
+command.magiadaemonica.boons.add.success=Increased boon %2$s to level %3$s for %1$s.
+command.magiadaemonica.boons.add.failure=Unable to increase boon level %2$s for %1$s.
+command.magiadaemonica.boons.clear.success=Cleared all boons from %1$s.
+command.magiadaemonica.boons.get.success=%1$s has boons %2$s.
+command.magiadaemonica.boons.get.failure=%1$s has no boons.
+command.magiadaemonica.boons.remove.success=Removed boon %2$s from %1$s.
+command.magiadaemonica.boons.remove.failure=Unable to remove boon %2$s from %1$s.
+command.magiadaemonica.boons.failure.subcommand=%1$s is not a recognized subcommand.
+command.magiadaemonica.boons.failure.args=Command %1$s requires a specified boon.

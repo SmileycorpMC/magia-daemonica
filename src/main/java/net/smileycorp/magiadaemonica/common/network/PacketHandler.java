@@ -13,18 +13,25 @@ public class PacketHandler {
 		int id = 0;
 		NETWORK_INSTANCE.registerMessage(DaemonicaParticleMessage::process, DaemonicaParticleMessage.class, id++, Side.CLIENT);
 		NETWORK_INSTANCE.registerMessage(InvocationMessage::process, InvocationMessage.class, id++, Side.CLIENT);
+
+		//rituals
+		NETWORK_INSTANCE.registerMessage(SyncRitualMessage::process, SyncRitualMessage.class, id++, Side.CLIENT);
+		NETWORK_INSTANCE.registerMessage(RemoveRitualMessage::process, RemoveRitualMessage.class, id++, Side.CLIENT);
+
+		//contracts
 		NETWORK_INSTANCE.registerMessage(OpenContractMessage::process, OpenContractMessage.class, id++, Side.CLIENT);
 		NETWORK_INSTANCE.registerMessage(SignContractMessage::process, SignContractMessage.class, id++, Side.SERVER);
 		NETWORK_INSTANCE.registerMessage(ValidateContractMessage::process, ValidateContractMessage.class, id++, Side.CLIENT);
-		NETWORK_INSTANCE.registerMessage(RemoveRitualMessage::process, RemoveRitualMessage.class, id++, Side.CLIENT);
+
+		//scrolls
 		NETWORK_INSTANCE.registerMessage(BlankScrollMessage::process, BlankScrollMessage.class, id++, Side.CLIENT);
 		NETWORK_INSTANCE.registerMessage(InscribeScrollMessage::process, InscribeScrollMessage.class, id++, Side.SERVER);
 		NETWORK_INSTANCE.registerMessage(FillChatMessage::process, FillChatMessage.class, id++, Side.CLIENT);
 
-		//sync messages
-		NETWORK_INSTANCE.registerMessage(SyncCursesMessage::process, SyncCursesMessage.class, id++, Side.CLIENT);
+		//data sync messages
 		NETWORK_INSTANCE.registerMessage(SyncSoulMessage::process, SyncSoulMessage.class, id++, Side.CLIENT);
-		NETWORK_INSTANCE.registerMessage(SyncRitualMessage::process, SyncRitualMessage.class, id++, Side.CLIENT);
+		NETWORK_INSTANCE.registerMessage(SyncCursesMessage::process, SyncCursesMessage.class, id++, Side.CLIENT);
+		NETWORK_INSTANCE.registerMessage(SyncBoonsMessage::process, SyncBoonsMessage.class, id++, Side.CLIENT);
 	}
 
 }

@@ -16,5 +16,8 @@ public class DaemonicaCapabilities {
 
 	@CapabilityInject(Curses.class)
 	public final static Capability<Curses> CURSES = null;
+
+	@CapabilityInject(Boons.class)
+	public final static Capability<Boons> BOONS = null;
 	
 }
