@@ -14,12 +14,12 @@ public class PotionBleed extends DaemonicaPotion {
 
     @Override
     public boolean isReady(int duration, int amplifier) {
-        return duration % 10 == 0;
+        return duration % (amplifier == 0 ? 20 : 10) == 0;
     }
 
     @Override
     public void performEffect(EntityLivingBase entity, int amplifier) {
-        entity.attackEntityFrom(DaemonicaDamageSources.BLEED, amplifier + 1);
+        entity.attackEntityFrom(DaemonicaDamageSources.BLEED, amplifier == 0 ? 1 : amplifier);
         Random rand = entity.getRNG();
         if (entity.isInvisible()) return;
         for (int i = 0; i <  3 * amplifier + rand.nextInt(4); i++) EnumParticle.PIXEL.send(entity.dimension, entity.posX + (rand.nextFloat() - 0.5) * (double)entity.width * 2,
