@@ -93,11 +93,9 @@ public class GuiContract extends GuiScreen {
         GlStateManager.pushMatrix();
         //half the size of the title text
         GlStateManager.scale(0.5, 0.5, 0.5);
-        y = (y + 20) * 2;
         for (int i = 0; i < text.size(); i ++) {
-            if (i > 0) y += 9;
             String string = text.get(i);
-            mc.fontRenderer.drawString(string, 2*(x + 10),  y, COLOUR, false);
+            mc.fontRenderer.drawString(string, 2*(x + 10),  (y + 20) * 2 + i * 9, COLOUR, false);
         }
         //fineprint
         //half the size of the contract body
@@ -105,7 +103,7 @@ public class GuiContract extends GuiScreen {
         GlStateManager.scale(0.5, 0.5, 0.5);
         for (int i = 0; i < fineprint.size(); i ++) {
             String string = fineprint.get(i);
-            mc.fontRenderer.drawString(string, 4*(x + 10),  y * 2 + 156 + i * 9, SHADOW, false);
+            mc.fontRenderer.drawString(string, 4*(x + 10),  (y + SIGN_Y + SIGN_HEIGHT + 2) * 4 + i * 9, SHADOW, false);
         }
         GlStateManager.popMatrix();
         GlStateManager.popMatrix();
