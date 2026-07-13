@@ -44,6 +44,11 @@ public class PotionSin extends DaemonicaPotion {
         return true;
     }
 
+    @Override
+    public int getGuiSortColor(PotionEffect effect) {
+        return Integer.MAX_VALUE;
+    }
+
     @SideOnly(Side.CLIENT)
     protected void renderEffect(PotionEffect effect, int x, int y, float alpha) {
         GlStateManager.pushMatrix();
