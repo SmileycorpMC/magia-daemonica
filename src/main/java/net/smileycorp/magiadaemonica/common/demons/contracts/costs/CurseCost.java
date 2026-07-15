@@ -11,7 +11,6 @@ import net.smileycorp.magiadaemonica.common.demons.Demon;
 import net.smileycorp.magiadaemonica.common.demons.contracts.CursesRegistry;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class CurseCost implements Cost {
 
@@ -59,9 +58,8 @@ public class CurseCost implements Cost {
     }
 
     public static CurseCost generate(Demon demon, EntityPlayer player, int tier) {
-        List<ResourceLocation> curses = CursesRegistry.getCurses().keySet().stream()
-                .filter(curse -> !Curses.isMaxLevel(player, curse)).collect(Collectors.toList());
-        if (curses.isEmpty()) curses.addAll(CursesRegistry.getCurses().keySet());
+        List<ResourceLocation> curses = CursesRegistry.getApplicableCurses(player);
+        if (curses.isEmpty()) curses.addAll(CursesRegistry.getCurseNames());
         return new CurseCost(curses.get(player.getRNG().nextInt(curses.size())));
     }
 

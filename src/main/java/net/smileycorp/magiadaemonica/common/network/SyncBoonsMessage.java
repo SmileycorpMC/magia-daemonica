@@ -27,8 +27,8 @@ public class SyncBoonsMessage implements IMessage {
         boons.stream().map(Pair::of).forEach(this.boons::add);
     }
 
-    public SyncBoonsMessage(ResourceLocation curse, int level) {
-        boons.add(Pair.of(curse, level));
+    public SyncBoonsMessage(ResourceLocation boon, int level) {
+        boons.add(Pair.of(boon, level));
     }
 
     @Override

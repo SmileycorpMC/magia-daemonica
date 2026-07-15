@@ -11,14 +11,16 @@ import net.minecraft.util.math.BlockPos;
 import net.smileycorp.magiadaemonica.common.Constants;
 import net.smileycorp.magiadaemonica.common.capabilities.Curses;
 import net.smileycorp.magiadaemonica.common.capabilities.DaemonicaCapabilities;
+import net.smileycorp.magiadaemonica.common.demons.contracts.BoonRegistry;
 import net.smileycorp.magiadaemonica.common.demons.contracts.CursesRegistry;
+import net.smileycorp.magiadaemonica.common.network.PickCurseBoonMessage;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
 public class CommandCurses extends CommandBase {
 
-    private final List<String> commands = Lists.newArrayList("add", "clear", "get", "remove");
+    private final List<String> commands = Lists.newArrayList("add", "choose", "clear", "get", "remove");
 
     @Override
     public String getName() {
@@ -27,7 +29,7 @@ public class CommandCurses extends CommandBase {
 
     @Override
     public String getUsage(ICommandSender iCommandSender) {
-        return "/curses <player> <add:clear:get:remove>";
+        return "/curses <player> <add:choose:clear:get:remove>";
     }
 
     @Override
@@ -57,6 +59,11 @@ public class CommandCurses extends CommandBase {
                 if (command.equals("clear")) {
                     notifyCommandListener(sender, this, "command." + Constants.MODID + ".curses.clear.success", player.getDisplayName());
                     Curses.clear(player);
+                    return;
+                }
+                if (command.equals("choose")) {
+                    int amount = args.length < 3 ? 3 : parseInt(args[2]);
+                    PickCurseBoonMessage.send(player, true, CursesRegistry.getRandomCurses(player, amount));
                     return;
                 }
                 if (args.length < 3) {

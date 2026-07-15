@@ -3,9 +3,11 @@ package net.smileycorp.magiadaemonica.client;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.GuiChat;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 import net.smileycorp.atlas.api.data.Pair;
+import net.smileycorp.magiadaemonica.client.gui.GUIPickBoonCurse;
 import net.smileycorp.magiadaemonica.client.gui.GuiBlankScroll;
 import net.smileycorp.magiadaemonica.client.gui.GuiContract;
 import net.smileycorp.magiadaemonica.client.particle.ParticleFullbrightPixel;
@@ -75,5 +77,14 @@ public class NetworkClientHandler {
 
     public static void openBlankScrollGUI(boolean mainhand) {
         mc.displayGuiScreen(new GuiBlankScroll(mainhand));
+    }
+
+    public static void openPickCurseBoonGUI(boolean isCurse, List<ResourceLocation> locs) {
+        GuiScreen screen = mc.currentScreen;
+        if (screen instanceof GUIPickBoonCurse) {
+            ((GUIPickBoonCurse) screen).queueScreen(new GUIPickBoonCurse(isCurse, locs));
+            return;
+        }
+        mc.displayGuiScreen(new GUIPickBoonCurse(isCurse, locs));
     }
 }

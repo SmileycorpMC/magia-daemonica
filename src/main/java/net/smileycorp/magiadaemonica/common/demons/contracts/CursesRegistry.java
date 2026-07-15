@@ -1,11 +1,17 @@
 package net.smileycorp.magiadaemonica.common.demons.contracts;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.smileycorp.magiadaemonica.common.Constants;
+import net.smileycorp.magiadaemonica.common.capabilities.Curses;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
+import java.util.Random;
+import java.util.stream.Collectors;
 
 public class CursesRegistry {
 
@@ -36,6 +42,24 @@ public class CursesRegistry {
 
     public static int getMaxLevel(ResourceLocation curse) {
         return CURSES.getOrDefault(curse, 0);
+    }
+
+    public static List<ResourceLocation> getApplicableCurses(EntityPlayer player) {
+        return getCurseNames().stream().filter(curse -> !Curses.isMaxLevel(player, curse)).collect(Collectors.toList());
+    }
+
+    public static List<ResourceLocation> getRandomCurses(EntityPlayer player, int amount) {
+        List<ResourceLocation> curses = Lists.newArrayList();
+        if (amount == 0) return curses;
+        List<ResourceLocation> applicable = getApplicableCurses(player);
+        amount = Math.min(amount, applicable.size());
+        Random rand = player.getRNG();
+        for (int i = 0; i < amount; i++) {
+            int r = rand.nextInt(applicable.size());
+            curses.add(applicable.get(r));
+            applicable.remove(r);
+        }
+        return curses;
     }
 
 }

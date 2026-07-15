@@ -28,6 +28,10 @@ public class PacketHandler {
 		NETWORK_INSTANCE.registerMessage(InscribeScrollMessage::process, InscribeScrollMessage.class, id++, Side.SERVER);
 		NETWORK_INSTANCE.registerMessage(FillChatMessage::process, FillChatMessage.class, id++, Side.CLIENT);
 
+		//curse boons
+		NETWORK_INSTANCE.registerMessage(PickCurseBoonMessage::process, PickCurseBoonMessage.class, id++, Side.CLIENT);
+		NETWORK_INSTANCE.registerMessage(AddCurseBoonMessage::process, AddCurseBoonMessage.class, id++, Side.SERVER);
+
 		//data sync messages
 		NETWORK_INSTANCE.registerMessage(SyncSoulMessage::process, SyncSoulMessage.class, id++, Side.CLIENT);
 		NETWORK_INSTANCE.registerMessage(SyncCursesMessage::process, SyncCursesMessage.class, id++, Side.CLIENT);

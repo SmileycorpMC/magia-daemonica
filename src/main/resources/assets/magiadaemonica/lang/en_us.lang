@@ -79,33 +79,39 @@ attribute.name.magiadaemonica.infernal_affinity=Infernal Affinity
 death.attack.bleed=%1$s lost too much blood.
 death.attack.knifestep=%1$s walked on blades.
 
+title.magiadaemonica.curse.choose=Select a curse
+title.magiadaemonica.boon.choose=Select a boon
+
+message.magiadaemonica.curse.add=Increased curse %1$s to level %2$s.
+message.magiadaemonica.boon.add=Increased boon %1$s to level %2$s.
+
 curse.magiadaemonica.warpworms=Warpworms
-curse.magiadaemonica.warpworms.description=a guaranteed chance to spawn Endermites when teleporting
+curse.magiadaemonica.warpworms.description=Teleporting always spawns an Endermite
 curse.magiadaemonica.knifestep=Knifestep
-curse.magiadaemonica.knifestep.description=walking continuously deals damage
+curse.magiadaemonica.knifestep.description=Walking continuously deals damage
 curse.magiadaemonica.torpidity=Torpidity
-curse.magiadaemonica.torpidity.description=health no longer regenerates naturally
+curse.magiadaemonica.torpidity.description=Health no longer regenerates naturally
 curse.magiadaemonica.voracity=Voracity
-curse.magiadaemonica.voracity.description=eating food heals less hunger
+curse.magiadaemonica.voracity.description=Eating food heals less hunger
 curse.magiadaemonica.lightningrod=Lightningrod
 curse.magiadaemonica.lightningrod.description=lightning is more likely to strike you
 curse.magiadaemonica.hemophilia=Hemophilia
-curse.magiadaemonica.hemophilia.description=taking damage causes a bleed effect
+curse.magiadaemonica.hemophilia.description=Taking damage inflicts Bleed
 curse.magiadaemonica.icesoles=Icesoles
 curse.magiadaemonica.icesoles.description=Every block is slippery
 curse.magiadaemonica.conspicuous=Conspicuous
-curse.magiadaemonica.conspicuous.description=monsters can see you from further away
+curse.magiadaemonica.conspicuous.description=Monsters see you from further away
 curse.magiadaemonica.corrosion=Corrosion
-curse.magiadaemonica.corrosion.description=tools and armor degrade more quickly
+curse.magiadaemonica.corrosion.description=Tools and armor degrade more quickly
 
 boon.magiadaemonica.dealmaker=Dealmaker
-boon.magiadaemonica.dealmaker.description=demons offer additional contracts
+boon.magiadaemonica.dealmaker.description=Demons offer additional contracts
 boon.magiadaemonica.shatterfist=Shatterfist
-boon.magiadaemonica.shatterfist.description=bare fist punches explode
+boon.magiadaemonica.shatterfist.description=Bare fist punches explode
 boon.magiadaemonica.hemorrhage=Hemorrhage
-boon.magiadaemonica.hemorrhage.description=critical hits inflict a bleed effect
+boon.magiadaemonica.hemorrhage.description=Critical hits inflict Bleed
 boon.magiadaemonica.juggernaut=Juggernaut
-boon.magiadaemonica.juggernaut.description=immune to the slowing effects of blocks
+boon.magiadaemonica.juggernaut.description=Immunity to the slowing effects of blocks
 
 entity.magiadaemonica.demonic_trader.name=Demonic Trader
 entity.magiadaemonica.contract.name=Infernal Contract
