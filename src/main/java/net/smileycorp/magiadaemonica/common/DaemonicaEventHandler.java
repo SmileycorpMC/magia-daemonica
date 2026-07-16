@@ -115,7 +115,7 @@ public class DaemonicaEventHandler {
 				player.hasCapability(DaemonicaCapabilities.BOONS, null)) {
 			player.getCapability(DaemonicaCapabilities.BOONS, null).readFromNBT(
 					original.getCapability(DaemonicaCapabilities.BOONS, null).writeToNBT());
-			if (player instanceof EntityPlayerMP) SyncCursesMessage.send((EntityPlayerMP) player);
+			if (player instanceof EntityPlayerMP) SyncBoonsMessage.send((EntityPlayerMP) player);
 		}
 	}
 
