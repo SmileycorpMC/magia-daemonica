@@ -20,6 +20,7 @@ import net.smileycorp.magiadaemonica.common.DaemonicaAttributes;
 import net.smileycorp.magiadaemonica.common.capabilities.Boons;
 import net.smileycorp.magiadaemonica.common.demons.Demon;
 import net.smileycorp.magiadaemonica.common.demons.Rank;
+import net.smileycorp.magiadaemonica.common.items.relics.InfernalRelic;
 import net.smileycorp.magiadaemonica.common.items.relics.ItemRelic;
 
 import java.math.BigDecimal;
@@ -105,7 +106,7 @@ public class ContractsUtils {
         FOOD = Lists.newArrayList();
         RELICS = Lists.newArrayList();
         for (Item item : ForgeRegistries.ITEMS) {
-            if (item instanceof ItemRelic) {
+            if (item instanceof InfernalRelic) {
                 RELICS.add(new ItemStack(item));
                 continue;
             }
@@ -158,6 +159,10 @@ public class ContractsUtils {
     public static ItemStack getRelic(Random rand) {
         if (RELICS == null) buildItemLists();
         return RELICS.get(rand.nextInt(RELICS.size())).copy();
+    }
+
+    public static List<ItemStack> getRelics() {
+        return Lists.newArrayList(RELICS);
     }
 
     public static float round(float amount, int places) {
