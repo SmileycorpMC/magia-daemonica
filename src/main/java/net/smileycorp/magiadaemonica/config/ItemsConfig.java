@@ -13,6 +13,9 @@ import java.util.List;
 
 public class ItemsConfig {
 
+    //alea diaboli
+    public static int aleaDiaboliCooldown;
+    public static int aleaDiaboliLuckMode;
     //beef suet
     public static int suetHunger;
     public static float suetSaturation;
@@ -56,6 +59,10 @@ public class ItemsConfig {
         Configuration config = new Configuration(new File(event.getModConfigurationDirectory().getPath() + "/magiadaemonica/items.cfg"));
         try{
             config.load();
+            aleaDiaboliCooldown = config.getInt("cooldown", "alea diaboli", 6000, 0, Integer.MAX_VALUE, "How long does the alea diaboli go on cooldown after use?");
+            aleaDiaboliLuckMode = config.getInt("luckMode", "alea diaboli", 4, 0, 4, "How does the luck attribute effect alea diaboli rolls?" +
+                    "\n0: luck doesn't affect rolls\n1: flat +1/-1 per full luck or negative luck level\n2: same as 1, with the remainder being a percent chance for an additional +1" +
+                    "\n3: additional roll per full luck or negative luck level, with the highest (or lowest for negative luck) roll being chosen\n4: same as 3, with the remainder being a percent chance for an additional roll");
             //beef suet
             suetHunger = config.getInt("hunger", "beef suet", 1, 0, Integer.MAX_VALUE, "How much hunger does eating beef suet provide?");
             suetSaturation = config.getFloat("saturation", "beef suet", 0.2f, 0, Integer.MAX_VALUE, "How much saturation does eating beef suet provide?");

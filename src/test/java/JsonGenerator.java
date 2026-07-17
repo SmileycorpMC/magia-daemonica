@@ -16,6 +16,7 @@ public class JsonGenerator {
     public static void main(String[] args) throws IOException {
         //scrollshelfState();
         //scrollshelfModels();
+        //aleaDiaboliModels();
     }
 
     private static void scrollshelfModels() {
@@ -67,6 +68,48 @@ public class JsonGenerator {
         if (property != null) when.addProperty(property, true);
         obj.add("when", when);
         multipart.add(obj);
+    }
+
+    private static void aleaDiaboliModels() {
+        for (int i = 1; i <= 20; i++) {
+            File file = new File(DIRECTORY + ("/src/main/resources/assets/magiadaemonica/models/item/alea_diaboli/alea_diaboli_" + i + ".json"));
+            System.out.println(file);
+            JsonObject obj = new JsonObject();
+            obj.addProperty("parent", "minecraft:item/generated");
+            JsonObject textures = new JsonObject();
+            textures.addProperty("layer0", "magiadaemonica:items/alea_diaboli");
+            textures.addProperty("layer1", "magiadaemonica:items/alea_diaboli/number_" + i);
+            obj.add("textures", textures);
+            try {
+                file.createNewFile();
+                FileWriter writer = new FileWriter(file);
+                writer.write(GSON.toJson(obj));
+                writer.close();
+            } catch (Exception e) {}
+        }
+        File file = new File(DIRECTORY + ("/src/main/resources/assets/magiadaemonica/models/item/alea_diaboli.json"));
+        System.out.println(file);
+        JsonObject obj = new JsonObject();
+        obj.addProperty("parent", "minecraft:item/generated");
+        JsonObject textures = new JsonObject();
+        textures.addProperty("layer0", "magiadaemonica:items/alea_diaboli");
+        obj.add("textures", textures);
+        JsonArray overrides = new JsonArray();
+        for (int i = 1; i <= 20; i++) {
+            JsonObject override = new JsonObject();
+            JsonObject predicate = new JsonObject();
+            predicate.addProperty("magiadaemonica:number", i);
+            override.add("predicate", predicate);
+            override.addProperty("model", "magiadaemonica:item/alea_diaboli/alea_diaboli_"+i);
+            overrides.add(override);
+        }
+        obj.add("overrides", overrides);
+        try {
+            file.createNewFile();
+            FileWriter writer = new FileWriter(file);
+            writer.write(GSON.toJson(obj));
+            writer.close();
+        } catch (Exception e) {}
     }
 
 }

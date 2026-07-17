@@ -11,9 +11,8 @@ import net.minecraft.util.math.BlockPos;
 import net.smileycorp.magiadaemonica.common.Constants;
 import net.smileycorp.magiadaemonica.common.capabilities.Curses;
 import net.smileycorp.magiadaemonica.common.capabilities.DaemonicaCapabilities;
-import net.smileycorp.magiadaemonica.common.demons.contracts.BoonRegistry;
 import net.smileycorp.magiadaemonica.common.demons.contracts.CursesRegistry;
-import net.smileycorp.magiadaemonica.common.network.PickCurseBoonMessage;
+import net.smileycorp.magiadaemonica.common.network.ChooseCurseBoonMessage;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -63,7 +62,7 @@ public class CommandCurses extends CommandBase {
                 }
                 if (command.equals("choose")) {
                     int amount = args.length < 3 ? 3 : parseInt(args[2]);
-                    PickCurseBoonMessage.send(player, true, CursesRegistry.getRandomCurses(player, amount));
+                    ChooseCurseBoonMessage.send(player, true, CursesRegistry.getRandomCurses(player, amount));
                     return;
                 }
                 if (args.length < 3) {

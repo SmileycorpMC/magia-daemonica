@@ -13,14 +13,14 @@ import net.smileycorp.magiadaemonica.client.NetworkClientHandler;
 
 import java.util.List;
 
-public class PickCurseBoonMessage implements IMessage {
+public class ChooseCurseBoonMessage implements IMessage {
 
     private boolean isCurse;
-    private List<ResourceLocation> locs = Lists.newArrayList();
+    private final List<ResourceLocation> locs = Lists.newArrayList();
 
-    public PickCurseBoonMessage() {}
+    public ChooseCurseBoonMessage() {}
 
-    public PickCurseBoonMessage(boolean isCurse, List<ResourceLocation> locs) {
+    public ChooseCurseBoonMessage(boolean isCurse, List<ResourceLocation> locs) {
         this.isCurse = isCurse;
         this.locs.addAll(locs);
     }
@@ -38,12 +38,12 @@ public class PickCurseBoonMessage implements IMessage {
     }
 
     public IMessage process(MessageContext ctx) {
-        if (ctx.side == Side.CLIENT) Minecraft.getMinecraft().addScheduledTask(() -> NetworkClientHandler.openPickCurseBoonGUI(isCurse, locs));
+        if (ctx.side == Side.CLIENT) Minecraft.getMinecraft().addScheduledTask(() -> NetworkClientHandler.openChooseCurseBoonGUI(isCurse, locs));
         return null;
     }
 
     public static void send(EntityPlayerMP player, boolean isCurse, List<ResourceLocation> locs) {
-        PacketHandler.NETWORK_INSTANCE.sendTo(new PickCurseBoonMessage(isCurse, locs), player);
+        PacketHandler.NETWORK_INSTANCE.sendTo(new ChooseCurseBoonMessage(isCurse, locs), player);
     }
 
 }

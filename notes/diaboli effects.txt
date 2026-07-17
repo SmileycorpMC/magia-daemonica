@@ -1,0 +1,20 @@
+1) the die breaks and explodes
+2) get shot into the air 26 blocks
+3) get struck by lightining (if you don't move this does 19 damage by the end of fire ticks)
+4) drop your inventory
+5) spawn 12 silverfish around you
+6) get a random curse (one of the ones demon contracts can give you) (changed to use the curse choice screen)
+7) teleported 500-1500 blocks in a random direction
+8) get a random negative potion effect
+9) web placed at your feet
+10) get forced into a boat
+11) stack of dirt
+12) get a random positive potion effect
+13) get a status effects cleanse, full heal, damage immunity, luck and a reroll
+14) full inventory item repair
+15) gain 10 experience levels
+16) random level 30 enchanted book
+17) get an infernal scrap (an item you can use to buy more relics at 5 scrap per relic)
+18) progression item
+19) get a random boon  (one of the ones demon contracts can give you) (changed to use the boon choice screen)
+20) the die gets replaced with a relic of your choice

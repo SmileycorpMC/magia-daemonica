@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "magiadaemonica:items/alea_diaboli",
+    "layer1": "magiadaemonica:items/alea_diaboli/number_10"
+  }
+}

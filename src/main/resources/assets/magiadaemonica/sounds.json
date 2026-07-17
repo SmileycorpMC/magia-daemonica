@@ -48,5 +48,22 @@
 		  }
 		],
 		"subtitle": "subtitles.magiadaemonica.item.book.page_turn"
+	},
+	"item.alea_diaboli.roll": {
+		"sounds": [
+		  {
+			"name": "magiadaemonica:item/alea_diaboli/roll1"
+		  },
+		  {
+			"name": "magiadaemonica:item/alea_diaboli/roll2"
+		  },
+		  {
+			"name": "magiadaemonica:item/alea_diaboli/roll3"
+		  },
+		  {
+			"name": "magiadaemonica:item/alea_diaboli/roll4"
+		  }
+		],
+		"subtitle": "subtitles.magiadaemonica.item.alea_diaboli.roll"
 	}
 }

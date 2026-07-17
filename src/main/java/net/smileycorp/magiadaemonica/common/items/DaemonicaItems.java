@@ -47,6 +47,7 @@ public class DaemonicaItems {
     public static final ItemInfernalMask FACIES_EXCORIATA = new ItemFaciesExcoriata();
     public static final ItemInfernalMask OCULUS_AETHEREUS = new ItemInfernalMask("oculus_aethereus");
     public static final ItemLoricaAculeata LORICA_ACULEATA = new ItemLoricaAculeata();
+    public static final ItemAleaDiaboli ALEA_DIABOLI = new ItemAleaDiaboli();
 
     @SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> event) {

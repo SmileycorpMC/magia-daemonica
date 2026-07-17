@@ -7,9 +7,7 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 import net.smileycorp.atlas.api.data.Pair;
-import net.smileycorp.magiadaemonica.client.gui.GUIPickBoonCurse;
-import net.smileycorp.magiadaemonica.client.gui.GuiBlankScroll;
-import net.smileycorp.magiadaemonica.client.gui.GuiContract;
+import net.smileycorp.magiadaemonica.client.gui.*;
 import net.smileycorp.magiadaemonica.client.particle.ParticleFullbrightPixel;
 import net.smileycorp.magiadaemonica.client.particle.ParticlePixel;
 import net.smileycorp.magiadaemonica.common.EnumParticle;
@@ -17,6 +15,7 @@ import net.smileycorp.magiadaemonica.common.capabilities.Boons;
 import net.smileycorp.magiadaemonica.common.capabilities.Curses;
 import net.smileycorp.magiadaemonica.common.capabilities.DaemonicaCapabilities;
 import net.smileycorp.magiadaemonica.common.demons.contracts.Contract;
+import net.smileycorp.magiadaemonica.common.demons.contracts.ContractsUtils;
 import net.smileycorp.magiadaemonica.common.entities.EntityContract;
 
 import java.util.List;
@@ -79,12 +78,22 @@ public class NetworkClientHandler {
         mc.displayGuiScreen(new GuiBlankScroll(mainhand));
     }
 
-    public static void openPickCurseBoonGUI(boolean isCurse, List<ResourceLocation> locs) {
+    public static void openChoiceGui(GuiChoice gui) {
         GuiScreen screen = mc.currentScreen;
-        if (screen instanceof GUIPickBoonCurse) {
-            ((GUIPickBoonCurse) screen).queueScreen(new GUIPickBoonCurse(isCurse, locs));
+        if (screen instanceof GuiChoice) {
+            ((GuiChooseBoonCurse) screen).queueScreen(gui);
             return;
         }
-        mc.displayGuiScreen(new GUIPickBoonCurse(isCurse, locs));
+        mc.displayGuiScreen(gui);
     }
+
+    public static void openChooseCurseBoonGUI(boolean isCurse, List<ResourceLocation> locs) {
+        openChoiceGui(new GuiChooseBoonCurse(isCurse, locs));
+    }
+
+
+    public static void openChooseRelicGUI() {
+        openChoiceGui(new GuiChooseItem(ContractsUtils.getRelics()));
+    }
+
 }

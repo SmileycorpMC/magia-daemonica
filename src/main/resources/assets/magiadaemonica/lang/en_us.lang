@@ -48,6 +48,9 @@ item.magiadaemonica.oculus_aethereus.name=Oculus Aethereus
 item.magiadaemonica.oculus_aethereus.tooltip=A writhing fleshy eye, it's vision is never hindered
 item.magiadaemonica.lorica_aculeata.name=Lorica Aculeata
 item.magiadaemonica.lorica_aculeata.tooltip=A spiked, it reflects damage dealt to the wearer at the cost of making them bleed
+item.magiadaemonica.alea_diaboli.name=Alea Diaboli
+item.magiadaemonica.alea_diaboli.tooltip=A stone icosahedron, rolling it causes random effects
+item.magiadaemonica.alea_diaboli.tooltip.disclaimer=§4Negative effects may cause death or destruction
 
 item.magiadaemonica.unequipable=§4Cannot be removed if worn
 
@@ -79,8 +82,9 @@ attribute.name.magiadaemonica.infernal_affinity=Infernal Affinity
 death.attack.bleed=%1$s lost too much blood.
 death.attack.knifestep=%1$s walked on blades.
 
-title.magiadaemonica.curse.choose=Select a curse
-title.magiadaemonica.boon.choose=Select a boon
+title.magiadaemonica.choose.item=Select an item
+title.magiadaemonica.choose.curse=Select a curse
+title.magiadaemonica.choose.boon=Select a boon
 
 message.magiadaemonica.curse.add=Increased curse %1$s to level %2$s.
 message.magiadaemonica.boon.add=Increased boon %1$s to level %2$s.

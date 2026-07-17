@@ -1,0 +1,128 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "magiadaemonica:items/alea_diaboli"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "magiadaemonica:number": 1
+      },
+      "model": "magiadaemonica:item/alea_diaboli/alea_diaboli_1"
+    },
+    {
+      "predicate": {
+        "magiadaemonica:number": 2
+      },
+      "model": "magiadaemonica:item/alea_diaboli/alea_diaboli_2"
+    },
+    {
+      "predicate": {
+        "magiadaemonica:number": 3
+      },
+      "model": "magiadaemonica:item/alea_diaboli/alea_diaboli_3"
+    },
+    {
+      "predicate": {
+        "magiadaemonica:number": 4
+      },
+      "model": "magiadaemonica:item/alea_diaboli/alea_diaboli_4"
+    },
+    {
+      "predicate": {
+        "magiadaemonica:number": 5
+      },
+      "model": "magiadaemonica:item/alea_diaboli/alea_diaboli_5"
+    },
+    {
+      "predicate": {
+        "magiadaemonica:number": 6
+      },
+      "model": "magiadaemonica:item/alea_diaboli/alea_diaboli_6"
+    },
+    {
+      "predicate": {
+        "magiadaemonica:number": 7
+      },
+      "model": "magiadaemonica:item/alea_diaboli/alea_diaboli_7"
+    },
+    {
+      "predicate": {
+        "magiadaemonica:number": 8
+      },
+      "model": "magiadaemonica:item/alea_diaboli/alea_diaboli_8"
+    },
+    {
+      "predicate": {
+        "magiadaemonica:number": 9
+      },
+      "model": "magiadaemonica:item/alea_diaboli/alea_diaboli_9"
+    },
+    {
+      "predicate": {
+        "magiadaemonica:number": 10
+      },
+      "model": "magiadaemonica:item/alea_diaboli/alea_diaboli_10"
+    },
+    {
+      "predicate": {
+        "magiadaemonica:number": 11
+      },
+      "model": "magiadaemonica:item/alea_diaboli/alea_diaboli_11"
+    },
+    {
+      "predicate": {
+        "magiadaemonica:number": 12
+      },
+      "model": "magiadaemonica:item/alea_diaboli/alea_diaboli_12"
+    },
+    {
+      "predicate": {
+        "magiadaemonica:number": 13
+      },
+      "model": "magiadaemonica:item/alea_diaboli/alea_diaboli_13"
+    },
+    {
+      "predicate": {
+        "magiadaemonica:number": 14
+      },
+      "model": "magiadaemonica:item/alea_diaboli/alea_diaboli_14"
+    },
+    {
+      "predicate": {
+        "magiadaemonica:number": 15
+      },
+      "model": "magiadaemonica:item/alea_diaboli/alea_diaboli_15"
+    },
+    {
+      "predicate": {
+        "magiadaemonica:number": 16
+      },
+      "model": "magiadaemonica:item/alea_diaboli/alea_diaboli_16"
+    },
+    {
+      "predicate": {
+        "magiadaemonica:number": 17
+      },
+      "model": "magiadaemonica:item/alea_diaboli/alea_diaboli_17"
+    },
+    {
+      "predicate": {
+        "magiadaemonica:number": 18
+      },
+      "model": "magiadaemonica:item/alea_diaboli/alea_diaboli_18"
+    },
+    {
+      "predicate": {
+        "magiadaemonica:number": 19
+      },
+      "model": "magiadaemonica:item/alea_diaboli/alea_diaboli_19"
+    },
+    {
+      "predicate": {
+        "magiadaemonica:number": 20
+      },
+      "model": "magiadaemonica:item/alea_diaboli/alea_diaboli_20"
+    }
+  ]
+}

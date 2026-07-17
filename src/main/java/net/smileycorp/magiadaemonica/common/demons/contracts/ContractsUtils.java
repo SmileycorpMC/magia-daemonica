@@ -21,7 +21,6 @@ import net.smileycorp.magiadaemonica.common.capabilities.Boons;
 import net.smileycorp.magiadaemonica.common.demons.Demon;
 import net.smileycorp.magiadaemonica.common.demons.Rank;
 import net.smileycorp.magiadaemonica.common.items.relics.InfernalRelic;
-import net.smileycorp.magiadaemonica.common.items.relics.ItemRelic;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -162,6 +161,7 @@ public class ContractsUtils {
     }
 
     public static List<ItemStack> getRelics() {
+        if (RELICS == null) buildItemLists();
         return Lists.newArrayList(RELICS);
     }
 

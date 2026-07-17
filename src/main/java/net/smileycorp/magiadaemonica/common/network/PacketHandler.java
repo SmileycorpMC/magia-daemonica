@@ -29,8 +29,12 @@ public class PacketHandler {
 		NETWORK_INSTANCE.registerMessage(FillChatMessage::process, FillChatMessage.class, id++, Side.CLIENT);
 
 		//curse boons
-		NETWORK_INSTANCE.registerMessage(PickCurseBoonMessage::process, PickCurseBoonMessage.class, id++, Side.CLIENT);
+		NETWORK_INSTANCE.registerMessage(ChooseCurseBoonMessage::process, ChooseCurseBoonMessage.class, id++, Side.CLIENT);
 		NETWORK_INSTANCE.registerMessage(AddCurseBoonMessage::process, AddCurseBoonMessage.class, id++, Side.SERVER);
+
+		//relics
+		NETWORK_INSTANCE.registerMessage(ChooseRelicMessage::process, ChooseRelicMessage.class, id++, Side.CLIENT);
+		NETWORK_INSTANCE.registerMessage(AddItemMessage::process, AddItemMessage.class, id++, Side.SERVER);
 
 		//data sync messages
 		NETWORK_INSTANCE.registerMessage(SyncSoulMessage::process, SyncSoulMessage.class, id++, Side.CLIENT);
