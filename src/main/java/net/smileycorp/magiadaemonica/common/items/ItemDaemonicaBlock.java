@@ -15,12 +15,14 @@ public class ItemDaemonicaBlock<T extends Block & BlockProperties> extends ItemB
         super(block);
         setRegistryName(block.getRegistryName());
         setUnlocalizedName(block.getUnlocalizedName().substring(0, 5));
+        setCreativeTab(block.getCreativeTabToDisplayOn());
         if (block.getMaxMeta() > 1) setHasSubtypes(true);
     }
 
     @Override
     public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
         if (!isInCreativeTab(tab)) return;
+        if (getMaxMeta() == 0) items.add(new ItemStack(this));
         for (int i = 0; i < getMaxMeta(); i++) items.add(new ItemStack(this, 1, i));
     }
 

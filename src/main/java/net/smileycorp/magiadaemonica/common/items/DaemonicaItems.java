@@ -2,6 +2,7 @@ package net.smileycorp.magiadaemonica.common.items;
 
 import com.google.common.collect.Lists;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockSlab;
 import net.minecraft.block.BlockStairs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -60,8 +61,10 @@ public class DaemonicaItems {
                 item.setUnlocalizedName(block.getUnlocalizedName());
                 register(registry, item);
             }
+            if (block instanceof BlockSlabBase && ((BlockSlabBase) block).isDouble()) {
+                registerSlab(registry, DaemonicaBlocks.CHALK_SLAB, DaemonicaBlocks.CHALK_DOUBLE_SLAB);
+            }
         }
-        registerSlab(registry, DaemonicaBlocks.CHALK_SLAB, DaemonicaBlocks.CHALK_DOUBLE_SLAB);
         for (Field field : DaemonicaItems.class.getDeclaredFields()) {
             try {
                 Object object = field.get(null);
