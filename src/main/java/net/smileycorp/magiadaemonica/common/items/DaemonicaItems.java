@@ -2,7 +2,6 @@ package net.smileycorp.magiadaemonica.common.items;
 
 import com.google.common.collect.Lists;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockSlab;
 import net.minecraft.block.BlockStairs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;

@@ -11,7 +11,9 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.smileycorp.magiadaemonica.client.rituals.renderers.RitualRenderer;
-import net.smileycorp.magiadaemonica.common.rituals.*;
+import net.smileycorp.magiadaemonica.common.rituals.Ritual;
+import net.smileycorp.magiadaemonica.common.rituals.Rituals;
+import net.smileycorp.magiadaemonica.common.rituals.RitualsRegistry;
 
 import java.util.Collection;
 import java.util.Map;
@@ -61,13 +63,6 @@ public class RitualsClient implements Rituals {
         }
         ritual = RitualsRegistry.getRitualFromNBT(nbt);
         addRitual(ritual);
-        PatternMatcher<? extends Ritual> matcher = RitualsRegistry.getPattern(ritual.getID(), ritual.getName());
-        if (matcher == null) return;
-        int[][][] pattern = matcher.getPattern();
-        if (pattern == null) return;
-        pattern = ritual.getRotation().apply(pattern);
-        if (ritual.isMirrored()) PatternTransformer.MIRROR.apply(pattern);
-        ritual.setBlocks(Minecraft.getMinecraft().world, pattern);
     }
 
     @Override

@@ -4,12 +4,13 @@ import com.google.common.collect.Maps;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.smileycorp.magiadaemonica.common.WorldDataDaemonica;
+import net.smileycorp.magiadaemonica.common.blocks.tiles.TileRitualBasic;
 import net.smileycorp.magiadaemonica.common.network.PacketHandler;
 import net.smileycorp.magiadaemonica.common.network.RemoveRitualMessage;
 import net.smileycorp.magiadaemonica.common.network.SyncRitualMessage;
@@ -84,17 +85,24 @@ public class RitualsServer implements Rituals {
     }
 
     public void syncRitual(Ritual ritual) {
-        BlockPos pos = ritual.getCenterPos();
-        PacketHandler.NETWORK_INSTANCE.sendToAllTracking(new SyncRitualMessage(pos, ritual),
-                new NetworkRegistry.TargetPoint(world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 128));
+        BlockPos center = ritual.getCenterPos();
+        PacketHandler.NETWORK_INSTANCE.sendToAllTracking(new SyncRitualMessage(center, ritual),
+                new NetworkRegistry.TargetPoint(world.provider.getDimension(), center.getX(), center.getY(), center.getZ(), 128));
         ritual.markDirty(false);
+        BlockPos pos = ritual.getPos();
+        BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
+        for (int i = 0; i < ritual.getWidth(); i++) for (int k = 0; k < ritual.getHeight(); k++) {
+            mutable.setPos(pos.getX() + i, pos.getY(), pos.getZ() + k);
+            TileEntity tile = world.getChunkFromBlockCoords(mutable).getTileEntity(mutable, Chunk.EnumCreateEntityType.CHECK);
+            if (!(tile instanceof TileRitualBasic)) continue;
+            ((TileRitualBasic) tile).forceUpdate();
+        }
     }
 
     public void syncRituals(Chunk chunk) {
-        World world = chunk.getWorld();
         for (Ritual ritual : rituals.values()) {
-            BlockPos pos = ritual.getCenterPos();
-            if (world.getChunkFromBlockCoords(pos) == chunk) syncRitual(ritual);
+            BlockPos center = ritual.getCenterPos();
+            if (!chunk.isAtLocation(center.getX() >> 4, center.getZ() >> 4)) syncRitual(ritual);
         }
     }
 

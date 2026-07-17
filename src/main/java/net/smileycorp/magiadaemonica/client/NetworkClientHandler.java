@@ -1,22 +1,30 @@
 package net.smileycorp.magiadaemonica.client;
 
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.Entity;
+import net.minecraft.network.play.INetHandlerPlayClient;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.smileycorp.atlas.api.data.Pair;
 import net.smileycorp.magiadaemonica.client.gui.*;
 import net.smileycorp.magiadaemonica.client.particle.ParticleFullbrightPixel;
 import net.smileycorp.magiadaemonica.client.particle.ParticlePixel;
 import net.smileycorp.magiadaemonica.common.EnumParticle;
+import net.smileycorp.magiadaemonica.common.blocks.RitualBlock;
+import net.smileycorp.magiadaemonica.common.blocks.tiles.RitualTile;
+import net.smileycorp.magiadaemonica.common.blocks.tiles.TileRitualBasic;
 import net.smileycorp.magiadaemonica.common.capabilities.Boons;
 import net.smileycorp.magiadaemonica.common.capabilities.Curses;
 import net.smileycorp.magiadaemonica.common.capabilities.DaemonicaCapabilities;
 import net.smileycorp.magiadaemonica.common.demons.contracts.Contract;
 import net.smileycorp.magiadaemonica.common.demons.contracts.ContractsUtils;
 import net.smileycorp.magiadaemonica.common.entities.EntityContract;
+import net.smileycorp.magiadaemonica.common.network.PacketRitualTile;
 
 import java.util.List;
 
@@ -96,4 +104,15 @@ public class NetworkClientHandler {
         openChoiceGui(new GuiChooseItem(ContractsUtils.getRelics()));
     }
 
+    public static void syncRitualTile(INetHandlerPlayClient netHandler, PacketRitualTile packet) {
+        BlockPos pos = packet.getPos();
+        if (!(mc.world.getTileEntity(pos) instanceof RitualTile)) {
+            IBlockState state = mc.world.getBlockState(pos);
+            TileEntity tile = state.getBlock() instanceof RitualBlock ?
+                    ((RitualBlock) state.getBlock()).createRitualTile(mc.world, pos, state)
+                    : new TileRitualBasic(pos);
+            mc.world.setTileEntity(pos, tile);
+        }
+        netHandler.handleUpdateTileEntity(packet);
+    }
 }
