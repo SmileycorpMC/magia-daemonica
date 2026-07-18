@@ -48,9 +48,9 @@ public class ItemSicaInfernalem extends ItemKnife implements InfernalRelic {
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World world, List<String> tooltip, ITooltipFlag flag) {
-        super.addInformation(stack, world, tooltip, flag);
         tooltip.add(new TextComponentTranslation("item.magiadaemonica.infernal_knife").getFormattedText());
         tooltip.add(new TextComponentTranslation("item.magiadaemonica." + name + ".tooltip").getFormattedText());
+        super.addInformation(stack, world, tooltip, flag);
     }
 
     @Override

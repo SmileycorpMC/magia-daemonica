@@ -13,6 +13,7 @@ item.magiadaemonica.bone_knife.name=Bone Knife
 item.magiadaemonica.lapis_knife.name=Lapis Lazuli Knife
 item.magiadaemonica.prismarine_knife.name=Prismarine Knife
 item.magiadaemonica.obsidian_knife.name=Obsidian Knife
+item.magiadaemonica.knife.tooltip=Hold use to prick your finger
 
 item.magiadaemonica.blank_scroll.name=Blank Scroll
 item.magiadaemonica.blank_scroll.tooltip=Use to inscribe with text that can later be filled into the chat bar
@@ -160,9 +161,10 @@ contract.magiadaemonica.offering.effect=permanent %1$s until your death**
 
 contract.magiadaemonica.sign=Sign
 
-invocation.magiadaemonica.component.vocalis=Vocalis component: §5§o%1$s
-invocation.magiadaemonica.component.materia=Materia component: §5§o%1$s
 invocation.magiadaemonica.component.optional=%1$s §7§o(optional)
+invocation.magiadaemonica.component.vocalis=Vocalis component: §4§o%1$s
+invocation.magiadaemonica.component.materia=Materia component: §4§o%1$s
+invocation.magiadaemonica.component.sanguis=Sanguis component: §4§o%1$s
 
 command.magiadaemonica.soul.get.success=%1$s has %2$s soul remaining.
 command.magiadaemonica.soul.change.success=Changed soul for %1$s from %2$s to %3$s.

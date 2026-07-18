@@ -70,6 +70,7 @@ public class DaemonicaEventHandler {
 		if (!entity.hasCapability(DaemonicaCapabilities.AFFILIATION, null)) event.addCapability(Constants.loc("affiliation"), new Affiliation.Provider());
 		if (!entity.hasCapability(DaemonicaCapabilities.CURSES, null)) event.addCapability(Constants.loc("curses"), new Curses.Provider());
 		if (!entity.hasCapability(DaemonicaCapabilities.BOONS, null)) event.addCapability(Constants.loc("boons"), new Boons.Provider());
+		if (!entity.hasCapability(DaemonicaCapabilities.SANGUIS, null)) event.addCapability(Constants.loc("sanguis"), new Sanguis.Provider((EntityPlayer) entity));
 	}
 
 	@SubscribeEvent
@@ -181,6 +182,9 @@ public class DaemonicaEventHandler {
 				int hemorrhage = Boons.getLevel((EntityPlayer) source.getTrueSource(), BoonRegistry.HEMORRHAGE);
 				if (hemorrhage > 0) entity.addPotionEffect(new PotionEffect(DaemonicaPotions.BLEED, 60, hemorrhage));
 			}
+		}
+		if (entity instanceof EntityPlayer) {
+
 		}
 		//hemophilia bleeding
 		if (source.isDamageAbsolute()) return;

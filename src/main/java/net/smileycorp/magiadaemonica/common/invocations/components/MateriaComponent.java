@@ -27,7 +27,7 @@ public class MateriaComponent implements MagiaComponent {
             if (hand == EnumHand.OFF_HAND) ctx.setFlag(OFFHAND_FLAG);
             return true;
         }
-        return true;
+        return false;
     }
 
     @Override
