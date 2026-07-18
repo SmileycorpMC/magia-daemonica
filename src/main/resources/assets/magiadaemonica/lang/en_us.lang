@@ -160,6 +160,10 @@ contract.magiadaemonica.offering.effect=permanent %1$s until your death**
 
 contract.magiadaemonica.sign=Sign
 
+invocation.magiadaemonica.component.vocalis=Vocalis component: §5§o%1$s
+invocation.magiadaemonica.component.materia=Materia component: §5§o%1$s
+invocation.magiadaemonica.component.optional=%1$s §7§o(optional)
+
 command.magiadaemonica.soul.get.success=%1$s has %2$s soul remaining.
 command.magiadaemonica.soul.change.success=Changed soul for %1$s from %2$s to %3$s.
 command.magiadaemonica.soul.failure=%1$s is not a recognized subcommand.

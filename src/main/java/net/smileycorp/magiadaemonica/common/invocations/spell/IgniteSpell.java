@@ -19,18 +19,23 @@ import net.smileycorp.atlas.api.util.DirectionUtils;
 import net.smileycorp.magiadaemonica.client.ClientUtils;
 import net.smileycorp.magiadaemonica.common.blocks.Lightable;
 import net.smileycorp.magiadaemonica.common.invocations.Invocation;
-import net.smileycorp.magiadaemonica.common.invocations.MateriaInvocation;
+import net.smileycorp.magiadaemonica.common.invocations.InvocationContext;
+import net.smileycorp.magiadaemonica.common.invocations.components.MateriaComponent;
+import net.smileycorp.magiadaemonica.common.invocations.components.VocalisComponent;
 
 import java.util.List;
 
-public class IgniteSpell extends MateriaInvocation implements Invocation.ClientInvocation {
+public class IgniteSpell extends Invocation implements Invocation.ClientInvocation {
 
     public IgniteSpell() {
-        super(new OreIngredient("ashOak"));
+        super();
+        addComponent(new VocalisComponent("scintilla in ignem"));
+        addComponent(new MateriaComponent(new OreIngredient("ashOak")));
     }
 
     @Override
-    protected InvocationResult tryCast(EntityPlayer player, EnumHand hand) {
+    public Invocation.InvocationResult apply(InvocationContext ctx) {
+        EntityPlayer player = ctx.getPlayer();
         BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos(player.getPosition());
         World world = player.world;
         IBlockState state;
@@ -53,7 +58,7 @@ public class IgniteSpell extends MateriaInvocation implements Invocation.ClientI
             world.playSound(null, player.posX, player.posY + 0.5f, player.posZ, SoundEvents.ITEM_FIRECHARGE_USE,
                     player.getSoundCategory(), 0.75f, player.getRNG().nextFloat() * 0.5f - 0.25f);
             List<Object> args = Lists.newArrayListWithExpectedSize(litBlocks.size() + 1);
-            args.add(hand == EnumHand.MAIN_HAND);
+            args.add(ctx.hasFlag(MateriaComponent.OFFHAND_FLAG));
             args.addAll(litBlocks);
             return InvocationResult.withArgs(args.toArray(args.toArray(new Object[args.size()])));
         }
@@ -85,7 +90,7 @@ public class IgniteSpell extends MateriaInvocation implements Invocation.ClientI
         Minecraft mc = Minecraft.getMinecraft();
         EntityPlayerSP localPlayer = mc.player;
         World world = localPlayer.world;
-        EnumHand hand = (boolean) args[0] ? EnumHand.MAIN_HAND : EnumHand.OFF_HAND;
+        EnumHand hand = (boolean) args[0] ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND;
         Vec3d origin = player == localPlayer && mc.gameSettings.thirdPersonView == 0 ? ClientUtils.getHandPosition(hand)
                 : player.getPositionEyes(1);
         for (int i = 1; i < args.length; i++) {
