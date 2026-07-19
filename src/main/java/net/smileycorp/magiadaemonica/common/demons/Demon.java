@@ -19,12 +19,20 @@ public class Demon {
     private final String name;
     private final Domain domain;
     private final Rank rank;
+    private int timesSummoned;
+    private int timesTraded ;
 
     public Demon(String name, Domain domain, Rank rank) {
+        this(name, domain, rank, 0, 0);
+    }
+
+    public Demon(String name, Domain domain, Rank rank, int timesSummoned, int timesTraded) {
         this.uuid = UUID.nameUUIDFromBytes(name.getBytes());
         this.name = name;
         this.domain = domain;
         this.rank = rank;
+        this.timesSummoned = timesSummoned;
+        this.timesTraded = timesTraded;
     }
 
     public UUID getUUID() {
@@ -47,6 +55,22 @@ public class Demon {
         return domain.getFormalName(name, rank);
     }
 
+    public int getTimesSummoned() {
+        return timesSummoned;
+    }
+
+    public void setTimesSummoned(int timesSummoned) {
+        this.timesSummoned = timesSummoned;
+    }
+
+    public int getTimesTraded() {
+        return timesTraded;
+    }
+
+    public void setTimesTraded(int timesTraded) {
+        this.timesTraded = timesTraded;
+    }
+
     @Override
     public String toString() {
         return name + ", " + rank + " of " + domain;
@@ -57,12 +81,15 @@ public class Demon {
         nbt.setString("name", name);
         nbt.setString("domain", domain.getName());
         nbt.setString("rank", rank.getName());
+        nbt.setInteger("timesSummoned", timesSummoned);
+        nbt.setInteger("timesTraded", timesTraded);
         return nbt;
     }
 
     public static Demon fromNBT(NBTTagCompound nbt) {
         return new Demon(nbt.getString("name"), Domain.get(nbt.getString("domain")),
-                Rank.get(nbt.getString("rank")));
+                Rank.get(nbt.getString("rank")), nbt.hasKey("timesSummoned") ? nbt.getInteger("timesSummoned") : 0,
+                nbt.hasKey("timesTraded") ? nbt.getInteger("timesTraded") : 0);
     }
 
     public static class Serializer implements DataSerializer<Demon> {
@@ -72,12 +99,14 @@ public class Demon {
             ByteBufUtils.writeUTF8String(buf, demon.name);
             ByteBufUtils.writeUTF8String(buf, demon.domain.getName());
             ByteBufUtils.writeUTF8String(buf, demon.rank.getName());
+            buf.writeInt(demon.timesSummoned);
+            buf.writeInt(demon.timesTraded);
         }
 
         @Override
         public Demon read(PacketBuffer buf) throws IOException {
             return new Demon(ByteBufUtils.readUTF8String(buf), Domain.get(ByteBufUtils.readUTF8String(buf)),
-                    Rank.get(ByteBufUtils.readUTF8String(buf)));
+                    Rank.get(ByteBufUtils.readUTF8String(buf)), buf.readInt(), buf.readInt());
         }
 
         @Override
@@ -87,7 +116,7 @@ public class Demon {
 
         @Override
         public Demon copyValue(Demon demon) {
-            return demon == null ? DEFAULT : new Demon(demon.name, demon.domain, demon.rank);
+            return new Demon(demon.name, demon.domain, demon.rank, demon.timesSummoned, demon.timesTraded);
         }
 
     }

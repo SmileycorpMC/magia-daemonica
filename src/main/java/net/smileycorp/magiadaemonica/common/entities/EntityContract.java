@@ -68,6 +68,8 @@ public class EntityContract extends Entity {
         accepted = true;
         ContractsUtils.addAffinity(player, getDemon());
         contract.accept(player);
+        Demon demon = getDemon();
+        demon.setTimesTraded(demon.getTimesTraded() + 1);
         getRitual().dispel(world);
         return true;
     }

@@ -32,6 +32,7 @@ import net.smileycorp.magiadaemonica.common.blocks.RitualBlock;
 import net.smileycorp.magiadaemonica.common.blocks.tiles.RitualTile;
 import net.smileycorp.magiadaemonica.common.blocks.tiles.TileRitualBasic;
 import net.smileycorp.magiadaemonica.common.capabilities.Affiliation;
+import net.smileycorp.magiadaemonica.common.demons.Demon;
 import net.smileycorp.magiadaemonica.common.demons.DemonRegistry;
 import net.smileycorp.magiadaemonica.common.demons.Domain;
 import net.smileycorp.magiadaemonica.common.demons.Rank;
@@ -222,7 +223,9 @@ public class SummoningCircle implements Ritual {
         if (ticksActive == 600) {
             EntityPlayer player = getPlayer().get();
             demon = new EntityDemonicTrader(world);
-            demon.setDemon(DemonRegistry.get().create(world.rand, getPowerBonus(world, pos, player), getAffiliationBonus(world, pos, player)));
+            Demon demonData = DemonRegistry.get().create(world.rand, getPowerBonus(world, pos, player), getAffiliationBonus(world, pos, player));
+            demonData.setTimesSummoned(demonData.getTimesSummoned() + 1);
+            demon.setDemon(demonData);
             demon.setPose(EntityDemonicTrader.Pose.SUMMONING);
             demon.setPosition(center.x, center.y, center.z);
             demon.setRitual(getCenterPos());
