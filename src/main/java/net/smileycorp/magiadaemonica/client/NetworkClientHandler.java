@@ -7,6 +7,7 @@ import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.Entity;
 import net.minecraft.network.play.INetHandlerPlayClient;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -24,7 +25,6 @@ import net.smileycorp.magiadaemonica.common.capabilities.DaemonicaCapabilities;
 import net.smileycorp.magiadaemonica.common.demons.contracts.Contract;
 import net.smileycorp.magiadaemonica.common.demons.contracts.ContractsUtils;
 import net.smileycorp.magiadaemonica.common.entities.EntityContract;
-import net.smileycorp.magiadaemonica.common.network.PacketRitualTile;
 
 import java.util.List;
 
@@ -99,20 +99,21 @@ public class NetworkClientHandler {
         openChoiceGui(new GuiChooseBoonCurse(isCurse, locs));
     }
 
-
     public static void openChooseRelicGUI() {
         openChoiceGui(new GuiChooseItem(ContractsUtils.getRelics()));
     }
 
-    public static void syncRitualTile(INetHandlerPlayClient netHandler, PacketRitualTile packet) {
+    public static void syncRitualTile(INetHandlerPlayClient netHandler, SPacketUpdateTileEntity packet) {
         BlockPos pos = packet.getPos();
-        if (!(mc.world.getTileEntity(pos) instanceof RitualTile)) {
+        TileEntity tile = mc.world.getTileEntity(pos);
+        if (!(tile instanceof RitualTile)) {
             IBlockState state = mc.world.getBlockState(pos);
-            TileEntity tile = state.getBlock() instanceof RitualBlock ?
+            tile = state.getBlock() instanceof RitualBlock ?
                     ((RitualBlock) state.getBlock()).createRitualTile(mc.world, pos, state)
                     : new TileRitualBasic(pos);
             mc.world.setTileEntity(pos, tile);
         }
-        netHandler.handleUpdateTileEntity(packet);
+        tile.handleUpdateTag(packet.getNbtCompound());
     }
+
 }

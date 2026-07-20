@@ -9,7 +9,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
-import net.smileycorp.magiadaemonica.common.network.PacketRitualTile;
 import net.smileycorp.magiadaemonica.common.rituals.Ritual;
 import net.smileycorp.magiadaemonica.common.rituals.Rituals;
 import org.jetbrains.annotations.Nullable;
@@ -39,6 +38,11 @@ public class TileRitualBasic extends TileEntity implements RitualTile {
     public boolean isActive() {
         Ritual ritual = getRitual();
         return ritual != null && ritual.isActive();
+    }
+
+    @Override
+    public boolean renderBlock() {
+        return ritual == null;
     }
 
     @Override
@@ -82,7 +86,7 @@ public class TileRitualBasic extends TileEntity implements RitualTile {
     @Nullable
     @Override
     public SPacketUpdateTileEntity getUpdatePacket() {
-        return new PacketRitualTile(pos, getUpdateTag());
+        return RitualTile.super.getUpdatePacket(this);
     }
 
     @Override
