@@ -34,13 +34,13 @@ public class WorldConfig {
             lavenderSpawnChance = config.get("lavender", "spawnChances", 20, "Chance for lavender to spawn per chunk (Set to 0 to disable generation)").getInt();
             lavenderMinSize = config.get("lavender", "minSize", 3, "Minimum amount of lavender to spawn per patch").getInt();
             lavenderMaxSize = config.get("lavender", "maxSize", 7, "Maximum amount of lavender to spawn per patch.").getInt();
-            lavenderBiomes = new BiomeGenEntry(config, "lavender", new String[]{"PLAINS"}, new String[0]);
+            lavenderBiomes = new BiomeGenEntry(config, "lavender", new String[]{"PLAINS", "FOREST"}, new String[0]);
             //peppermint
             peppermintDimensions = config.get("peppermint", "dimensions", new int[]{0}, "Which dimensions can peppermint generate in?").getIntList();
             peppermintSpawnChance = config.get("peppermint", "spawnChances", 20, "Chance for peppermint to spawn per chunk (Set to 0 to disable generation)").getInt();
             peppermintMinSize = config.get("peppermint", "minSize", 3, "Minimum amount of peppermint to spawn per patch").getInt();
             peppermintMaxSize = config.get("peppermint", "maxSize", 7, "Maximum amount of peppermint to spawn per patch.").getInt();
-            peppermintBiomes = new BiomeGenEntry(config, "peppermint", new String[]{"RIVER", "FOREST"}, new String[0]);
+            peppermintBiomes = new BiomeGenEntry(config, "peppermint", new String[]{"RIVER", "SWAMP", "LUSH"}, new String[0]);
         } catch(Exception e) {
         } finally {
             if (config.hasChanged()) config.save();
