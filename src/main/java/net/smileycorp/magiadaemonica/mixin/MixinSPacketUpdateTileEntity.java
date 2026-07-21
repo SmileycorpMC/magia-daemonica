@@ -2,11 +2,9 @@ package net.smileycorp.magiadaemonica.mixin;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.Packet;
 import net.minecraft.network.play.INetHandlerPlayClient;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.smileycorp.magiadaemonica.client.NetworkClientHandler;
-import net.smileycorp.magiadaemonica.common.blocks.tiles.RitualTile;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;

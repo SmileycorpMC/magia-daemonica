@@ -1,7 +1,5 @@
 package net.smileycorp.magiadaemonica.common.network;
 
-import net.minecraft.network.EnumConnectionState;
-import net.minecraft.network.EnumPacketDirection;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
