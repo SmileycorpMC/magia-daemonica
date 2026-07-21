@@ -74,7 +74,7 @@ public class ClientProxy extends CommonProxy {
 				ModelLoader.setCustomModelResourceLocation(item, i, loc);
 			}
 			else {
-				ModelResourceLocation loc = new ModelResourceLocation(item.getRegistryName().toString());
+				ModelResourceLocation loc = new ModelResourceLocation(item.getRegistryName().toString(), "inventory");
 				ModelLoader.setCustomModelResourceLocation(item, 0, loc);
 			}
 		}
