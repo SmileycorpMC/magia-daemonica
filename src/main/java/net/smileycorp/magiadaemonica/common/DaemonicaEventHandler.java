@@ -1,5 +1,7 @@
 package net.smileycorp.magiadaemonica.common;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockCrops;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -14,6 +16,7 @@ import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.FoodStats;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -34,6 +37,7 @@ import net.minecraftforge.event.entity.player.PlayerEvent.Clone;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.event.world.ChunkWatchEvent;
+import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
@@ -50,6 +54,7 @@ import net.smileycorp.magiadaemonica.common.network.SyncCursesMessage;
 import net.smileycorp.magiadaemonica.common.network.SyncSoulMessage;
 import net.smileycorp.magiadaemonica.common.potions.DaemonicaPotions;
 import net.smileycorp.magiadaemonica.common.potions.PotionSin;
+import net.smileycorp.magiadaemonica.common.recipes.PlantHybridizationRegistry;
 import net.smileycorp.magiadaemonica.common.rituals.Ritual;
 import net.smileycorp.magiadaemonica.common.rituals.Rituals;
 import net.smileycorp.magiadaemonica.common.rituals.RitualsRegistry;
@@ -272,6 +277,25 @@ public class DaemonicaEventHandler {
 		Entity target = event.getTarget();
 		world.createExplosion(null, target.posX, target.posY + 0.5 * target.height, target.posZ, 1 + shatterfist, true);
 		event.setCanceled(true);
+	}
+
+	@SubscribeEvent
+	public void cropGrow(BlockEvent.CropGrowEvent.Pre event) {
+		BlockPos pos = event.getPos();
+		IBlockState state = event.getState();
+		Block block = state.getBlock();
+		if (!(block instanceof BlockCrops)) return;
+		int age = ((BlockCrops)block).getAge(state);
+		if (age > 0) return;
+		World world = event.getWorld();
+		for (EnumFacing facing : EnumFacing.HORIZONTALS) {
+			PlantHybridizationRegistry.HybridizationRecipe recipe = PlantHybridizationRegistry.getInstance()
+					.getRecipe(state, world.getBlockState(pos.offset(facing)));
+			if (recipe == null) continue;
+			if (!recipe.canGrow(world.rand)) continue;
+			world.setBlockState(pos, recipe.getState(age + 1), 2);
+			event.setResult(Event.Result.DENY);
+		}
 	}
 
 }
