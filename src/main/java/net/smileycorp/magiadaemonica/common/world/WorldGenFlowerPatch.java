@@ -11,13 +11,20 @@ import java.util.Random;
 
 public class WorldGenFlowerPatch extends WorldGenerator {
 
-	private final IBlockState state;
+	private final IBlockState state, rareState;
 	private final int min, max;
+	private final double rareStateChance;
 
 	public WorldGenFlowerPatch(IBlockState state, int min, int max) {
+		this(state, min, max, null, 0);
+	}
+
+	public WorldGenFlowerPatch(IBlockState state, int min, int max, IBlockState rareState, double rareStateChance) {
 		this.state = state;
 		this.min = min;
 		this.max = max;
+		this.rareState = rareState;
+		this.rareStateChance = rareStateChance;
 	}
 
 	@Override
@@ -28,7 +35,7 @@ public class WorldGenFlowerPatch extends WorldGenerator {
 			IBlockState soil = world.getBlockState(mutable.down());
 			if ((soil.getMaterial() == Material.GRASS || soil.getMaterial() == Material.GROUND) && soil.isFullBlock() &&
 					world.isAirBlock(mutable) && (!world.provider.isNether() || mutable.getY() < world.getHeight()))
-				setBlockAndNotifyAdequately(world, mutable, state);
+				setBlockAndNotifyAdequately(world, mutable, rareState != null && rand.nextFloat() <= rareStateChance ? rareState : state);
 		}
 		return true;
 	}

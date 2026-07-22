@@ -3,43 +3,42 @@
   "defaults": {
     "model": "cross",
     "textures": {
-      "cross": "magiadaemonica:blocks/peppermint"
+      "cross": "magiadaemonica:blocks/watermint"
     }
-
   },
   "variants": {
     "age=0": [
       {
 		"textures": {
-			"cross": "magiadaemonica:blocks/peppermint_0"
+			"cross": "magiadaemonica:blocks/watermint_0"
 		}    
 	  }
     ],
 	"age=1": [
       {
 		"textures": {
-			"cross": "magiadaemonica:blocks/peppermint_1"
+			"cross": "magiadaemonica:blocks/watermint_1"
 		}    
 	  }
     ],
 	"age=2": [
       {
 		"textures": {
-			"cross": "magiadaemonica:blocks/peppermint_2"
+			"cross": "magiadaemonica:blocks/watermint_2"
 		}    
 	  }
     ],
 	"age=3": [
       {
 		"textures": {
-			"cross": "magiadaemonica:blocks/peppermint_3"
+			"cross": "magiadaemonica:blocks/watermint_3"
 		}    
 	  }
     ],
 	"age=4": [
       {
 		"textures": {
-			"cross": "magiadaemonica:blocks/peppermint"
+			"cross": "magiadaemonica:blocks/watermint"
 		}    
 	  }
     ]

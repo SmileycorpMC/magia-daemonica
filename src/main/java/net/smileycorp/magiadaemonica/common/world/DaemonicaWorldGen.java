@@ -9,7 +9,6 @@ import net.minecraftforge.fml.common.IWorldGenerator;
 import net.smileycorp.atlas.api.config.BiomeGenEntry;
 import net.smileycorp.atlas.api.config.WorldGenEntry;
 import net.smileycorp.magiadaemonica.common.MagiaDaemonica;
-import net.smileycorp.magiadaemonica.common.blocks.BlockDaemonicaFlower;
 import net.smileycorp.magiadaemonica.common.blocks.DaemonicaBlocks;
 import net.smileycorp.magiadaemonica.config.WorldConfig;
 
@@ -21,7 +20,9 @@ public class DaemonicaWorldGen implements IWorldGenerator {
     public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
         genOre(DaemonicaBlocks.CHALK.getDefaultState(), WorldConfig.chalk, WorldConfig.chalkBiomes, world, random, chunkX, chunkZ);
         if (WorldConfig.lavenderSpawnChance > 0) genLavender(world, random, chunkX, chunkZ);
-        if (WorldConfig.lavenderSpawnChance > 0) genPeppermint(world, random, chunkX, chunkZ);
+        if (WorldConfig.spearmintSpawnChance > 0) genSpearmint(world, random, chunkX, chunkZ);
+        if (WorldConfig.watermintSpawnChance > 0) genWatermint(world, random, chunkX, chunkZ);
+        if (WorldConfig.peppermintSpawnChance > 0) genPeppermint(world, random, chunkX, chunkZ);
     }
 
     private void genOre(IBlockState block, WorldGenEntry entry, BiomeGenEntry biomes, World world, Random rand, int chunkX, int chunkZ) {
@@ -54,12 +55,42 @@ public class DaemonicaWorldGen implements IWorldGenerator {
         }
     }
 
+    private void genSpearmint(World world, Random rand, int chunkX, int chunkZ) {
+        for (int dim : WorldConfig.spearmintDimensions) {
+            if (world.provider.getDimension() != dim) continue;
+            if (rand.nextInt(WorldConfig.spearmintSpawnChance) > 0) continue;
+            WorldGenFlowerPatch generator = new WorldGenFlowerPatch(DaemonicaBlocks.SPEARMINT.withAge(DaemonicaBlocks.SPEARMINT.getMaxAge()),
+                    WorldConfig.spearmintMinSize, WorldConfig.spearmintMaxSize, DaemonicaBlocks.PEPPERMINT.withAge(DaemonicaBlocks.PEPPERMINT.getMaxAge()),
+                    WorldConfig.watermintPeppermintChance);
+            int x = chunkX * 16 + rand.nextInt(16);
+            int z = chunkZ * 16 + rand.nextInt(16);
+            BlockPos pos =  new BlockPos(x, world.getHeight(x, z), z);
+            if (!WorldConfig.spearmintBiomes.getGenerationBiomes(MagiaDaemonica.LOGGER).contains(world.getBiome(pos))) return;
+            generator.generate(world, rand, pos);
+        }
+    }
+
+    private void genWatermint(World world, Random rand, int chunkX, int chunkZ) {
+        for (int dim : WorldConfig.watermintDimensions) {
+            if (world.provider.getDimension() != dim) continue;
+            if (rand.nextInt(WorldConfig.watermintSpawnChance) > 0) continue;
+            WorldGenFlowerPatch generator = new WorldGenFlowerPatch(DaemonicaBlocks.WATERMINT.withAge(DaemonicaBlocks.WATERMINT.getMaxAge()),
+                    WorldConfig.watermintMinSize, WorldConfig.watermintMaxSize, DaemonicaBlocks.PEPPERMINT.withAge(DaemonicaBlocks.PEPPERMINT.getMaxAge()),
+                    WorldConfig.watermintPeppermintChance);
+            int x = chunkX * 16 + rand.nextInt(16);
+            int z = chunkZ * 16 + rand.nextInt(16);
+            BlockPos pos =  new BlockPos(x, world.getHeight(x, z), z);
+            if (!WorldConfig.watermintBiomes.getGenerationBiomes(MagiaDaemonica.LOGGER).contains(world.getBiome(pos))) return;
+            generator.generate(world, rand, pos);
+        }
+    }
+
     private void genPeppermint(World world, Random rand, int chunkX, int chunkZ) {
         for (int dim : WorldConfig.peppermintDimensions) {
             if (world.provider.getDimension() != dim) continue;
             if (rand.nextInt(WorldConfig.peppermintSpawnChance) > 0) continue;
-            WorldGenFlowerPatch generator = new WorldGenFlowerPatch(DaemonicaBlocks.FLOWER.getDefaultState()
-                    .withProperty(BlockDaemonicaFlower.VARIANT, BlockDaemonicaFlower.Variant.PEPPERMINT), WorldConfig.peppermintMinSize, WorldConfig.peppermintMaxSize);
+            WorldGenFlowerPatch generator = new WorldGenFlowerPatch(DaemonicaBlocks.PEPPERMINT.withAge(DaemonicaBlocks.PEPPERMINT.getMaxAge()),
+                    WorldConfig.peppermintMinSize, WorldConfig.peppermintMaxSize);
             int x = chunkX * 16 + rand.nextInt(16);
             int z = chunkZ * 16 + rand.nextInt(16);
             BlockPos pos =  new BlockPos(x, world.getHeight(x, z), z);

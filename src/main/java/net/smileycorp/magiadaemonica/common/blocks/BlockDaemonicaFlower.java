@@ -73,7 +73,7 @@ public class BlockDaemonicaFlower extends BlockBush implements BlockProperties, 
 
     @Override
     public int getMaxMeta() {
-        return 2;
+        return Variant.values().length;
     }
 
     @Override
@@ -105,8 +105,7 @@ public class BlockDaemonicaFlower extends BlockBush implements BlockProperties, 
 
     public enum Variant implements IStringSerializable {
 
-        LAVENDER("lavender"),
-        PEPPERMINT("peppermint");
+        LAVENDER("lavender");
 
         final String name;
 

@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -16,6 +17,7 @@ import net.smileycorp.magiadaemonica.common.Constants;
 import net.smileycorp.magiadaemonica.common.MagiaDaemonica;
 import net.smileycorp.magiadaemonica.common.blocks.tiles.TileRitualBasic;
 import net.smileycorp.magiadaemonica.common.blocks.tiles.TileScrollshelf;
+import net.smileycorp.magiadaemonica.common.items.DaemonicaItems;
 import net.smileycorp.magiadaemonica.config.BlocksConfig;
 
 import java.lang.reflect.Field;
@@ -26,11 +28,20 @@ public class DaemonicaBlocks {
 
     public static final List<Block> BLOCKS = Lists.newArrayList();
 
+    //world
+    //chalk
     public static final BlockBase CHALK = new BlockBase("chalk", Constants.MODID, Material.ROCK, SoundType.STONE, BlocksConfig.chalk.getHardness(), BlocksConfig.chalk.getResistance(), BlocksConfig.chalk.getHarvestLevel(), MagiaDaemonica.CREATIVE_TAB);
     public static final BlockStairsBase CHALK_STAIRS = new BlockStairsBase(CHALK);
     public static final BlockSlabBase CHALK_SLAB = new BlockSlabBase(CHALK, BlocksConfig.chalk.getHardness(), BlocksConfig.chalk.getResistance(), "pickaxe", BlocksConfig.chalk.getHarvestLevel(), false);
     public static final BlockSlabBase CHALK_DOUBLE_SLAB = new BlockSlabBase(CHALK, BlocksConfig.chalk.getHardness(), BlocksConfig.chalk.getResistance(), "pickaxe", BlocksConfig.chalk.getHarvestLevel(), true);
+
+    //plants
     public static final BlockDaemonicaFlower FLOWER = new BlockDaemonicaFlower();
+    public static final BlockDaemonicaCrop SPEARMINT = BlockDaemonicaCrop.create("spearmint", 4, true).setDrop(BlockDaemonicaCrop.DropFunction.SELF)
+            .setSeed(BlockDaemonicaCrop.DropFunction.seed(new ItemStack(DaemonicaItems.SEEDS, 1, 0)));
+    public static final BlockDaemonicaCrop WATERMINT = BlockDaemonicaCrop.create("watermint", 4, true).setDrop(BlockDaemonicaCrop.DropFunction.SELF)
+            .setSeed(BlockDaemonicaCrop.DropFunction.seed(new ItemStack(DaemonicaItems.SEEDS, 1, 1)));
+    public static final BlockDaemonicaCrop PEPPERMINT = BlockDaemonicaCrop.create("peppermint", 4, true).setDrop(BlockDaemonicaCrop.DropFunction.SELF);
 
     //ritual
     public static final BlockScentedCandle SCENTED_CANDLE = new BlockScentedCandle();

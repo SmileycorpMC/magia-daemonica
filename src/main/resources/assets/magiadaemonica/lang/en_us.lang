@@ -8,6 +8,9 @@ item.magiadaemonica.frankincense.name=Frankincense
 item.magiadaemonica.bark.name=Oak Bark
 item.magiadaemonica.oak_ash.name=Oak Ash
 
+item.magiadaemonica.watermint_seeds.name=Watermint Seeds
+item.magiadaemonica.spearmint_seeds.name=Spearmint Seeds
+
 item.magiadaemonica.flint_knife.name=Flint Knife
 item.magiadaemonica.bone_knife.name=Bone Knife
 item.magiadaemonica.lapis_knife.name=Lapis Lazuli Knife
@@ -59,7 +62,9 @@ tile.magiadaemonica.chalk.name=Chalk
 tile.magiadaemonica.chalk_stairs.name=Chalk Stairs
 tile.magiadaemonica.ChalkSlab.name=Chalk Slab
 tile.magiadaemonica.lavender.name=Lavender
-tile.magiadaemonica.peppermint.name=Pepermint
+tile.magiadaemonica.watermint.name=Watermint
+tile.magiadaemonica.spearmint.name=Spearmint
+tile.magiadaemonica.peppermint.name=Peppermint
 tile.magiadaemonica.scented_candle.name=Scented Candle
 tile.magiadaemonica.rose_candle.name=Rose Candle
 tile.magiadaemonica.lavender_candle.name=Lavender Candle
@@ -160,6 +165,8 @@ contract.magiadaemonica.offering.item.infernal_relic=Infernal Relic
 contract.magiadaemonica.offering.effect=permanent %1$s until your death**
 
 contract.magiadaemonica.sign=Sign
+
+jei.category.magiadaemonica.plant_hybridizations=Plant Hybridizations
 
 invocation.magiadaemonica.component.optional=%1$s §7§o(optional)
 invocation.magiadaemonica.component.vocalis=Vocalis component: §4§o%1$s
