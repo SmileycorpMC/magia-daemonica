@@ -1,6 +1,7 @@
 package net.smileycorp.magiadaemonica.common.blocks;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -27,9 +28,7 @@ import net.smileycorp.magiadaemonica.config.BlocksConfig;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class BlockScrollshelf extends Block implements BlockProperties, ITileEntityProvider {
-
-    public static final PropertyDirection FACING = PropertyDirection.create("facing", dir -> dir.getAxis() != EnumFacing.Axis.Y);
+public class BlockScrollshelf extends BlockHorizontal implements BlockProperties, ITileEntityProvider {
     
     public static final PropertyBool[] SCROLLS = {PropertyBool.create("scroll_0"), PropertyBool.create("scroll_1"),
     PropertyBool.create("scroll_2"), PropertyBool.create("scroll_3"), PropertyBool.create("scroll_4"),
@@ -42,8 +41,8 @@ public class BlockScrollshelf extends Block implements BlockProperties, ITileEnt
         setCreativeTab(MagiaDaemonica.CREATIVE_TAB);
         setSoundType(SoundType.WOOD);
         setHardness(BlocksConfig.scrollshelf.getHardness());
-        setHardness(BlocksConfig.scrollshelf.getResistance());
-        setHardness(BlocksConfig.scrollshelf.getHarvestLevel());
+        setResistance(BlocksConfig.scrollshelf.getResistance());
+        setHarvestLevel("pickaxe", BlocksConfig.scrollshelf.getHarvestLevel());
         IBlockState state = blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH);
         for (PropertyBool scroll : SCROLLS) state = state.withProperty(scroll, false);
         setDefaultState(state);
