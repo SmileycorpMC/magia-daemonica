@@ -1,8 +1,6 @@
 {
-    "parent": 	"block/half_slab",
+    "parent": "block/cube_all",
 	"textures": {
-      "top": "magiadaemonica:blocks/chalk",
-      "bottom": "magiadaemonica:blocks/chalk",
-      "side": "magiadaemonica:blocks/chalk"
+      "all": "magiadaemonica:blocks/chalk"
     }
 }
