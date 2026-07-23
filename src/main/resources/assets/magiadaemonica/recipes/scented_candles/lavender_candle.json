@@ -7,8 +7,7 @@
       "ore": "string"
     },
     {
-      "item": "magiadaemonica:flower",
-      "data": 0
+      "item": "magiadaemonica:lavender_petals"
     },
     {
       "type": "forge:ore_dict",

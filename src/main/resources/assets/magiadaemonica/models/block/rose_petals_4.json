@@ -1,0 +1,7 @@
+{
+  "parent": "magiadaemonica:block/petals_4",
+  "textures": {
+    "texture": "magiadaemonica:blocks/rose_petals",
+    "particle": "magiadaemonica:blocks/rose_petals"
+  }
+}

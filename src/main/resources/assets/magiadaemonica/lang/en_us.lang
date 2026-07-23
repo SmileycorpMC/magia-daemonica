@@ -75,6 +75,9 @@ tile.magiadaemonica.pumpkin_candle.name=Pumpkin Candle
 tile.magiadaemonica.peppermint_candle.name=Peppermint Candle
 tile.magiadaemonica.chalk_ash_line.name=Chalk Ash
 tile.magiadaemonica.scrollshelf.name=Scrollshelf
+tile.magiadaemonica.rose_petals.name=Rose Petals
+tile.magiadaemonica.lilac_petals.name=Lilac Petals
+tile.magiadaemonica.lavender_petals.name=Lavender Petals
 
 fluid.milk=Milk
 

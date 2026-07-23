@@ -1,0 +1,14 @@
+{
+  "group": "minecraft:dye",
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "magiadaemonica:lilac_petals"
+    }
+  ],
+  "result": {
+    "item": "minecraft:dye",
+    "data": 13,
+    "count": 1
+  }
+}

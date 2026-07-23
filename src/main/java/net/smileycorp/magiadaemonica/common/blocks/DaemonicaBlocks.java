@@ -51,6 +51,9 @@ public class DaemonicaBlocks {
 
     //decorations
     public static final BlockScrollshelf SCROLLSHELF = new BlockScrollshelf();
+    public static final BlockPetals ROSE_PETALS = new BlockPetals("rose");
+    public static final BlockPetals LILAC_PETALS = new BlockPetals("lilac");
+    public static final BlockPetals LAVENDER_PETALS = new BlockPetals("lavender");
 
     @SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> event) {

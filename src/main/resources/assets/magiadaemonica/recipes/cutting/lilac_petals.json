@@ -1,0 +1,19 @@
+{
+  "group": "magiadaemonica:cutting",
+  "type": "atlaslib:shapeless_tool",
+  "ingredients": [
+    {
+      "item": "minecraft:double_plant",
+      "data": 1
+    },
+	{
+	 "type": "forge:ore_dict",
+      "ore": "knife"
+	}
+  ],
+  "result": {
+    "item": "magiadaemonica:lilac_petals",
+    "data": 0,
+    "count": 3
+  }
+}

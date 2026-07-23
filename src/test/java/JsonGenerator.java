@@ -17,6 +17,30 @@ public class JsonGenerator {
         //scrollshelfState();
         //scrollshelfModels();
         //aleaDiaboliModels();
+        petals();
+    }
+
+    private static void petals() {
+        for (String str : new String[]{"rose", "lilac", "lavender"}) {
+            for (int i = 1; i < 5; i++) {
+                File file = new File(DIRECTORY + ("/src/main/resources/assets/magiadaemonica/models/block/" + str + "_petals_" + i + ".json"));
+                System.out.println(file);
+                JsonObject obj = new JsonObject();
+                obj.addProperty("parent", "magiadaemonica:block/petals_" + i);
+                JsonObject textures = new JsonObject();
+                String texture = "magiadaemonica:blocks/" + str + "_petals";
+                textures.addProperty("texture", texture);
+                textures.addProperty("particle", texture);
+                obj.add("textures", textures);
+                try {
+                    file.createNewFile();
+                    FileWriter writer = new FileWriter(file);
+                    writer.write(GSON.toJson(obj));
+                    writer.close();
+                } catch (Exception e) {}
+            }
+
+        }
     }
 
     private static void scrollshelfModels() {

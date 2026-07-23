@@ -6,9 +6,8 @@
       "type": "forge:ore_dict",
       "ore": "string"
     },
-    {
-      "item": "minecraft:double_plant",
-      "data": 4
+   {
+      "item": "magiadaemonica:rose_petals"
     },
     {
       "type": "forge:ore_dict",

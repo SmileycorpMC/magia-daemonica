@@ -14,6 +14,7 @@ import net.minecraftforge.registries.IForgeRegistry;
 import net.smileycorp.atlas.api.block.BlockProperties;
 import net.smileycorp.atlas.api.block.BlockSlabBase;
 import net.smileycorp.magiadaemonica.common.Constants;
+import net.smileycorp.magiadaemonica.common.blocks.BlockPetals;
 import net.smileycorp.magiadaemonica.common.blocks.DaemonicaBlocks;
 import net.smileycorp.magiadaemonica.common.items.relics.*;
 
@@ -54,15 +55,25 @@ public class DaemonicaItems {
     public static void registerItems(RegistryEvent.Register<Item> event) {
         IForgeRegistry<Item> registry = event.getRegistry();
         for (Block block : DaemonicaBlocks.BLOCKS) {
-            if (block instanceof BlockProperties) if (!((BlockProperties)block).usesCustomItemHandler()) register(registry, new ItemDaemonicaBlock(block));
+            if (block instanceof BlockProperties) if (!((BlockProperties) block).usesCustomItemHandler()) {
+                register(registry, new ItemDaemonicaBlock(block));
+                continue;
+            }
             if (block instanceof BlockStairs) {
                 Item item = new ItemBlock(block);
                 item.setRegistryName(block.getRegistryName());
                 item.setUnlocalizedName(block.getUnlocalizedName());
                 register(registry, item);
+                continue;
             }
-            if (block instanceof BlockSlabBase && ((BlockSlabBase) block).isDouble()) {
+            if (block instanceof BlockSlabBase) {
+                if (((BlockSlabBase) block).isDouble()) continue;
                 registerSlab(registry, DaemonicaBlocks.CHALK_SLAB, DaemonicaBlocks.CHALK_DOUBLE_SLAB);
+                continue;
+            }
+            if (block instanceof BlockPetals) {
+                register(registry, new ItemPetal((BlockPetals) block));
+                continue;
             }
         }
         for (Field field : DaemonicaItems.class.getDeclaredFields()) {
