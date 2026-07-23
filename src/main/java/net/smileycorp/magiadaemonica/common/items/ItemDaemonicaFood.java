@@ -54,7 +54,10 @@ public class ItemDaemonicaFood extends ItemDaemonicaEdible {
         SUET("suet", ItemsConfig.suetHunger, ItemsConfig.suetSaturation),
         TALLOW("tallow", ItemsConfig.tallowHunger, ItemsConfig.tallowSaturation),
         BARK("bark", ItemsConfig.oakBarkHunger, ItemsConfig.oakBarkSaturation),
-        PUMPKIN_SLICE("pumpkin_slice", ItemsConfig.pumpkinSliceHunger, ItemsConfig.pumpkinSliceSaturation);
+        PUMPKIN_SLICE("pumpkin_slice", ItemsConfig.pumpkinSliceHunger, ItemsConfig.pumpkinSliceSaturation),
+        SPEARMINT_LEAF("spearmint_leaf", ItemsConfig.spearmintLeafHunger, ItemsConfig.spearmintLeafSaturation),
+        WATERMINT_LEAF("watermint_leaf", ItemsConfig.watermintLeafHunger, ItemsConfig.watermintLeafSaturation),
+        PEPPERMINT_LEAF("peppermint_leaf", ItemsConfig.peppermintLeafHunger, ItemsConfig.peppermintLeafSaturation);
 
         private final String name;
         private final int hunger;

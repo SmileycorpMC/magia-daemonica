@@ -7,8 +7,8 @@
       "ore": "string"
     },
     {
-      "item": "magiadaemonica:flower",
-      "data": 1
+      "item": "magiadaemonica:food",
+      "data": 6
     },
     {
       "type": "forge:ore_dict",

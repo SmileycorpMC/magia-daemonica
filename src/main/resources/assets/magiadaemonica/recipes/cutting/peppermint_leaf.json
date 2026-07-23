@@ -1,0 +1,18 @@
+{
+  "group": "magiadaemonica:cutting",
+  "type": "atlaslib:shapeless_tool",
+  "ingredients": [
+    {
+      "item": "magiadaemonica:peppermint"
+    },
+	{
+	 "type": "forge:ore_dict",
+      "ore": "knife"
+	}
+  ],
+  "result": {
+    "item": "magiadaemonica:food",
+    "data": 6,
+    "count": 3
+  }
+}

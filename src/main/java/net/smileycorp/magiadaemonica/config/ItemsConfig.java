@@ -33,6 +33,12 @@ public class ItemsConfig {
     private static List<Class<? extends EntityLiving>> faciesExcoriataEntityBlacklist;
     public static float faciesExcoriataRange;
     public static int faciesExcoriataTickRate;
+    //lavender petal
+    public static int lavenderPetalHunger;
+    public static float lavenderPetalSaturation;
+    //lilac petal
+    public static int lilacPetalHunger;
+    public static float lilacPetalSaturation;
     //lorica aculeta
     public static int loricaAculetaBleedTime;
     public static float loricaAculetaDamageReflection;
@@ -50,9 +56,21 @@ public class ItemsConfig {
     private static String[] peccatumPrimordialeEffectBlacklistStr;
     public static int peccatumPrimordialeHunger;
     public static float peccatumPrimordialeSaturation;
+    //peppermintLeaf
+    public static int peppermintLeafHunger;
+    public static float peppermintLeafSaturation;
+    //rose petal
+    public static int rosePetalHunger;
+    public static float rosePetalSaturation;
+    //spearmintLeaf
+    public static int spearmintLeafHunger;
+    public static float spearmintLeafSaturation;
     //tallow
     public static int tallowHunger;
     public static float tallowSaturation;
+    //watermintLeaf
+    public static int watermintLeafHunger;
+    public static float watermintLeafSaturation;
 
 
     public static void syncConfig(FMLPreInitializationEvent event) {
@@ -79,6 +97,12 @@ public class ItemsConfig {
             faciesExcoriataDuration = config.getInt("duration", "facies excoriata", 40, 0, Integer.MAX_VALUE, "How long does the facies excoriata's petrify effect work on mobs after you stop looking ar them?");
             faciesExcoriataRange = config.getFloat("range", "facies excoriata", 32, 0, Float.MAX_VALUE, "How far away can the facies excoriata petrify mobs?");
             faciesExcoriataTickRate = config.getInt("tickRate", "facies excoriata", 10, 1, Integer.MAX_VALUE, "How often in ticks does the facies excoriata refresh it's petrify effect?");
+            //lavender petal
+            lavenderPetalHunger = config.getInt("hunger", "lavender petal", 1, 0, Integer.MAX_VALUE, "How much hunger does eating lavender petals provide?");
+            lavenderPetalSaturation = config.getFloat("saturation", "lavender petal", 0.2f, 0, Integer.MAX_VALUE, "How much saturation does eating lavender petals provide?");
+            //lavender petal
+            lilacPetalHunger = config.getInt("hunger", "lilac petal", 1, 0, Integer.MAX_VALUE, "How much hunger does eating lilac petals provide?");
+            lilacPetalSaturation = config.getFloat("saturation", "lilac petal", 0.2f, 0, Integer.MAX_VALUE, "How much saturation does eating lilac petals provide?");
             //lorica aculeta
             loricaAculetaBleedTime = config.getInt("bleedTime", "lorica aculeta", 60, 0, Integer.MAX_VALUE, "How long does the lorica aculeta inflict bleed for after reflecting damage");
             loricaAculetaDamageReflection = config.getFloat("damageReflection", "lorica aculeta", 0.3f, 0, 1, "Percentage of damage the lorica aculeta reduces damage by (before armour and resistance) and reflects back to the attacker");
@@ -96,9 +120,21 @@ public class ItemsConfig {
             peccatumPrimordialeEffectBlacklistStr = config.getStringList("effectBlacklist", "peccatum primordiale", new String[]{"magiadaemonica:petrified", "magiadaemonica:tremor"}, "Potion effects the peccatum primordiale will not apply when eaten");
             peccatumPrimordialeHunger = config.getInt("hunger", "peccatum primordiale", 4, 0, Integer.MAX_VALUE, "How much hunger does eating the peccatum primordiale provide?");
             peccatumPrimordialeSaturation = config.getFloat("saturation", "peccatum primordiale", 2.4f, 0, Integer.MAX_VALUE, "How much saturation does eating the peccatum primordiale provide?");
+            //peppermintLeaf
+            peppermintLeafHunger = config.getInt("hunger", "peppermint leaf", 3, 0, Integer.MAX_VALUE, "How much hunger does eating peppermint leaf provide?");
+            peppermintLeafSaturation = config.getFloat("saturation", "peppermint leaf", 0.2f, 0, Integer.MAX_VALUE, "How much saturation does eating peppermint leaf provide?");
+            //rose petal
+            rosePetalHunger = config.getInt("hunger", "rose petal", 1, 0, Integer.MAX_VALUE, "How much hunger does eating rose petals provide?");
+            rosePetalSaturation = config.getFloat("saturation", "rose petal", 0.2f, 0, Integer.MAX_VALUE, "How much saturation does eating rose petals provide?");
+            //spearmintLeaf
+            spearmintLeafHunger = config.getInt("hunger", "spearmint leaf", 3, 0, Integer.MAX_VALUE, "How much hunger does eating spearmint leaf provide?");
+            spearmintLeafSaturation = config.getFloat("saturation", "spearmint leaf", 0.2f, 0, Integer.MAX_VALUE, "How much saturation does eating spearmint leaf provide?");
             //tallow
             tallowHunger = config.getInt("hunger", "tallow", 3, 0, Integer.MAX_VALUE, "How much hunger does eating tallow provide?");
             tallowSaturation = config.getFloat("saturation", "tallow", 0.4f, 0, Integer.MAX_VALUE, "How much saturation does eating tallow provide?");
+            //watermintLeaf
+            watermintLeafHunger = config.getInt("hunger", "watermint leaf", 3, 0, Integer.MAX_VALUE, "How much hunger does eating watermint leaf provide?");
+            watermintLeafSaturation = config.getFloat("saturation", "watermint leaf", 0.2f, 0, Integer.MAX_VALUE, "How much saturation does eating watermint leaf provide?");
         } catch(Exception e) {
         } finally {
             if (config.hasChanged()) config.save();
