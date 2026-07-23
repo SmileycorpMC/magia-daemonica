@@ -40,7 +40,7 @@ public abstract class MixinEntity {
     @Inject(at = @At(value = "HEAD"), method = "move")
     public void magiadaemonica$move(MoverType type, double x, double y, double z, CallbackInfo callback) {
         if (type != MoverType.PLAYER || (x == 0 && z == 0) || ticksExisted % 10 != 0) return;
-        if (isRiding() || onGround || y > 0) return;
+        if (isRiding() |! onGround || y > 0) return;
         int knifestep = Curses.getLevel((EntityPlayer) (Object)this, CursesRegistry.KNIFESTEP);
         if (knifestep == 0) return;
         attackEntityFrom(DaemonicaDamageSources.KNIFESTEP, (float) Math.ceil(knifestep * Math.sqrt(x * x + z * z) * 4));

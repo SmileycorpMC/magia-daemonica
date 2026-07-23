@@ -225,16 +225,6 @@ public class DaemonicaEventHandler {
 	}
 
 	@SubscribeEvent
-	public void tick(TickEvent.PlayerTickEvent event) {
-		EntityPlayer player = event.player;
-		if (player.ticksExisted % 20 != 0) return;
-		if (player.moveForward == 0 || player.isAirBorne) return;
-		int knifestep = Curses.getLevel(player, CursesRegistry.KNIFESTEP);
-		if (knifestep == 0) return;
-		player.attackEntityFrom(DaemonicaDamageSources.KNIFESTEP, knifestep);
-	}
-
-	@SubscribeEvent
 	public void entityJoinWorld(EntityJoinWorldEvent event) {
 		Entity entity = event.getEntity();
 		if (!(entity instanceof EntityPlayer)) return;
