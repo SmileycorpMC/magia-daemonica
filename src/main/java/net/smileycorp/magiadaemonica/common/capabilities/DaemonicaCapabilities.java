@@ -22,5 +22,8 @@ public class DaemonicaCapabilities {
 
 	@CapabilityInject(Sanguis.class)
 	public final static Capability<Sanguis> SANGUIS = null;
+
+	@CapabilityInject(Effects.class)
+	public final static Capability<Effects> EFFECTS = null;
 	
 }

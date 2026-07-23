@@ -59,6 +59,7 @@ import net.smileycorp.magiadaemonica.common.rituals.Ritual;
 import net.smileycorp.magiadaemonica.common.rituals.Rituals;
 import net.smileycorp.magiadaemonica.common.rituals.RitualsRegistry;
 import net.smileycorp.magiadaemonica.common.rituals.RitualsServer;
+import net.smileycorp.magiadaemonica.common.util.Effect;
 import net.smileycorp.magiadaemonica.common.util.FoodStatsPlayer;
 import net.smileycorp.magiadaemonica.config.ItemsConfig;
 
@@ -76,6 +77,7 @@ public class DaemonicaEventHandler {
 		if (!entity.hasCapability(DaemonicaCapabilities.CURSES, null)) event.addCapability(Constants.loc("curses"), new Curses.Provider());
 		if (!entity.hasCapability(DaemonicaCapabilities.BOONS, null)) event.addCapability(Constants.loc("boons"), new Boons.Provider());
 		if (!entity.hasCapability(DaemonicaCapabilities.SANGUIS, null)) event.addCapability(Constants.loc("sanguis"), new Sanguis.Provider((EntityPlayer) entity));
+		if (!entity.hasCapability(DaemonicaCapabilities.EFFECTS, null)) event.addCapability(Constants.loc("effects"), new Effects.Provider());
 	}
 
 	@SubscribeEvent
@@ -143,9 +145,18 @@ public class DaemonicaEventHandler {
 	}
 
 	@SubscribeEvent
-	public void tick(TickEvent.WorldTickEvent event) {
+	public void worldTick(TickEvent.WorldTickEvent event) {
 		if (event.phase != TickEvent.Phase.START) return;
 		Rituals.get(event.world).tick();
+	}
+
+	@SubscribeEvent
+	public void tick(TickEvent.PlayerTickEvent event) {
+		if (event.phase != TickEvent.Phase.START) return;
+		EntityPlayer player = event.player;
+		if (!(player instanceof EntityPlayerMP)) return;
+		if (!player.hasCapability(DaemonicaCapabilities.EFFECTS, null)) return;
+		player.getCapability(DaemonicaCapabilities.EFFECTS, null).tick((EntityPlayerMP) player);
 	}
 
 	//lowest priority so other events can cancel the event if they need to
@@ -189,7 +200,11 @@ public class DaemonicaEventHandler {
 			}
 		}
 		if (entity instanceof EntityPlayer) {
-
+			EntityPlayer player = (EntityPlayer) entity;
+			if (source.isFireDamage() && Boons.has(player, BoonRegistry.FLAREFOOT)) {
+				Effect effect = Effects.get(player, BoonRegistry.FLAREFOOT);
+				Effects.addEffect((EntityPlayer) entity, BoonRegistry.FLAREFOOT, new Effect(effect == null ? 1 : effect.getLevel() + 1, 20));
+			}
 		}
 		//hemophilia bleeding
 		if (source.isDamageAbsolute()) return;

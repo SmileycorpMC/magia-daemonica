@@ -44,6 +44,7 @@ public class CommonProxy {
 		CapabilityManager.INSTANCE.register(Curses.class, new Curses.Storage(), Curses.Impl::new);
 		CapabilityManager.INSTANCE.register(Boons.class, new Boons.Storage(), Boons.Impl::new);
 		CapabilityManager.INSTANCE.register(Sanguis.class, new Sanguis.Storage(), () -> new Sanguis.Impl(null));
+		CapabilityManager.INSTANCE.register(Effects.class, new Effects.Storage(), Effects.Impl::new);
 
 		//registries
 		DaemonicaAdvancements.register();

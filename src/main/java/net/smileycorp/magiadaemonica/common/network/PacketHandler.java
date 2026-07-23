@@ -40,6 +40,7 @@ public class PacketHandler {
 		NETWORK_INSTANCE.registerMessage(SyncSoulMessage::process, SyncSoulMessage.class, id++, Side.CLIENT);
 		NETWORK_INSTANCE.registerMessage(SyncCursesMessage::process, SyncCursesMessage.class, id++, Side.CLIENT);
 		NETWORK_INSTANCE.registerMessage(SyncBoonsMessage::process, SyncBoonsMessage.class, id++, Side.CLIENT);
+		NETWORK_INSTANCE.registerMessage(SyncEffectsMessage::process, SyncEffectsMessage.class, id++, Side.CLIENT);
 	}
 
 }

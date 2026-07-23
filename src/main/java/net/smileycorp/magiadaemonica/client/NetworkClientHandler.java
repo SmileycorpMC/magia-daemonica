@@ -23,11 +23,12 @@ import net.smileycorp.magiadaemonica.common.blocks.tiles.TileRitualBasic;
 import net.smileycorp.magiadaemonica.common.capabilities.Boons;
 import net.smileycorp.magiadaemonica.common.capabilities.Curses;
 import net.smileycorp.magiadaemonica.common.capabilities.DaemonicaCapabilities;
+import net.smileycorp.magiadaemonica.common.capabilities.Effects;
 import net.smileycorp.magiadaemonica.common.demons.contracts.Contract;
 import net.smileycorp.magiadaemonica.common.demons.contracts.ContractsUtils;
 import net.smileycorp.magiadaemonica.common.entities.EntityContract;
+import net.smileycorp.magiadaemonica.common.util.Effect;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -78,6 +79,13 @@ public class NetworkClientHandler {
         if (!player.hasCapability(DaemonicaCapabilities.BOONS, null)) return;
         Boons cap = player.getCapability(DaemonicaCapabilities.BOONS, null);
         for (Pair<ResourceLocation, Integer> pair : boons) cap.setLevel(pair.getFirst(), pair.getSecond());
+    }
+
+    public static void setEffects(List<Pair<ResourceLocation, Effect>> effects) {
+        EntityPlayerSP player = mc.player;
+        if (!player.hasCapability(DaemonicaCapabilities.EFFECTS, null)) return;
+        Effects cap = player.getCapability(DaemonicaCapabilities.EFFECTS, null);
+        for (Pair<ResourceLocation, Effect> pair : effects) cap.addEffect(pair.getFirst(), pair.getSecond());
     }
 
     public static void fillChat(String text) {

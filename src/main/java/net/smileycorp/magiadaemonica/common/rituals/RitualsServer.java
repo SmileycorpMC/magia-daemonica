@@ -1,5 +1,6 @@
 package net.smileycorp.magiadaemonica.common.rituals;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
@@ -16,6 +17,7 @@ import net.smileycorp.magiadaemonica.common.network.RemoveRitualMessage;
 import net.smileycorp.magiadaemonica.common.network.SyncRitualMessage;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 public class RitualsServer implements Rituals {
@@ -23,6 +25,9 @@ public class RitualsServer implements Rituals {
     private final Map<BlockPos, Ritual> rituals = Maps.newHashMap();
     private final WorldDataDaemonica data;
     private WorldServer world;
+    private List<BlockPos> toRemove = Lists.newArrayList();
+    private List<Ritual> toAdd = Lists.newArrayList();
+    private boolean ticking;
 
     public RitualsServer(WorldDataDaemonica data) {
         this.data = data;
@@ -49,6 +54,7 @@ public class RitualsServer implements Rituals {
 
     @Override
     public void addRitual(Ritual ritual) {
+        if (ticking) toAdd.add(ritual);
         rituals.put(ritual.getCenterPos(), ritual);
         syncRitual(ritual);
         data.markDirty();
@@ -56,6 +62,10 @@ public class RitualsServer implements Rituals {
 
     @Override
     public void removeRitual(BlockPos pos) {
+        if (ticking) {
+            toRemove.add(pos);
+            return;
+        }
         Ritual ritual = getRitual(pos);
         if (ritual == null) return;
         pos = ritual.getCenterPos();
@@ -69,14 +79,20 @@ public class RitualsServer implements Rituals {
 
     @Override
     public void tick() {
+        ticking = true;
         if (world == null) return;
-        for (Ritual ritual : rituals.values()) {
+        for (Ritual ritual : Lists.newArrayList(rituals.values())) {
             ritual.tick(world);
             if (ritual.isDirty()) {
                 data.markDirty();
                 syncRitual(ritual);
             }
         }
+        ticking = false;
+        toAdd.forEach(this::addRitual);
+        toAdd.clear();
+        toRemove.forEach(this::removeRitual);
+        toRemove.clear();
     }
 
     @Override
