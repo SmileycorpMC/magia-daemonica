@@ -6,18 +6,15 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.smileycorp.magiadaemonica.common.Constants;
-import net.smileycorp.magiadaemonica.common.capabilities.Boons;
 import net.smileycorp.magiadaemonica.common.demons.Demon;
 import net.smileycorp.magiadaemonica.common.demons.contracts.BoonRegistry;
 import net.smileycorp.magiadaemonica.common.demons.contracts.CursesRegistry;
 import net.smileycorp.magiadaemonica.common.network.ChooseCurseBoonMessage;
 import net.smileycorp.magiadaemonica.common.network.ChooseRelicMessage;
 
-import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
 public class ChoiceOffering implements Offering {
 

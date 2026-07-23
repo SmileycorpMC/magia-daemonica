@@ -9,7 +9,10 @@ import net.smileycorp.atlas.api.util.Func;
 import net.smileycorp.magiadaemonica.common.demons.Demon;
 import net.smileycorp.magiadaemonica.common.demons.Rank;
 import net.smileycorp.magiadaemonica.common.demons.contracts.costs.*;
-import net.smileycorp.magiadaemonica.common.demons.contracts.offerings.*;
+import net.smileycorp.magiadaemonica.common.demons.contracts.offerings.BoonOffering;
+import net.smileycorp.magiadaemonica.common.demons.contracts.offerings.ChoiceOffering;
+import net.smileycorp.magiadaemonica.common.demons.contracts.offerings.ItemOffering;
+import net.smileycorp.magiadaemonica.common.demons.contracts.offerings.Offering;
 
 import java.util.List;
 import java.util.Map;

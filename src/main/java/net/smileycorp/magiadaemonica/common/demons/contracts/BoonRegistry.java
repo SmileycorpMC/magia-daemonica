@@ -2,7 +2,6 @@ package net.smileycorp.magiadaemonica.common.demons.contracts;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.smileycorp.magiadaemonica.common.Constants;
