@@ -36,6 +36,7 @@ import net.smileycorp.magiadaemonica.common.entities.EntityDemonicTrader;
 import net.smileycorp.magiadaemonica.common.items.DaemonicaItems;
 import net.smileycorp.magiadaemonica.common.items.relics.ItemCalixPerpetuus;
 import net.smileycorp.magiadaemonica.common.rituals.summoning.SummoningCircle;
+import net.smileycorp.magiadaemonica.config.ClientConfig;
 
 @EventBusSubscriber(value = Side.CLIENT, modid= Constants.MODID)
 public class ClientProxy extends CommonProxy {
@@ -43,6 +44,7 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void preInit(FMLPreInitializationEvent event) {
 		super.preInit(event);
+		ClientConfig.syncConfig(event);
 		MinecraftForge.EVENT_BUS.register(new ClientEventHandler());
 		RitualsClient.registerRitualRenderer(SummoningCircle.ID, new SummoningCircleRenderer());
 		ModLocalization.INSTANCE.register(Constants.loc("contract"));

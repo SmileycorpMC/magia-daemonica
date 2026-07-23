@@ -14,6 +14,7 @@ import net.smileycorp.magiadaemonica.client.rituals.RitualsClient;
 import net.smileycorp.magiadaemonica.common.items.DaemonicaItems;
 import net.smileycorp.magiadaemonica.common.potions.DaemonicaPotions;
 import net.smileycorp.magiadaemonica.common.rituals.Rituals;
+import net.smileycorp.magiadaemonica.config.ClientConfig;
 
 public class ClientEventHandler {
 
@@ -44,7 +45,8 @@ public class ClientEventHandler {
         if (!(entity instanceof EntityLivingBase)) return;
         EntityLivingBase living = (EntityLivingBase) entity;
         if (living.isPotionActive(DaemonicaPotions.TREMOR)) {
-            float a = (living.getActivePotionEffect(DaemonicaPotions.TREMOR).getAmplifier() + 4) * 0.25f;
+            if (ClientConfig.tremorShakeIntensity <= 0) return;
+            float a = (living.getActivePotionEffect(DaemonicaPotions.TREMOR).getAmplifier() + 4) * 0.25f * ClientConfig.tremorShakeIntensity;
             float t = ((mc.isGamePaused() ? 0 : mc.getRenderPartialTicks()) + living.ticksExisted) * a * 0.75f;
             event.setPitch((float) (event.getPitch() + a * Math.sin((2*t) + 3)));
             event.setYaw((float) (event.getYaw() + a * Math.cos(t)));
