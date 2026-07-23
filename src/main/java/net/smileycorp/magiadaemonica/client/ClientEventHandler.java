@@ -45,7 +45,7 @@ public class ClientEventHandler {
         EntityLivingBase living = (EntityLivingBase) entity;
         if (living.isPotionActive(DaemonicaPotions.TREMOR)) {
             float a = (living.getActivePotionEffect(DaemonicaPotions.TREMOR).getAmplifier() + 4) * 0.25f;
-            float t = (mc.getRenderPartialTicks() + living.ticksExisted) * a * 0.75f;
+            float t = ((mc.isGamePaused() ? 0 : mc.getRenderPartialTicks()) + living.ticksExisted) * a * 0.75f;
             event.setPitch((float) (event.getPitch() + a * Math.sin((2*t) + 3)));
             event.setYaw((float) (event.getYaw() + a * Math.cos(t)));
             event.setRoll((float) (event.getRoll() + a * Math.sin(5 - (t*3))));
