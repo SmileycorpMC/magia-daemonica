@@ -4,12 +4,15 @@ item.magiadaemonica.chalk_stick.name=Chalk Stick
 item.magiadaemonica.suet.name=Beef Suet
 item.magiadaemonica.tallow.name=Tallow
 item.magiadaemonica.pumpkin_slice.name=Pumpkin Slice
+item.magiadaemonica.spearmint_leaf.name=Spearmint Leaf
+item.magiadaemonica.watermint_leaf.name=Watermint Leaf
+item.magiadaemonica.peppermint_leaf.name=Peppermint Leaf
 item.magiadaemonica.frankincense.name=Frankincense
 item.magiadaemonica.bark.name=Oak Bark
 item.magiadaemonica.oak_ash.name=Oak Ash
 
-item.magiadaemonica.watermint_seeds.name=Watermint Seeds
 item.magiadaemonica.spearmint_seeds.name=Spearmint Seeds
+item.magiadaemonica.watermint_seeds.name=Watermint Seeds
 
 item.magiadaemonica.flint_knife.name=Flint Knife
 item.magiadaemonica.bone_knife.name=Bone Knife
