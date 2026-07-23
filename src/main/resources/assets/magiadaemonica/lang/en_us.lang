@@ -171,6 +171,7 @@ contract.magiadaemonica.offering.item=%1$s
 contract.magiadaemonica.offering.item.enchanted=Enchanted
 contract.magiadaemonica.offering.item.infernal_relic=Infernal Relic
 contract.magiadaemonica.offering.effect=permanent %1$s until your death**
+contract.magiadaemonica.offering.boon=Boon of %1$s (%2$s)
 
 contract.magiadaemonica.sign=Sign
 
