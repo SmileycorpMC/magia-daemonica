@@ -2,6 +2,7 @@ package net.smileycorp.magiadaemonica.mixin;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.MobEffects;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.smileycorp.magiadaemonica.common.capabilities.Boons;
@@ -43,7 +44,7 @@ public abstract class MixinEntityPlayer extends EntityLivingBase{
 
     @Inject(at = @At(value = "RETURN"), method = "getAIMoveSpeed", cancellable = true)
     public void magiadaemonica$getAIMoveSpeed(CallbackInfoReturnable<Float> callback) {
-        if (!world.isRemote) return;
+        if (!world.isRemote || isImmuneToFire() || isPotionActive(MobEffects.FIRE_RESISTANCE)) return;
         if (ticksBurning < 0 |! Boons.has((EntityPlayer) (Object) this, BoonRegistry.FLAREFOOT)) return;
         callback.setReturnValue(callback.getReturnValue() * 1 + (ticksBurning * 0.0025f));
     }
