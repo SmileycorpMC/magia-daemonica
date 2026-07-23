@@ -34,6 +34,7 @@ import net.smileycorp.magiadaemonica.common.Constants;
 import net.smileycorp.magiadaemonica.common.DaemonicaSoundEvents;
 import net.smileycorp.magiadaemonica.common.EnumParticle;
 import net.smileycorp.magiadaemonica.common.demons.contracts.BoonRegistry;
+import net.smileycorp.magiadaemonica.common.demons.contracts.ContractsUtils;
 import net.smileycorp.magiadaemonica.common.demons.contracts.CursesRegistry;
 import net.smileycorp.magiadaemonica.common.items.DaemonicaItems;
 import net.smileycorp.magiadaemonica.common.network.ChooseCurseBoonMessage;
@@ -271,7 +272,7 @@ public class ItemAleaDiaboli extends ItemRelic {
                 ChooseCurseBoonMessage.send((EntityPlayerMP) player, false, BoonRegistry.getRandomBoons(player, 3));
                 return;
             case 20:
-                ChooseRelicMessage.send((EntityPlayerMP) player);
+                ChooseRelicMessage.send((EntityPlayerMP) player, ContractsUtils.getRelics().size());
                 stack.shrink(1);
         }
     }

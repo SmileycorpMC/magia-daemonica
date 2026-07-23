@@ -6,6 +6,7 @@ import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.Entity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.INetHandlerPlayClient;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
@@ -26,7 +27,10 @@ import net.smileycorp.magiadaemonica.common.demons.contracts.Contract;
 import net.smileycorp.magiadaemonica.common.demons.contracts.ContractsUtils;
 import net.smileycorp.magiadaemonica.common.entities.EntityContract;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class NetworkClientHandler {
     
@@ -99,8 +103,13 @@ public class NetworkClientHandler {
         openChoiceGui(new GuiChooseBoonCurse(isCurse, locs));
     }
 
-    public static void openChooseRelicGUI() {
-        openChoiceGui(new GuiChooseItem(ContractsUtils.getRelics()));
+    public static void openChooseRelicGUI(int amount) {
+        List<ItemStack> relics = ContractsUtils.getRelics();
+        if (amount < relics.size()) {
+            Collections.shuffle(relics);
+            relics = relics.stream().limit(amount).collect(Collectors.toList());
+        }
+        openChoiceGui(new GuiChooseItem(relics));
     }
 
     public static void syncRitualTile(INetHandlerPlayClient netHandler, SPacketUpdateTileEntity packet) {

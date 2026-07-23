@@ -172,6 +172,10 @@ contract.magiadaemonica.offering.item.enchanted=Enchanted
 contract.magiadaemonica.offering.item.infernal_relic=Infernal Relic
 contract.magiadaemonica.offering.effect=permanent %1$s until your death**
 contract.magiadaemonica.offering.boon=Boon of %1$s (%2$s)
+contract.magiadaemonica.offering.choice=(%2$s) of your choice
+contract.magiadaemonica.offering.choice.boon=Boon
+contract.magiadaemonica.offering.choice.curse=Curse
+contract.magiadaemonica.offering.choice.relic=Infernal Relic
 
 contract.magiadaemonica.sign=Sign
 

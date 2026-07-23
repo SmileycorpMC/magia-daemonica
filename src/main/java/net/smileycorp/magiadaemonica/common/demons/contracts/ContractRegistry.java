@@ -9,10 +9,7 @@ import net.smileycorp.atlas.api.util.Func;
 import net.smileycorp.magiadaemonica.common.demons.Demon;
 import net.smileycorp.magiadaemonica.common.demons.Rank;
 import net.smileycorp.magiadaemonica.common.demons.contracts.costs.*;
-import net.smileycorp.magiadaemonica.common.demons.contracts.offerings.BoonOffering;
-import net.smileycorp.magiadaemonica.common.demons.contracts.offerings.EffectOffering;
-import net.smileycorp.magiadaemonica.common.demons.contracts.offerings.ItemOffering;
-import net.smileycorp.magiadaemonica.common.demons.contracts.offerings.Offering;
+import net.smileycorp.magiadaemonica.common.demons.contracts.offerings.*;
 
 import java.util.List;
 import java.util.Map;
@@ -46,6 +43,7 @@ public class ContractRegistry {
         registerOffering(BoonOffering.ID, 6, BoonOffering::fromNBT, BoonOffering::generate);
         registerOffering(ItemOffering.ID, 1, ItemOffering::fromNBT, ItemOffering::generate);
         registerOffering(ItemOffering.RELIC_ID, 6, ItemOffering::fromNBT, ItemOffering::generateRelic);
+        registerOffering(ChoiceOffering.ID, 9, ChoiceOffering::fromNBT, ChoiceOffering::generate);
     }
 
     public static Cost readCost(NBTTagCompound cost) {

@@ -10,21 +10,31 @@ import net.smileycorp.magiadaemonica.client.NetworkClientHandler;
 
 public class ChooseRelicMessage implements IMessage {
 
+    private int amount;
+
     public ChooseRelicMessage() {}
 
-    @Override
-    public void fromBytes(ByteBuf buf) {}
+    public ChooseRelicMessage(int amount) {
+        this.amount = amount;
+    }
 
     @Override
-    public void toBytes(ByteBuf buf) {}
+    public void fromBytes(ByteBuf buf) {
+        amount = buf.readInt();
+    }
+
+    @Override
+    public void toBytes(ByteBuf buf) {
+        buf.writeInt(amount);
+    }
 
     public IMessage process(MessageContext ctx) {
-        if (ctx.side == Side.CLIENT) Minecraft.getMinecraft().addScheduledTask(NetworkClientHandler::openChooseRelicGUI);
+        if (ctx.side == Side.CLIENT) Minecraft.getMinecraft().addScheduledTask(() -> NetworkClientHandler.openChooseRelicGUI(amount));
         return null;
     }
 
-    public static void send(EntityPlayerMP player) {
-        PacketHandler.NETWORK_INSTANCE.sendTo(new ChooseRelicMessage(), player);
+    public static void send(EntityPlayerMP player, int amount) {
+        PacketHandler.NETWORK_INSTANCE.sendTo(new ChooseRelicMessage(amount), player);
     }
 
 }
