@@ -36,6 +36,7 @@ import net.smileycorp.magiadaemonica.common.demons.Demon;
 import net.smileycorp.magiadaemonica.common.demons.DemonRegistry;
 import net.smileycorp.magiadaemonica.common.demons.Domain;
 import net.smileycorp.magiadaemonica.common.demons.Rank;
+import net.smileycorp.magiadaemonica.common.demons.contracts.Contract;
 import net.smileycorp.magiadaemonica.common.demons.contracts.ContractRegistry;
 import net.smileycorp.magiadaemonica.common.demons.contracts.ContractsUtils;
 import net.smileycorp.magiadaemonica.common.entities.EntityAbstractDemon;
@@ -46,10 +47,7 @@ import net.smileycorp.magiadaemonica.common.rituals.Ritual;
 import net.smileycorp.magiadaemonica.common.rituals.Rituals;
 import net.smileycorp.magiadaemonica.common.rituals.Rotation;
 
-import java.util.EnumMap;
-import java.util.Optional;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 
 public class SummoningCircle implements Ritual {
 
@@ -236,14 +234,16 @@ public class SummoningCircle implements Ritual {
         }
         if (ticksActive == 680) {
             EntityPlayer player = getPlayer().get();
-            int count = ContractsUtils.getContractCount(demon.getDemon(), player);
+            Demon demonData = demon.getDemon();
+            List<Contract> customContracts = demonData.getCustomContracts();
+            int count = customContracts.isEmpty() ? ContractsUtils.getContractCount(demon.getDemon(), player) : customContracts.size();
             double angle = Math.atan2(player.posZ - center.z, player.posX - center.x);
             double step = Math.PI * 0.25f / ((float)count * 0.5f);
             angle -= step * (count -1) * 0.5;
             for (int i = 0 ; i < count; i++) {
                 EntityContract contract = new EntityContract(world);
                 contract.setPosition(center.x + Math.cos(angle) * 2, center.y + 1.5, center.z + Math.sin(angle) * 2);
-                contract.setContract(ContractRegistry.generateContract(demon.getDemon(), player));
+                contract.setContract(customContracts.isEmpty() ? ContractRegistry.generateContract(demonData, player) : customContracts.get(i));
                 contract.setRitual(getCenterPos());
                 world.spawnEntity(contract);
                 world.playSound(null, center.x, center.y, center.z, SoundEvents.ITEM_FIRECHARGE_USE, SoundCategory.HOSTILE, 0.75f, 1);

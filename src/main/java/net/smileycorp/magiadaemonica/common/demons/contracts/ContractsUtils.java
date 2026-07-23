@@ -83,7 +83,7 @@ public class ContractsUtils {
     }
 
     public static int getContractCount(Demon demon, EntityPlayer player) {
-        int contracts = demon == null ? 1 : demon.getRank().getBaseContractCount();
+        int contracts = demon == null || demon.getRank() == null ? 1 : demon.getRank().getBaseContractCount();
         while (true) {
             float r = player.getRNG().nextFloat();
             if (contracts > 1 && r > 0.95) {
@@ -172,7 +172,7 @@ public class ContractsUtils {
     public static void addAffinity(EntityPlayerMP player, Demon demon) {
         IAttributeInstance attributes = player.getEntityAttribute(DaemonicaAttributes.INFERNAL_AFFINITY);
         AttributeModifier modifier = attributes.getModifier(SUMMON_AFFINITY);
-        double value = 0.005 * (Rank.values().length - demon.getRank().ordinal() + 1);
+        double value = 0.005 * (Rank.values().length - (demon.getRank() == null ? 0 : demon.getRank().ordinal()) + 1);
         if (modifier != null) {
             value += modifier.getAmount();
             attributes.removeModifier(modifier);

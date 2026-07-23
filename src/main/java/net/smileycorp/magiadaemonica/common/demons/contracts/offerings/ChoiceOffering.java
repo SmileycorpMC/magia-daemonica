@@ -59,7 +59,7 @@ public class ChoiceOffering implements Offering {
         return new ChoiceOffering(Type.get(player.getRNG()), 3);
     }
 
-    enum Type {
+    public enum Type {
         BOON((player, amount) -> ChooseCurseBoonMessage.send(player, false, BoonRegistry.getRandomBoons(player, amount))),
         CURSE((player, amount) -> ChooseCurseBoonMessage.send(player, true, CursesRegistry.getRandomCurses(player, amount))),
         RELIC(ChooseRelicMessage::send);

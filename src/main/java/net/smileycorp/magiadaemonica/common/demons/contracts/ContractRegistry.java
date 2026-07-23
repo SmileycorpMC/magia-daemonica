@@ -7,6 +7,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.smileycorp.atlas.api.util.Func;
 import net.smileycorp.magiadaemonica.common.demons.Demon;
+import net.smileycorp.magiadaemonica.common.demons.Domain;
 import net.smileycorp.magiadaemonica.common.demons.Rank;
 import net.smileycorp.magiadaemonica.common.demons.contracts.costs.*;
 import net.smileycorp.magiadaemonica.common.demons.contracts.offerings.BoonOffering;
@@ -62,7 +63,7 @@ public class ContractRegistry {
     public static Contract generateContract(Demon demon, EntityPlayer player) {
         Contract contract = new Contract(demon.getUUID());
         Random rand = player.getRNG();
-        int tier = Rank.values().length - demon.getRank().ordinal();
+        int tier = demon.getRank() == null ? 1 : Rank.values().length - demon.getRank().ordinal();
         tier += (int) ((double)tier * rand.nextGaussian() * 0.1);
         int searchTier = tier;
         while (true) {
@@ -75,13 +76,13 @@ public class ContractRegistry {
         List<Cost.Entry<?>> costs = Lists.newArrayList(COSTS.values());
         Cost.Entry<?>[] contractCosts = new Cost.Entry[costsCount];
         Offering.Entry<?> offering = null;
-        int tries = 0;
+        int tries;
         for (int i = 0; i < contractCosts.length; i++) {
             tries = 0;
             while (tries++ <= 10) {
                 Cost.Entry<?> cost = costs.get(rand.nextInt(costs.size()));
                 contractCosts[i] = cost;
-                if (!(demon.getDomain().isGreedy() && cost.getName().equals(ItemCost.ID))
+                if (!(Domain.isGreedy(demon) && cost.getName().equals(ItemCost.ID))
                         && (cost.getTier() > searchTier || cost.getTier() > searchTier + 2)) continue;
                 costs = costs.stream().filter(entry -> cost.canApplyTogether(entry.getName())).collect(Collectors.toList());
             }

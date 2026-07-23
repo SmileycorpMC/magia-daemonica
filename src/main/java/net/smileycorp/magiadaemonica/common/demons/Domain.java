@@ -1,5 +1,6 @@
 package net.smileycorp.magiadaemonica.common.demons;
 
+import com.google.common.collect.Maps;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.smileycorp.atlas.api.recipe.WeightedOutputs;
@@ -7,6 +8,7 @@ import net.smileycorp.magiadaemonica.common.Constants;
 
 import java.util.EnumMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Random;
 
 public enum Domain {
@@ -50,7 +52,8 @@ public enum Domain {
     }
 
     public static Domain get(Random rand, EnumMap<Domain, Integer> affiliation) {
-        EnumMap<Domain, Integer> weights = new EnumMap<>(Domain.class);
+        Map<Domain, Integer> weights = Maps.newHashMap();
+        weights.put(null, 100 * values().length / 3);
         for (Domain domain : values()) weights.put(domain, 100 + affiliation.getOrDefault(domain, 0));
         return new WeightedOutputs<>(weights).getResult(rand);
     }
@@ -59,6 +62,11 @@ public enum Domain {
         return new TextComponentTranslation("demon.magiadaemonica.name", name,
                 new TextComponentTranslation(rank.getTranslationKey()).getFormattedText(),
                 new TextComponentTranslation("demon." + Constants.MODID + ".domain." + getName()).getFormattedText());
+    }
+
+    public static boolean isGreedy(Demon demon) {
+        Domain domain = demon.getDomain();
+        return domain != null && domain.isGreedy();
     }
 
 }

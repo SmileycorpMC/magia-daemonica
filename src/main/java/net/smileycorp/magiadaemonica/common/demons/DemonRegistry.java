@@ -1,10 +1,18 @@
 package net.smileycorp.magiadaemonica.common.demons;
 
 import com.google.common.collect.Maps;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.smileycorp.magiadaemonica.common.WorldDataDaemonica;
+import net.smileycorp.magiadaemonica.common.demons.contracts.ContractsUtils;
+import net.smileycorp.magiadaemonica.common.demons.contracts.costs.Cost;
+import net.smileycorp.magiadaemonica.common.demons.contracts.costs.ExperienceLevelCost;
+import net.smileycorp.magiadaemonica.common.demons.contracts.costs.ItemCost;
+import net.smileycorp.magiadaemonica.common.demons.contracts.offerings.ChoiceOffering;
+import net.smileycorp.magiadaemonica.common.demons.contracts.offerings.Offering;
+import net.smileycorp.magiadaemonica.common.items.DaemonicaItems;
 
 import java.util.EnumMap;
 import java.util.Map;
@@ -52,7 +60,18 @@ public class DemonRegistry {
         Random rand = new Random();
         for (Domain domain : Domain.values()) {
             Demon demon = new Demon(Rank.PRINCE.getDemonName(rand, domain), domain, Rank.PRINCE);
-            demons.put(demon.getUUID(), demon);
+            if (demons.containsKey(demon.getUUID())) {
+                demon = demons.get(demon);
+                demon.getCustomContracts().clear();
+            }
+            else demons.put(demon.getUUID(), demon);
+        }
+        Demon azazel = new Demon("azazel", null, null);
+        if (demons.containsKey(azazel.getUUID())) {
+            azazel = demons.get(azazel.getUUID());
+            azazel.getCustomContracts().clear();
+            azazel.addCustomContract(new Cost[]{new ItemCost(new ItemStack(DaemonicaItems.MATERIAL, 5, 666)), new ExperienceLevelCost(10)},
+                    new Offering[]{new ChoiceOffering(ChoiceOffering.Type.RELIC, ContractsUtils.getRelics().size())});
         }
         data.markDirty();
     }
@@ -63,12 +82,14 @@ public class DemonRegistry {
             Demon demon = Demon.fromNBT((NBTTagCompound) tag);
             if (demon != null) demons.put(demon.getUUID(), demon);
         }
+        if (!nbt.hasKey("version") || nbt.getInteger("version") == 1) setup();
     }
 
     public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
         NBTTagList demons = new NBTTagList();
         for (Demon demon : this.demons.values()) demons.appendTag(demon.toNBT());
         nbt.setTag("demons", demons);
+        nbt.setInteger("version", 1);
         return nbt;
     }
 

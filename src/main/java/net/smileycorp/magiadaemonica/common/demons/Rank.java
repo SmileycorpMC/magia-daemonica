@@ -43,7 +43,7 @@ public enum Rank {
     }
 
     public String getDemonName(Random rand, Domain domain) {
-        if (this == PRINCE) return domain.getPrince();
+        if (this == PRINCE) return domain == null ? "Azazel" : domain.getPrince();
         return DemonNameGenerator.generate(rand);
     }
 

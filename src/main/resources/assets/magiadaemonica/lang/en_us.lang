@@ -27,7 +27,7 @@ item.magiadaemonica.inscribed_scroll.name=Inscribed Scroll
 item.magiadaemonica.inscribed_scroll.tooltip=Inscribed text: %1$s
 item.magiadaemonica.inscribed_scroll.tooltip1=Use to fill inscribed text into the chat bar
 
-item.magiadaemonica.infernal_scrap.name=Fragmenta Infernalia
+item.magiadaemonica.infernal_scrap.name=Infernal Scrap
 item.magiadaemonica.infernal_scrap.tooltip=A strange dark metal, it does not bend or break, it feels slightly warm to the touch
 
 item.magiadaemonica.infernal_relic=§4§oInfernal Relic
@@ -134,7 +134,17 @@ boon.magiadaemonica.flarefoot.description=Gain speed while burning
 entity.magiadaemonica.demonic_trader.name=Demonic Trader
 entity.magiadaemonica.contract.name=Infernal Contract
 
+demon.magiadaemonica.lucifer=First of the Fallen, Lord of Sin, Star of the Morning, Son of the Dawn, The Great Betrayer, Grand Prince of Pride, and Prince of the 7 Hells, Lucifer
+demon.magiadaemonica.mammon=High Banker of the Hells, and Exalted Prince of Greed and Opulence, Mammon
+demon.magiadaemonica.asmodeus=Prince of Pleasure, Great Purveyor of Lust, Asmodeus
+demon.magiadaemonica.leviathan=The Green Eyed Serpent, Grand Prince of Envy, Great Destroyer of Worlds, Future Prince of Hell, Leviathan
+demon.magiadaemonica.beelzebub=Lord of Flies, The Great Glutton, Beelzebub
+demon.magiadaemonica.satanas=The Great Other, Lord of Lies and Prince of Wrath, Satanas
+demon.magiadaemonica.belphegor=Belphegor, Lord of Sloth, ect.
+demon.magiadaemonica.azazel=The Scapegoat, Grand Librarian of Forbidden Knowledge, Azazel
+
 demon.magiadaemonica.name=%2$s of %3$s, %1$s
+demon.magiadaemonica.unaligned.name=%2$s of the 7 Hells, %1$s
 
 demon.magiadaemonica.rank.prince=Prince
 demon.magiadaemonica.rank.archbaron=Archbaron
