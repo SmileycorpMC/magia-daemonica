@@ -128,6 +128,8 @@ boon.magiadaemonica.hemorrhage=Hemorrhage
 boon.magiadaemonica.hemorrhage.description=Critical hits inflict Bleed
 boon.magiadaemonica.juggernaut=Juggernaut
 boon.magiadaemonica.juggernaut.description=Immunity to the slowing effects of blocks
+boon.magiadaemonica.flarefoot=Flarefoot
+boon.magiadaemonica.flarefoot.description=Gain speed while burning
 
 entity.magiadaemonica.demonic_trader.name=Demonic Trader
 entity.magiadaemonica.contract.name=Infernal Contract
