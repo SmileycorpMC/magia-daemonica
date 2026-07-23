@@ -9,6 +9,7 @@ import net.smileycorp.atlas.api.util.Func;
 import net.smileycorp.magiadaemonica.common.demons.Demon;
 import net.smileycorp.magiadaemonica.common.demons.Rank;
 import net.smileycorp.magiadaemonica.common.demons.contracts.costs.*;
+import net.smileycorp.magiadaemonica.common.demons.contracts.offerings.BoonOffering;
 import net.smileycorp.magiadaemonica.common.demons.contracts.offerings.EffectOffering;
 import net.smileycorp.magiadaemonica.common.demons.contracts.offerings.ItemOffering;
 import net.smileycorp.magiadaemonica.common.demons.contracts.offerings.Offering;
@@ -41,7 +42,8 @@ public class ContractRegistry {
         registerCost(SoulPercentageCost.ID, 3, SoulPercentageCost::fromNBT, SoulPercentageCost::generate, SoulCost::canApplyTogether);
         registerCost(CurseCost.ID, 5, CurseCost::fromNBT, CurseCost::generate, Func::True);
         //registerOffering(AttributeOffering.ID, 5, AttributeOffering::fromNBT);
-        registerOffering(EffectOffering.ID, 6, EffectOffering::fromNBT, EffectOffering::generate);
+        //registerOffering(EffectOffering.ID, 6, EffectOffering::fromNBT, EffectOffering::generate);
+        registerOffering(BoonOffering.ID, 6, BoonOffering::fromNBT, BoonOffering::generate);
         registerOffering(ItemOffering.ID, 1, ItemOffering::fromNBT, ItemOffering::generate);
         registerOffering(ItemOffering.RELIC_ID, 6, ItemOffering::fromNBT, ItemOffering::generateRelic);
     }
