@@ -92,10 +92,12 @@ configurations {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2860'
+    minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2864'
     implementation fg.deobf("curse.maven:atlas-463826:8206890")
     implementation fg.deobf('software.bernie.geckolib:geckolib-forge-1.12.2:3.0.31')
     compileOnly "mezz.jei:jei_${mc_version}:${jei_version}:api"
+    //jei is stinky and crashes at runtime it's ats don't get loaded for some reason
+    //runtime fg.deobf("mezz.jei:jei_${mc_version}:${jei_version}")
     implementation "org.spongepowered:mixin:0.8"
     implementation "io.github.llamalad7:mixinextras-common:0.4.1"
     compileOnly "curse.maven:futuremc-310059:6162819"
