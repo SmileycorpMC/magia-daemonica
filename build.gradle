@@ -92,9 +92,10 @@ configurations {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2864'
+    minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2860'
     implementation fg.deobf("curse.maven:atlas-463826:8206890")
-    implementation fg.deobf('software.bernie.geckolib:geckolib-forge-1.12.2:3.0.31')
+    implementation fg.deobf("curse.maven:geckolib-388172:4020277")
+    //implementation fg.deobf('software.bernie.geckolib:geckolib-forge-1.12.2:3.0.31')
     compileOnly "mezz.jei:jei_${mc_version}:${jei_version}:api"
     //jei is stinky and crashes at runtime it's ats don't get loaded for some reason
     //runtime fg.deobf("mezz.jei:jei_${mc_version}:${jei_version}")
