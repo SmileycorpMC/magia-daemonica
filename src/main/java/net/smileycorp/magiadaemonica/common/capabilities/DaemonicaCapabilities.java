@@ -20,8 +20,8 @@ public class DaemonicaCapabilities {
 	@CapabilityInject(Boons.class)
 	public final static Capability<Boons> BOONS = null;
 
-	@CapabilityInject(Sanguis.class)
-	public final static Capability<Sanguis> SANGUIS = null;
+	@CapabilityInject(ComponentTracker.class)
+	public final static Capability<ComponentTracker> COMPONENT_TRACKER = null;
 
 	@CapabilityInject(Effects.class)
 	public final static Capability<Effects> EFFECTS = null;

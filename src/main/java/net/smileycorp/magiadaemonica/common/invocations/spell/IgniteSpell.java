@@ -20,6 +20,7 @@ import net.smileycorp.magiadaemonica.client.ClientUtils;
 import net.smileycorp.magiadaemonica.common.blocks.Lightable;
 import net.smileycorp.magiadaemonica.common.invocations.Invocation;
 import net.smileycorp.magiadaemonica.common.invocations.InvocationContext;
+import net.smileycorp.magiadaemonica.common.invocations.components.ExhaustionComponent;
 import net.smileycorp.magiadaemonica.common.invocations.components.MateriaComponent;
 import net.smileycorp.magiadaemonica.common.invocations.components.VocalisComponent;
 
@@ -29,6 +30,7 @@ public class IgniteSpell extends Invocation implements Invocation.ClientInvocati
 
     public IgniteSpell() {
         super();
+        addComponent(new ExhaustionComponent(8));
         addComponent(new VocalisComponent("scintilla in ignem"));
         addComponent(new MateriaComponent(new OreIngredient("ashOak")));
     }

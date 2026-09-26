@@ -43,7 +43,7 @@ public class CommonProxy {
 		CapabilityManager.INSTANCE.register(Affiliation.class, new Affiliation.Storage(), Affiliation.Impl::new);
 		CapabilityManager.INSTANCE.register(Curses.class, new Curses.Storage(), Curses.Impl::new);
 		CapabilityManager.INSTANCE.register(Boons.class, new Boons.Storage(), Boons.Impl::new);
-		CapabilityManager.INSTANCE.register(Sanguis.class, new Sanguis.Storage(), () -> new Sanguis.Impl(null));
+		CapabilityManager.INSTANCE.register(ComponentTracker.class, new ComponentTracker.Storage(), () -> new ComponentTracker.Impl(null));
 		CapabilityManager.INSTANCE.register(Effects.class, new Effects.Storage(), Effects.Impl::new);
 
 		//registries

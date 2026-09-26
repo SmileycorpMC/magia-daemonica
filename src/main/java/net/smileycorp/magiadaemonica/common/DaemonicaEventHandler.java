@@ -14,6 +14,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.EnumAction;
+import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
@@ -28,10 +30,8 @@ import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.ServerChatEvent;
 import net.minecraftforge.event.entity.EntityEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
-import net.minecraftforge.event.entity.living.EnderTeleportEvent;
-import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.event.entity.living.PotionEvent;
+import net.minecraftforge.event.entity.item.ItemEvent;
+import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.Clone;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -76,7 +76,7 @@ public class DaemonicaEventHandler {
 		if (!entity.hasCapability(DaemonicaCapabilities.AFFILIATION, null)) event.addCapability(Constants.loc("affiliation"), new Affiliation.Provider());
 		if (!entity.hasCapability(DaemonicaCapabilities.CURSES, null)) event.addCapability(Constants.loc("curses"), new Curses.Provider());
 		if (!entity.hasCapability(DaemonicaCapabilities.BOONS, null)) event.addCapability(Constants.loc("boons"), new Boons.Provider());
-		if (!entity.hasCapability(DaemonicaCapabilities.SANGUIS, null)) event.addCapability(Constants.loc("sanguis"), new Sanguis.Provider((EntityPlayer) entity));
+		if (!entity.hasCapability(DaemonicaCapabilities.COMPONENT_TRACKER, null)) event.addCapability(Constants.loc("component_tracker"), new ComponentTracker.Provider((EntityPlayer) entity));
 		if (!entity.hasCapability(DaemonicaCapabilities.EFFECTS, null)) event.addCapability(Constants.loc("effects"), new Effects.Provider());
 	}
 
@@ -200,6 +200,7 @@ public class DaemonicaEventHandler {
 			}
 		}
 		if (entity instanceof EntityPlayer) {
+			ComponentTracker.addDamage((EntityPlayer) entity, event.getAmount());
 			EntityPlayer player = (EntityPlayer) entity;
 			if (source.isFireDamage() && Boons.has(player, BoonRegistry.FLAREFOOT)) {
 				Effect effect = Effects.get(player, BoonRegistry.FLAREFOOT);
@@ -301,6 +302,15 @@ public class DaemonicaEventHandler {
 			world.setBlockState(pos, recipe.getState(age + 1), 2);
 			event.setResult(Event.Result.DENY);
 		}
+	}
+
+	@SubscribeEvent
+	public void itemConsume(LivingEntityUseItemEvent.Finish event) {
+		EntityLivingBase entity = event.getEntityLiving();
+		if (!(entity instanceof EntityPlayer)) return;
+		ItemStack stack = event.getItem();
+		if (stack.getItemUseAction() != EnumAction.EAT && stack.getItemUseAction() != EnumAction.DRINK) return;
+		ComponentTracker.addFood((EntityPlayer) entity, stack);
 	}
 
 }
