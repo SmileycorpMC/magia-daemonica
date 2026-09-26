@@ -40,6 +40,9 @@ public class LayerDemonEmissive extends GeoLayerRenderer<EntityAbstractDemon> {
     }
 
     @Override
+    public void doRenderLayer(EntityAbstractDemon entitylivingbaseIn, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale) {}
+
+    @Override
     public boolean shouldCombineTextures() {
         return false;
     }
