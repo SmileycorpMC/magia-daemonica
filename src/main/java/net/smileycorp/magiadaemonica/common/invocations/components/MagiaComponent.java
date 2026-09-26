@@ -11,4 +11,8 @@ public interface MagiaComponent {
 
     ITextComponent getDescription();
 
+    default boolean isVocalis() {
+        return false;
+    }
+
 }

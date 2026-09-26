@@ -7,6 +7,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.smileycorp.magiadaemonica.common.invocations.components.MagiaComponent;
+import net.smileycorp.magiadaemonica.common.invocations.components.VocalisComponent;
 
 import java.util.List;
 
@@ -14,6 +15,7 @@ public abstract class Invocation {
 
     private final List<MagiaComponent> components = Lists.newArrayList();
     private ResourceLocation registryName;
+    private int vocalisComponent = -1;
 
     public void setRegistryName(ResourceLocation registryName) {
         this.registryName = registryName;
@@ -24,14 +26,12 @@ public abstract class Invocation {
     }
 
     public void addComponent(MagiaComponent component) {
+        if (component.isVocalis()) vocalisComponent = components.size();
         components.add(component);
     }
 
     public boolean canApply(InvocationContext ctx) {
-        for (MagiaComponent component : components) {
-            System.out.println(component + ", " + component.canApply(ctx));
-            if (!(component.canApply(ctx))) return false;
-        }
+        for (MagiaComponent component : components) if (!(component.canApply(ctx))) return false;
         return true;
     }
 
@@ -39,6 +39,14 @@ public abstract class Invocation {
 
     public void consumeComponents(InvocationContext ctx) {
         components.forEach(component -> component.consumeComponent(ctx));
+    }
+
+    public boolean hasVocalisComponent() {
+        return vocalisComponent > -1;
+    }
+
+    public VocalisComponent getVocalisComponent() {
+        return (VocalisComponent) components.get(vocalisComponent);
     }
 
     public interface ClientInvocation {

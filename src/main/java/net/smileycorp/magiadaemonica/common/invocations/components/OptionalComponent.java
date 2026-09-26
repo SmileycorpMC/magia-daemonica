@@ -31,4 +31,9 @@ public class OptionalComponent implements MagiaComponent {
         return new TextComponentTranslation("invocation.magiadaemonica.component.optional", component.getDescription());
     }
 
+    @Override
+    public boolean isVocalis() {
+        return component.isVocalis();
+    }
+
 }

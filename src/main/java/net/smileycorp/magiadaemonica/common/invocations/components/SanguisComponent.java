@@ -2,7 +2,7 @@ package net.smileycorp.magiadaemonica.common.invocations.components;
 
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
-import net.smileycorp.magiadaemonica.common.capabilities.Sanguis;
+import net.smileycorp.magiadaemonica.common.capabilities.ComponentTracker;
 import net.smileycorp.magiadaemonica.common.invocations.InvocationContext;
 
 public class SanguisComponent implements MagiaComponent {
@@ -15,7 +15,7 @@ public class SanguisComponent implements MagiaComponent {
 
     @Override
     public boolean canApply(InvocationContext ctx) {
-        return Sanguis.get(ctx.getPlayer()) >= amount;
+        return ComponentTracker.getDamage(ctx.getPlayer()) >= amount;
     }
 
     @Override
