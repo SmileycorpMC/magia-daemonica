@@ -1,29 +1,29 @@
 package net.smileycorp.magiadaemonica.common.items;
 
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.smileycorp.magiadaemonica.common.Constants;
 import net.smileycorp.magiadaemonica.config.ItemsConfig;
 
-public class ItemDaemonicaFood extends ItemDaemonicaEdible {
+public class ItemDaemonicaHerb extends ItemDaemonicaEdible {
 
-    public ItemDaemonicaFood() {
-        super("food", 1, 0.6f);
+    public ItemDaemonicaHerb() {
+        super("herb", 1, 0.6f);
         setHasSubtypes(true);
+        setAlwaysEdible();
     }
-    
+
     @Override
     public String byMeta(int meta) {
         return Variant.get(meta).getName();
     }
-    
+
     @Override
     public int getMaxMeta() {
         return Variant.values().length;
     }
-    
+
     @Override
     public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
         if (!isInCreativeTab(tab)) return;
@@ -45,15 +45,12 @@ public class ItemDaemonicaFood extends ItemDaemonicaEdible {
         return Variant.get(stack.getMetadata()).getSaturation();
     }
 
-    @Override
-    public ItemFood setAlwaysEdible() {
-        return super.setAlwaysEdible();
-    }
-
     public enum Variant {
-        SUET("suet", ItemsConfig.suetHunger, ItemsConfig.suetSaturation),
-        TALLOW("tallow", ItemsConfig.tallowHunger, ItemsConfig.tallowSaturation),
-        PUMPKIN_SLICE("pumpkin_slice", ItemsConfig.pumpkinSliceHunger, ItemsConfig.pumpkinSliceSaturation);
+        SPEARMINT_LEAF("spearmint_leaf", ItemsConfig.spearmintLeafHunger, ItemsConfig.spearmintLeafSaturation),
+        WATERMINT_LEAF("watermint_leaf", ItemsConfig.watermintLeafHunger, ItemsConfig.watermintLeafSaturation),
+        PEPPERMINT_LEAF("peppermint_leaf", ItemsConfig.peppermintLeafHunger, ItemsConfig.peppermintLeafSaturation),
+        OAK_BARK("oak_bark", ItemsConfig.oakBarkHunger, ItemsConfig.oakBarkSaturation),
+        BIRCH_BARK("birch_bark", ItemsConfig.birchBarkHunger, ItemsConfig.birchBarkSaturation);
 
         private final String name;
         private final int hunger;
@@ -78,7 +75,7 @@ public class ItemDaemonicaFood extends ItemDaemonicaEdible {
         }
 
         public static Variant get(int meta) {
-            return meta < values().length ? values()[meta] : SUET;
+            return meta < values().length ? values()[meta] : Variant.SPEARMINT_LEAF;
         }
 
     }

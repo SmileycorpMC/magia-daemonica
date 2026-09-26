@@ -44,11 +44,6 @@ public class ItemDaemonicaEdible extends ItemFood implements IMetaItem {
     }
 
     @Override
-    public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        return super.onItemUse(player, worldIn, pos, hand, facing, hitX, hitY, hitZ);
-    }
-
-    @Override
     public int getMaxItemUseDuration(ItemStack stack) {
         return canEat(stack) ? super.getMaxItemUseDuration(stack) : 0;
     }

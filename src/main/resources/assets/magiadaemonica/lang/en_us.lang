@@ -8,8 +8,9 @@ item.magiadaemonica.spearmint_leaf.name=Spearmint Leaf
 item.magiadaemonica.watermint_leaf.name=Watermint Leaf
 item.magiadaemonica.peppermint_leaf.name=Peppermint Leaf
 item.magiadaemonica.frankincense.name=Frankincense
-item.magiadaemonica.bark.name=Oak Bark
+item.magiadaemonica.oak_bark.name=Oak Bark
 item.magiadaemonica.oak_ash.name=Oak Ash
+item.magiadaemonica.birch_bark.name=Birch Bark
 
 item.magiadaemonica.spearmint_seeds.name=Spearmint Seeds
 item.magiadaemonica.watermint_seeds.name=Watermint Seeds
@@ -191,10 +192,12 @@ contract.magiadaemonica.sign=Sign
 
 jei.category.magiadaemonica.plant_hybridizations=Plant Hybridizations
 
+invocation.magiadaemonica.component.exhaustion=Drained Exhaustion:§4§o%1$s
 invocation.magiadaemonica.component.optional=%1$s §7§o(optional)
 invocation.magiadaemonica.component.vocalis=Vocalis component: §4§o%1$s
 invocation.magiadaemonica.component.materia=Materia component: §4§o%1$s
 invocation.magiadaemonica.component.sanguis=Sanguis component: §4§o%1$s
+invocation.magiadaemonica.component.consumibilis=Consumibilis component: §4§o%1$s
 
 command.magiadaemonica.soul.get.success=%1$s has %2$s soul remaining.
 command.magiadaemonica.soul.change.success=Changed soul for %1$s from %2$s to %3$s.

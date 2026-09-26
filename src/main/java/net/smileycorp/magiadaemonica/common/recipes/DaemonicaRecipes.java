@@ -47,7 +47,7 @@ public class DaemonicaRecipes {
 
     private static void addSmelting() {
         GameRegistry.addSmelting(new ItemStack(DaemonicaItems.FOOD, 1, 0), new ItemStack(DaemonicaItems.FOOD, 1, 1), 0.1f);
-        GameRegistry.addSmelting(new ItemStack(DaemonicaItems.FOOD, 1, 2), new ItemStack(DaemonicaItems.MATERIAL, 1, 1), 0.1f);
+        GameRegistry.addSmelting(new ItemStack(DaemonicaItems.HERB, 1, 3), new ItemStack(DaemonicaItems.MATERIAL, 1, 1), 0.1f);
     }
 
     private static void addTrades() {

@@ -26,9 +26,10 @@ public class DaemonicaItems {
 
     public static final List<Item> ITEMS = Lists.newArrayList();
 
+    public static final ItemDaemonicaSeeds SEEDS = new ItemDaemonicaSeeds();
+    public static final ItemDaemonicaHerb HERB = new ItemDaemonicaHerb();
     public static final ItemDaemonicaFood FOOD = new ItemDaemonicaFood();
     public static final ItemDaemonicaMaterial MATERIAL = new ItemDaemonicaMaterial();
-    public static final ItemDaemonicaSeeds SEEDS = new ItemDaemonicaSeeds();
 
     //tools
     public static final ItemChalkStick CHALK_STICK = new ItemChalkStick();

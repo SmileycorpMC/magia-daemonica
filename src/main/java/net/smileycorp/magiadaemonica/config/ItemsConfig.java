@@ -19,6 +19,9 @@ public class ItemsConfig {
     //beef suet
     public static int suetHunger;
     public static float suetSaturation;
+    //birch bark
+    public static int birchBarkHunger;
+    public static float birchBarkSaturation;
     //calix perpetuus
     public static int calixPerpetuusCooldown;
     public static boolean calixPerpetuusMilk;
@@ -44,7 +47,6 @@ public class ItemsConfig {
     public static float loricaAculetaDamageReflection;
     public static boolean loricaAculetaRemovable;
     //oak bark
-    public static boolean oakBarkEdible;
     public static int oakBarkHunger;
     public static float oakBarkSaturation;
     //pumpkin slice
@@ -84,6 +86,9 @@ public class ItemsConfig {
             //beef suet
             suetHunger = config.getInt("hunger", "beef suet", 1, 0, Integer.MAX_VALUE, "How much hunger does eating beef suet provide?");
             suetSaturation = config.getFloat("saturation", "beef suet", 0.2f, 0, Integer.MAX_VALUE, "How much saturation does eating beef suet provide?");
+            //birch bark
+            birchBarkHunger = config.getInt("hunger", "birch bark", 1, 0, Integer.MAX_VALUE, "How much hunger does eating birch bark provide?");
+            birchBarkSaturation = config.getFloat("saturation", "birch bark", 0.2f, 0, Integer.MAX_VALUE, "How much saturation does eating birch bark provide?");
             //calix perpetuus
             calixPerpetuusCooldown = config.getInt("cooldown", "calix perpetuus", 60, 0, Integer.MAX_VALUE, "How long does the calix perpetuus go on cooldown after use?");
             calixPerpetuusMilk = config.getBoolean("canContainMilk", "calix perpetuus", true, "Can the calix perpetuus contain milk?");
@@ -108,7 +113,6 @@ public class ItemsConfig {
             loricaAculetaDamageReflection = config.getFloat("damageReflection", "lorica aculeta", 0.3f, 0, 1, "Percentage of damage the lorica aculeta reduces damage by (before armour and resistance) and reflects back to the attacker");
             loricaAculetaRemovable = config.getBoolean("removable", "lorica aculeta", false, "Can the lorica aculeta be unequipped?");
             //oak bark
-            oakBarkEdible = config.getBoolean("edible", "oak bark", true, "Can oak bark be eaten?");
             oakBarkHunger = config.getInt("hunger", "oak bark", 1, 0, Integer.MAX_VALUE, "How much hunger does eating oak bark provide?");
             oakBarkSaturation = config.getFloat("saturation", "oak bark", 0.2f, 0, Integer.MAX_VALUE, "How much saturation does eating oak bark provide?");
             //pumpkin slice
