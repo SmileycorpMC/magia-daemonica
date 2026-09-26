@@ -1,5 +1,6 @@
 package net.smileycorp.magiadaemonica.common.items;
 
+import com.google.common.collect.Lists;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -16,6 +17,9 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.smileycorp.magiadaemonica.common.invocations.Invocation;
+import net.smileycorp.magiadaemonica.common.invocations.InvocationContext;
+import net.smileycorp.magiadaemonica.common.invocations.InvocationsRegistry;
 import net.smileycorp.magiadaemonica.common.network.FillChatMessage;
 import org.jetbrains.annotations.Nullable;
 
@@ -46,7 +50,11 @@ public class ItemInscribedScroll extends ItemDaemonica {
     @Override
     public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
         if (!isInCreativeTab(tab)) return;
-        items.add(inscribeScroll( new ItemStack(this), "te infernale invoco pacisci volo"));
+        List<String> invocations = Lists.newArrayList();
+        for (Invocation invocation : InvocationsRegistry.getInvocations())
+            if (invocation.hasVocalisComponent()) invocations.add(invocation.getVocalisComponent().getText());
+        invocations.sort(String::compareTo);
+        invocations.forEach(invocation -> items.add(inscribeScroll( new ItemStack(this), invocation)));
     }
 
     @Override
