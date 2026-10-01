@@ -18,9 +18,9 @@ public interface ComponentTracker {
 
     float getTakenDamage();
 
-    void addFood(ItemStack stack);
+    void addConsumed(ItemStack stack);
 
-    boolean hasEaten(ItemStack stack);
+    boolean hasConsumed(ItemStack stack);
 
     class Impl implements ComponentTracker {
 
@@ -63,7 +63,7 @@ public interface ComponentTracker {
         private final List<Pair<ItemStack, Long>> eatenFood = Lists.newArrayList();
 
         @Override
-        public void addFood(ItemStack stack) {
+        public void addConsumed(ItemStack stack) {
             for (int i = 0; i < eatenFood.size(); i++) {
                 Pair<ItemStack, Long> pair = eatenFood.get(i);
                 if (pair.getSecond() + 600 <= player.world.getWorldTime()) continue;
@@ -74,7 +74,7 @@ public interface ComponentTracker {
         }
 
         @Override
-        public boolean hasEaten(ItemStack stack) {
+        public boolean hasConsumed(ItemStack stack) {
             if (eatenFood.isEmpty()) return false;
             int remove = -1;
             for (int i = 0; i < eatenFood.size(); i++) {
@@ -135,14 +135,14 @@ public interface ComponentTracker {
                 player.getCapability(DaemonicaCapabilities.COMPONENT_TRACKER, null).addDamage(damage);
     }
 
-    static boolean hasEaten(EntityPlayer player, ItemStack stack) {
+    static boolean hasConsumed(EntityPlayer player, ItemStack stack) {
         return player.hasCapability(DaemonicaCapabilities.COMPONENT_TRACKER, null) &&
-                player.getCapability(DaemonicaCapabilities.COMPONENT_TRACKER, null).hasEaten(stack);
+                player.getCapability(DaemonicaCapabilities.COMPONENT_TRACKER, null).hasConsumed(stack);
     }
 
-    static void addFood(EntityPlayer player, ItemStack stack) {
+    static void addConsumed(EntityPlayer player, ItemStack stack) {
         if (player.hasCapability(DaemonicaCapabilities.COMPONENT_TRACKER, null))
-            player.getCapability(DaemonicaCapabilities.COMPONENT_TRACKER, null).addFood(stack);
+            player.getCapability(DaemonicaCapabilities.COMPONENT_TRACKER, null).addConsumed(stack);
     }
 
 }

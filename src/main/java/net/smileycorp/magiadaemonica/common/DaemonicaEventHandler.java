@@ -30,7 +30,6 @@ import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.ServerChatEvent;
 import net.minecraftforge.event.entity.EntityEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
-import net.minecraftforge.event.entity.item.ItemEvent;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.Clone;
@@ -310,7 +309,7 @@ public class DaemonicaEventHandler {
 		if (!(entity instanceof EntityPlayer)) return;
 		ItemStack stack = event.getItem();
 		if (stack.getItemUseAction() != EnumAction.EAT && stack.getItemUseAction() != EnumAction.DRINK) return;
-		ComponentTracker.addFood((EntityPlayer) entity, stack);
+		ComponentTracker.addConsumed((EntityPlayer) entity, stack);
 	}
 
 }

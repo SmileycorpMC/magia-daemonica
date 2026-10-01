@@ -16,7 +16,7 @@ public class ConsumibilisComponent implements MagiaComponent {
 
     @Override
     public boolean canApply(InvocationContext ctx) {
-        return ComponentTracker.hasEaten(ctx.getPlayer(), stack);
+        return ComponentTracker.hasConsumed(ctx.getPlayer(), stack);
     }
 
     @Override
